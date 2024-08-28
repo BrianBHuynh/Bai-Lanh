@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dh18lb7hb3xm0"]
+
+[ext_resource type="Texture2D" uid="uid://b3iqmjghd7ckx" path="res://Default resources/Placeholders/Main Character Temp.png" id="1_8fs0u"]
+[ext_resource type="Script" path="res://Characters/Player/player.gd" id="1_vv0m6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oudid"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8fs0u")
+}],
+"loop": true,
+"name": &"Standby",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c22nx"]
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_vv0m6")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_oudid")
+animation = &"Standby"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(8, 13)
+shape = SubResource("RectangleShape2D_c22nx")
