@@ -25,6 +25,15 @@ scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_oudid")
 animation = &"Standby"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(8, 13)
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+scale = Vector2(10, 15)
 shape = SubResource("RectangleShape2D_c22nx")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
