@@ -12,6 +12,6 @@ script = ExtResource("1_nfg4x")
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_t0xfq")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["Slot"]]
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("2_m6rn2")
