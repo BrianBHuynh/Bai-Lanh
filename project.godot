@@ -17,7 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-globalVars="*res://Current/Scrips/Global scripts/Global_vars.gd"
+globalVars="*res://Current/Scrips/Global scripts/global_Vars.gd"
+combat="*res://Current/Scrips/Global scripts/combat_Engine.gd"
 
 [display]
 
