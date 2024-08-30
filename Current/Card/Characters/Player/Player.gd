@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 			holdCard()
 		elif Input.is_action_just_released("leftClick"):
 			modulate = defaultColor;
-			GlobalVars.dragging_card = false
+			globalVars.dragging_card = false
 			var tween = get_tree().create_tween()
 			if slotted > 0 && is_instance_valid(slotRef) && not slotRef.filled:
 				placeCard(tween)
@@ -63,14 +63,14 @@ func removeSlot():
 
 #Makes card draggable and shows that it is to player by changing color and size
 func selectCard():
-	if not GlobalVars.dragging_card:
+	if not globalVars.dragging_card:
 		draggable = true
 		scale = Vector2(1.1, 1.1)
 		modulate = Color(Color.ALICE_BLUE, 1)
 
 #Returns card back to normal
 func unselectCard():
-	if not GlobalVars.dragging_card:
+	if not globalVars.dragging_card:
 		draggable = false
 		modulate = defaultColor
 		scale = defaultSize
@@ -79,7 +79,7 @@ func unselectCard():
 func pickupCard():
 	offset = get_global_mouse_position() - global_position
 	initialPos = global_position
-	GlobalVars.dragging_card = true
+	globalVars.dragging_card = true
 	modulate = Color(Color.LIGHT_GOLDENROD, 1.5);
 	move_to_front()
 
@@ -90,7 +90,7 @@ func holdCard():
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 func placeCard(tween: Tween):
 	tween.tween_property(self,"position",slotRef.position,0.2).set_ease(Tween.EASE_OUT)
-	GlobalVars.player_party.append(self)
+	globalVars.player_party.append(self)
 	if is_instance_valid(curRef):
 		curRef.filled = false
 	curRef = slotRef

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l5bugjhnh6k"
-path="res://.godot/imported/Slot.png-f333d79e089001e20624b206544f90db.ctex"
+uid="uid://b3iqmjghd7ckx"
+path="res://.godot/imported/Main Character Temp.png-6121f9b9ddfcb714a917f89324205f84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Default resources/Common/Card slot/Slot.png"
-dest_files=["res://.godot/imported/Slot.png-f333d79e089001e20624b206544f90db.ctex"]
+source_file="res://Current/Card/Characters/Player/Main Character Temp.png"
+dest_files=["res://.godot/imported/Main Character Temp.png-6121f9b9ddfcb714a917f89324205f84.ctex"]
 
 [params]
 

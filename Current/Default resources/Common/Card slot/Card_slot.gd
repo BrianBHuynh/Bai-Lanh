@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 		scale = Vector2(1,1)
 	else:
 		scale = Vector2(1,1)
-		if GlobalVars.dragging_card:
+		if globalVars.dragging_card:
 			modulate = Color(Color.ALICE_BLUE, 1)
 		else:
 			modulate = Color(Color.ALICE_BLUE, .4)

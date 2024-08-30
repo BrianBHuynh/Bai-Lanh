@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Bai Lanh"
-run/main_scene="res://Screens/Testing.tscn"
+run/main_scene="res://Debug/Testing.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GlobalVars="*res://Scrips/Global scripts/Global_vars.gd"
+globalVars="*res://Current/Scrips/Global scripts/Global_vars.gd"
 
 [display]
 
