@@ -11,4 +11,8 @@ func _process(delta: float) -> void:
 	pass
 
 func _pressed() -> void:
-	combat.playerParty.pop_front().free()
+	if is_instance_valid(combat.playerParty.front()):
+		combat.playerParty.front().curSlot.filled = false
+		combat.playerParty.pop_front().free()
+	else:
+		get_tree().change_scene_to_file("res://Debug/Testing.tscn")
