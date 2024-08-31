@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 globalVars="*res://Current/Scrips/Global scripts/global_Vars.gd"
 combat="*res://Current/Scrips/Global scripts/combat_Engine.gd"
+cards="*res://Current/Scrips/Global scripts/cardEngine.gd"
 
 [display]
 
