@@ -19,16 +19,20 @@ func move(card):
 #Places the location of the Slot into slot ref and changes its color, incriments the slot int
 func addSlot(card, slot: Node2D):
 	card.slotted = card.slotted + 1
-	slot.modulate = Color(Color.SKY_BLUE, 2)
-	slot.scale = Vector2(1.1,1.1)
+	if not slot.filled:
+		slot.modulate = Color(Color.RED, 1)
+		slot.scale = Vector2(1.1,1.1)
 	card.newSlot = slot
 
 #Decriments the slotted variable, then returns the slot back to it's default color
 func removeSlot(card):
+	if is_instance_valid(card.curSlot):
+		card.curSlot.modulate = Color(Color.WHITE, 1)
+		card.curSlot.scale = Vector2(1, 1)
 	card.slotted = card.slotted - 1
 	if card.slotted == 0:
-		scale = Vector2(1.1, 1.1)
-		modulate = Color(Color.ALICE_BLUE, 1)
+		card.scale = Vector2(1, 1)
+		card.modulate = Color(Color.ALICE_BLUE, 1)
 
 #Makes card draggable and shows that it is to player by changing color and size
 func mouseOver(card):
@@ -63,6 +67,8 @@ func place(card, tween: Tween):
 		card.curSlot.filled = false
 	card.curSlot = card.newSlot
 	card.curSlot.filled = true
+	card.curSlot.scale = Vector2(1,1)
+	card.curSlot.modulate = Color(Color.ALICE_BLUE, .4)
 	if not combat.playerParty.has(card):
 		combat.playerParty.append(card)
 
