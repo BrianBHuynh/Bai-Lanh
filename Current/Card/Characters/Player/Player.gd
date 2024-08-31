@@ -28,19 +28,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if draggable: #Prevents alot of unecessary checks, uses select and unselect cards to make sure that the card is draggable
-		if Input.is_action_just_pressed("leftClick"):
-			cards.pickupCard(self)
-		if Input.is_action_pressed("leftClick"):
-			cards.holdCard(self)
-		elif Input.is_action_just_released("leftClick"):
-			modulate = defaultColor;
-			globalVars.draggingCard = false
-			var tween = get_tree().create_tween()
-			if slotted > 0 && is_instance_valid(newSlot) && not newSlot.filled:
-				cards.placeCard(self, tween)
-			else:
-				cards.returnCard(self, tween)
+	cards.move(self) #Takes care of card movement each frame
 
 #For when the card enters a slto
 func _on_body_entered(body: Node2D) -> void:
@@ -54,11 +42,11 @@ func _on_body_exited(body: Node2D) -> void:
 
 #For when mouse enters the card
 func _on_mouse_entered() -> void:
-	cards.selectCard(self)
+	cards.mouseOver(self)
 
 #For when mouse leaves the card
 func _on_mouse_exited() -> void:
-	cards.unselectCard(self)
+	cards.mouseOff(self)
 
 #For when the positional effect is activated for the card
 func posEffect(position):
