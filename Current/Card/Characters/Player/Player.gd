@@ -38,7 +38,7 @@ func _on_body_entered(body: Node2D) -> void:
 #For when the card leaves a slot
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group('Slot'):
-		cards.removeSlot(self)
+		cards.removeSlot(self, body)
 
 #For when mouse enters the card
 func _on_mouse_entered() -> void:

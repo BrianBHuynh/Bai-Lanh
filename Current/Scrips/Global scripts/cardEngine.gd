@@ -20,15 +20,16 @@ func move(card):
 func addSlot(card, slot: Node2D):
 	card.slotted = card.slotted + 1
 	if not slot.filled:
-		slot.modulate = Color(Color.RED, 1)
+		slot.modulate = Color(Color.GOLD, 1)
 		slot.scale = Vector2(1.1,1.1)
 	card.newSlot = slot
+	
 
 #Decriments the slotted variable, then returns the slot back to it's default color
-func removeSlot(card):
-	if is_instance_valid(card.curSlot):
-		card.curSlot.modulate = Color(Color.WHITE, 1)
-		card.curSlot.scale = Vector2(1, 1)
+func removeSlot(card, slot: Node2D):
+	if is_instance_valid(slot):
+		slot.modulate = Color(Color.WHITE, 1)
+		slot.scale = Vector2(1, 1)
 	card.slotted = card.slotted - 1
 	if card.slotted == 0:
 		card.scale = Vector2(1, 1)
