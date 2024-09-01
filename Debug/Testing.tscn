@@ -9,13 +9,13 @@
 script = ExtResource("1_76161")
 
 [node name="Player" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(295, 738)
+position = Vector2(1378, 363)
 
 [node name="Player2" parent="." instance=ExtResource("2_hkdv2")]
 position = Vector2(311, 362)
 
 [node name="Player3" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(868, 328)
+position = Vector2(375, 284)
 
 [node name="Card_slot" parent="." instance=ExtResource("1_kl1h6")]
 position = Vector2(1767, 845)

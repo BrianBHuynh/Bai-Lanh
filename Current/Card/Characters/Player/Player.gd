@@ -28,16 +28,20 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if draggable == true:
+		modulate = Color(Color.AQUAMARINE)
+	else:
+		modulate = defaultColor
 	cards.move(self) #Takes care of card movement each frame
 
-#For when the card enters a slto
+#For when the card enters a slot
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group('Slot'):
+	if body.is_in_group('slot'):
 		cards.addSlot(self, body)
 
 #For when the card leaves a slot
 func _on_body_exited(body: Node2D) -> void:
-	if body.is_in_group('Slot'):
+	if body.is_in_group('slot'):
 		cards.removeSlot(self, body)
 
 #For when mouse enters the card
@@ -51,3 +55,12 @@ func _on_mouse_exited() -> void:
 #For when the positional effect is activated for the card
 func posEffect(position):
 	pass
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group('stackable'):
+		pass
+
+func _on_area_exited(area: Area2D) -> void:
+	if area.is_in_group('stackable'):
+		pass

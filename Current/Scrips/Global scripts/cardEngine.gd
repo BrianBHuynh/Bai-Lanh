@@ -4,11 +4,18 @@ extends Node2D
 func move(card):
 	if card.draggable: #Prevents alot of unecessary checks, uses select and unselect cards to make sure that the card is draggable
 		if Input.is_action_just_pressed("leftClick"):
-			pickup(card)
+				globalVars.curCard.append(card)
+				pickup(card)
 		if Input.is_action_pressed("leftClick"):
-			hold(card)
+			if globalVars.curCard.size() > 1:
+				checkFront()
+			if globalVars.curCard.front() == card:
+				hold(card)
+			else:
+				card.draggable = false
 		elif Input.is_action_just_released("leftClick"):
-			card.modulate = card.defaultColor;
+			globalVars.curCard.clear()
+			card.modulate = card.defaultColor
 			globalVars.draggingCard = false
 			var tween = get_tree().create_tween()
 			if card.slotted > 0 && is_instance_valid(card.newSlot) && not card.newSlot.filled:
@@ -92,3 +99,11 @@ func posApply(card):
 		card.defense = card.defense + card.posDefense
 		card.speed = card.speed + card.posSpeed
 		card.posEffect(card.curSlot.pos)
+
+func checkFront():
+	globalVars.curCard.sort_custom(frontComparator)
+
+func frontComparator(a, b):
+	if a.get_index() > b.get_index():
+		return true
+	return false

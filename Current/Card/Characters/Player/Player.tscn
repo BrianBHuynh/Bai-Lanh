@@ -16,7 +16,7 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c22nx"]
 
-[node name="Player" type="Area2D" groups=["Slot", "Stackable"]]
+[node name="Player" type="Area2D" groups=["stackable"]]
 script = ExtResource("1_2lvgx")
 metadata/_edit_group_ = true
 
@@ -29,6 +29,8 @@ animation = &"Standby"
 scale = Vector2(10, 15)
 shape = SubResource("RectangleShape2D_c22nx")
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
