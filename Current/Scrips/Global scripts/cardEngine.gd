@@ -1,5 +1,6 @@
 extends Node2D
 
+var stackingDistance = 50
 #Takes care of card movement each turn
 func move(card):
 	if card.draggable: #Prevents alot of unecessary checks, uses select and unselect cards to make sure that the card is draggable
@@ -22,7 +23,7 @@ func move(card):
 			var tween = get_tree().create_tween()
 			if card.slotted > 0 && is_instance_valid(card.newSlot) && not card.newSlot.filled:
 				placeSlot(card, tween)
-			elif card.slotted > 0 && is_instance_valid(card.newCard):
+			elif card.slotted > 0 && is_instance_valid(card.newCard) && is_instance_valid(card.newCard.bottomCard.curSlot):
 				placeCard(card, tween)
 			else:
 				reject(card, tween)
@@ -102,12 +103,13 @@ func placeSlot(card, tween: Tween):
 
 #Moves card location to the card's location translated upwards slightly, places card into the lowest's card's register, unfills the old slot if it exist, changes current slot to new slot and fills it
 func placeCard(card, tween: Tween):
-	tween.tween_property(card,"position",card.newCard.position + Vector2(0, 100),0.2).set_ease(Tween.EASE_OUT)
+	tween.tween_property(card,"position",card.newCard.position + Vector2(0, stackingDistance),0.2).set_ease(Tween.EASE_OUT)
 	if is_instance_valid(card.curSlot):
 		card.curSlot.filled = false
 	if is_instance_valid(card.cardBelow):
 		card.cardBelow.cardAbove = null
 	card.cardBelow = card.newCard
+	card.bottomCard = card.cardBelow.bottomCard
 	card.cardBelow.cardAbove = card
 	card.cardBelow.scale = card.cardBelow.defaultSize
 	card.cardBelow.modulate = card.cardBelow.defaultColor
@@ -139,3 +141,10 @@ func frontComparator(a, b):
 	if a.get_index() > b.get_index():
 		return true
 	return false
+
+func recursiveMoveUp(card):
+	if is_instance_valid(card.cardAbove):
+		card.cardAbove.cardBelow = card.cardBelow
+		card.cardAbove.position - Vector2(0, stackingDistance)
+		recursiveMoveUp(card.cardAbove)
+		

@@ -40,10 +40,18 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group('slot'):
 		cards.addSlot(self, body)
 
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group('stackable'):
+		cards.addCard(self, area)
+
 #For when the card leaves a slot
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group('slot'):
 		cards.removeSlot(self, body)
+
+func _on_area_exited(area: Area2D) -> void:
+	if area.is_in_group('stackable'):
+		cards.removeCard(self, area)
 
 #For when mouse enters the card
 func _on_mouse_entered() -> void:
@@ -52,15 +60,6 @@ func _on_mouse_entered() -> void:
 #For when mouse leaves the card
 func _on_mouse_exited() -> void:
 	cards.mouseOff(self)
-
 #For when the positional effect is activated for the card
 func posEffect(position):
 	pass
-
-func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group('stackable'):
-		cards.addCard(self, area)
-
-func _on_area_exited(area: Area2D) -> void:
-	if area.is_in_group('stackable'):
-		cards.removeCard(self, area)
