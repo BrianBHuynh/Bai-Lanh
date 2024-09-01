@@ -22,16 +22,17 @@ var curSlot #Where the current slot / location is stored
 var defaultColor = modulate #for default color
 var defaultSize = Vector2(1,1)
 
+var cardAbove
+var cardBelow
+var bottomCard = self
+var newCard
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if draggable == true:
-		modulate = Color(Color.AQUAMARINE)
-	else:
-		modulate = defaultColor
 	cards.move(self) #Takes care of card movement each frame
 
 #For when the card enters a slot
@@ -56,11 +57,10 @@ func _on_mouse_exited() -> void:
 func posEffect(position):
 	pass
 
-
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group('stackable'):
-		pass
+		cards.addCard(self, area)
 
 func _on_area_exited(area: Area2D) -> void:
 	if area.is_in_group('stackable'):
-		pass
+		cards.removeCard(self, area)

@@ -6,20 +6,24 @@ func move(card):
 		if Input.is_action_just_pressed("leftClick"):
 				globalVars.curCard.append(card)
 				pickup(card)
+				await get_tree().create_timer(0.02).timeout
+				if globalVars.curCard.size() > 1:
+					checkFront()
+				if globalVars.curCard.front() == card:
+					card.move_to_front()
+				else:
+					card.draggable = false
 		if Input.is_action_pressed("leftClick"):
-			if globalVars.curCard.size() > 1:
-				checkFront()
-			if globalVars.curCard.front() == card:
 				hold(card)
-			else:
-				card.draggable = false
 		elif Input.is_action_just_released("leftClick"):
 			globalVars.curCard.clear()
 			card.modulate = card.defaultColor
 			globalVars.draggingCard = false
 			var tween = get_tree().create_tween()
 			if card.slotted > 0 && is_instance_valid(card.newSlot) && not card.newSlot.filled:
-				place(card, tween)
+				placeSlot(card, tween)
+			elif card.slotted > 0 && is_instance_valid(card.newCard):
+				placeCard(card, tween)
 			else:
 				reject(card, tween)
 
@@ -29,8 +33,15 @@ func addSlot(card, slot: Node2D):
 	if not slot.filled:
 		slot.modulate = Color(Color.GOLD, 1)
 		slot.scale = Vector2(1.1,1.1)
-	card.newSlot = slot
-	
+		card.newSlot = slot
+
+#Places the location of the cardBelow to the latest card it passes over if the card is a top card
+func addCard(card, newCard: Node2D):
+	card.slotted = card.slotted + 1
+	if not is_instance_valid(newCard.cardAbove):
+		newCard.modulate = Color(Color.GOLD, 1)
+		newCard.scale = Vector2(1.1,1.1)
+		card.newCard = newCard
 
 #Decriments the slotted variable, then returns the slot back to it's default color
 func removeSlot(card, slot: Node2D):
@@ -39,8 +50,18 @@ func removeSlot(card, slot: Node2D):
 		slot.scale = Vector2(1, 1)
 	card.slotted = card.slotted - 1
 	if card.slotted == 0:
-		card.scale = Vector2(1, 1)
-		card.modulate = Color(Color.ALICE_BLUE, 1)
+		card.scale = card.defaultSize
+		card.modulate = card.defaultColor
+
+#Decriments the slotted variable, then returns the card back to it's default color
+func removeCard(card, newCard: Node2D):
+	if is_instance_valid(newCard):
+		newCard.modulate = Color(Color.WHITE, 1)
+		newCard.scale = Vector2(1, 1)
+	card.slotted = card.slotted - 1
+	if card.slotted == 0:
+		card.scale = card.defaultSize
+		card.modulate = card.defaultColor
 
 #Makes card draggable and shows that it is to player by changing color and size
 func mouseOver(card):
@@ -62,14 +83,13 @@ func pickup(card):
 	card.initialPos = card.global_position
 	globalVars.draggingCard = true
 	card.modulate = Color(Color.LIGHT_GOLDENROD, 1.5);
-	card.move_to_front()
 
 #Updates card location
 func hold(card):
 	card.global_position = get_global_mouse_position() - card.offset
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
-func place(card, tween: Tween):
+func placeSlot(card, tween: Tween):
 	tween.tween_property(card,"position",card.newSlot.position,0.2).set_ease(Tween.EASE_OUT)
 	if is_instance_valid(card.curSlot):
 		card.curSlot.filled = false
@@ -79,6 +99,18 @@ func place(card, tween: Tween):
 	card.curSlot.modulate = Color(Color.ALICE_BLUE, .4)
 	if not combat.playerParty.has(card):
 		combat.playerParty.append(card)
+
+#Moves card location to the card's location translated upwards slightly, places card into the lowest's card's register, unfills the old slot if it exist, changes current slot to new slot and fills it
+func placeCard(card, tween: Tween):
+	tween.tween_property(card,"position",card.newCard.position + Vector2(0, 100),0.2).set_ease(Tween.EASE_OUT)
+	if is_instance_valid(card.curSlot):
+		card.curSlot.filled = false
+	if is_instance_valid(card.cardBelow):
+		card.cardBelow.cardAbove = null
+	card.cardBelow = card.newCard
+	card.cardBelow.cardAbove = card
+	card.cardBelow.scale = card.cardBelow.defaultSize
+	card.cardBelow.modulate = card.cardBelow.defaultColor
 
 #returns card back to old position when picking up
 func reject(card, tween: Tween):
