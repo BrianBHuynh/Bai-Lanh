@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dh18lb7hb3xm0"]
+[gd_scene load_steps=6 format=3 uid="uid://dh18lb7hb3xm0"]
 
 [ext_resource type="Script" path="res://Current/Card/Characters/Player/Player.gd" id="1_2lvgx"]
 [ext_resource type="Texture2D" uid="uid://b3iqmjghd7ckx" path="res://Current/Card/Characters/Player/Main Character Temp.png" id="1_8fs0u"]
+[ext_resource type="Script" path="res://Debug/card debugger.gd" id="3_0fviy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oudid"]
 animations = [{
@@ -24,6 +25,11 @@ metadata/_edit_group_ = true
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_oudid")
 animation = &"Standby"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 101.0
+offset_bottom = 150.0
+script = ExtResource("3_0fviy")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 scale = Vector2(10, 15)

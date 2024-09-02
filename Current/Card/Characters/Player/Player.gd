@@ -15,6 +15,7 @@ var posSpeed = 0
 
 var draggable = false #If the card is draggable at that moment
 var slotted = 0 #Slotted is a int because sometimes multiple slots overlap or are placed close to eachother
+var carded = 0 #Like the above variable however applies to cards, needs to be seperated since slots take priority over cards
 var newSlot #Where the latest slot is stored
 var offset: Vector2 #Used to store the offset between where the card is held and the mouse
 var initialPos: Vector2 #The initial position of the card before moving
@@ -22,36 +23,36 @@ var curSlot #Where the current slot / location is stored
 var defaultColor = modulate #for default color
 var defaultSize = Vector2(1,1)
 
-var cardAbove
+var cardAbove = null
 var cardBelow
 var bottomCard = self
 var newCard
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	initialPos = global_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if self.cardAbove == self:
+		scale = Vector2(5,5)
 	cards.move(self) #Takes care of card movement each frame
 
 #For when the card enters a slot
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group('slot'):
-		cards.addSlot(self, body)
+	cards.addSlot(self, body)
 
+#For when the card enters another card
 func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group('stackable'):
-		cards.addCard(self, area)
+	cards.addCard(self, area)
 
 #For when the card leaves a slot
 func _on_body_exited(body: Node2D) -> void:
-	if body.is_in_group('slot'):
-		cards.removeSlot(self, body)
+	cards.removeSlot(self, body)
 
+#For when the card leaves another card
 func _on_area_exited(area: Area2D) -> void:
-	if area.is_in_group('stackable'):
-		cards.removeCard(self, area)
+	cards.removeCard(self, area)
 
 #For when mouse enters the card
 func _on_mouse_entered() -> void:
@@ -60,6 +61,7 @@ func _on_mouse_entered() -> void:
 #For when mouse leaves the card
 func _on_mouse_exited() -> void:
 	cards.mouseOff(self)
+
 #For when the positional effect is activated for the card
 func posEffect(position):
 	pass
