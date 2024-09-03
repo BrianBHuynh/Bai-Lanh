@@ -8,4 +8,4 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	text = ("Slotted = " + str(get_parent().slotted) + " Carded = " + str(get_parent().carded) + str(get_parent().draggable))
+	pass

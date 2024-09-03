@@ -24,19 +24,22 @@ var defaultColor = modulate #for default color
 var defaultSize = Vector2(1,1)
 
 var cardAbove = null
-var cardBelow
+var cardBelow = null
 var bottomCard = self
-var newCard
+var newCard = null
 
+var debugTest = "same"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initialPos = global_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if self.cardAbove == self:
-		scale = Vector2(5,5)
-	cards.move(self) #Takes care of card movement each frame
+	if self.bottomCard == self:
+		modulate = Color(Color.HOT_PINK)
+	else:
+		modulate = defaultColor
+	cards.moveScript(self) #Takes care of card movement each frame
 
 #For when the card enters a slot
 func _on_body_entered(body: Node2D) -> void:
