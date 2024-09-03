@@ -21,24 +21,19 @@ var offset: Vector2 #Used to store the offset between where the card is held and
 var initialPos: Vector2 #The initial position of the card before moving
 var curSlot #Where the current slot / location is stored
 var defaultColor = modulate #for default color
-var defaultSize = Vector2(1,1)
+var defaultSize = Vector2(1,1) #Default size for the card
 
 var cardAbove = null
 var cardBelow = null
 var bottomCard = self
 var newCard = null
 
-var debugTest = "same"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initialPos = global_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if self.bottomCard == self:
-		modulate = Color(Color.HOT_PINK)
-	else:
-		modulate = defaultColor
 	cards.moveScript(self) #Takes care of card movement each frame
 
 #For when the card enters a slot

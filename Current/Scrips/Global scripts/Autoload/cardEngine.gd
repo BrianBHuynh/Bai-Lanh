@@ -1,13 +1,14 @@
 extends Node2D
 
+var latest = "none"
 var stackingDistance = 50
 #Takes care of card movement each turn
 func moveScript(card):
-	if card.draggable: #Prevents alot of unecessary checks, uses select and unselect cards to make sure that the card is draggable
+	if card.draggable and not moveLib.animRunning: #Prevents alot of unecessary checks, uses select and unselect cards to make sure that the card is draggable, does not allow inputs while animations are playing
 		if Input.is_action_just_pressed("leftClick"):
 			leftClickAction(card)
 		elif Input.is_action_pressed("leftClick"):
-				leftHoldAction(card)
+			leftHoldAction(card)
 		elif Input.is_action_just_released("leftClick"):
 			leftReleaseAction(card)
 
@@ -29,20 +30,19 @@ func leftReleaseAction(card):
 	globalVars.curCard.clear()
 	card.modulate = card.defaultColor
 	globalVars.draggingCard = false
-	var tween = get_tree().create_tween()
-	if card.slotted > 0 && is_instance_valid(card.newSlot) and not card.newSlot.filled and card.newSlot != card.curSlot:
-		placeSlot(card, tween)
-	elif card.carded > 0 && is_instance_valid(card.newCard) and is_instance_valid(card.newCard.bottomCard.curSlot) and not is_instance_valid(card.newCard.cardAbove):
-		placeCard(card, tween)
+	if card.slotted > 0 && is_instance_valid(card.newSlot) and not card.newSlot.filled and card.newSlot != card.curSlot and latest == "slot":
+		placeSlot(card)
+	elif card.carded > 0 && is_instance_valid(card.newCard) and is_instance_valid(card.newCard.bottomCard.curSlot) and not is_instance_valid(card.newCard.cardAbove) and latest == "card":
+		placeCard(card)
 	else:
-		reject(card, tween)
+		reject(card)
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
-func placeSlot(card, tween: Tween):
+func placeSlot(card):
 	if is_instance_valid(card.curSlot) and not is_instance_valid(card.cardAbove):
 		card.curSlot.filled = false
-	moveUp(card, tween)
-	tween.tween_property(card,"position",card.newSlot.position,0.2).set_ease(Tween.EASE_OUT)
+	moveUp(card)
+	moveLib.move(card, card.newSlot.position)
 	card.initialPos = card.newSlot.position
 	card.curSlot = card.newSlot
 	card.curSlot.filled = true
@@ -55,11 +55,11 @@ func placeSlot(card, tween: Tween):
 	card.bottomCard = card
 
 #Moves card location to the card's location translated upwards slightly, places card into the lowest's card's register, unfills the old slot if it exist, changes current slot to new slot and fills it
-func placeCard(card, tween: Tween):
+func placeCard(card):
 	if is_instance_valid(card.curSlot) and not is_instance_valid(card.cardAbove):
 		card.curSlot.filled = false
-	moveUp(card, tween)
-	tween.tween_property(card,"position",card.newCard.position + Vector2(0, stackingDistance),0.2).set_ease(Tween.EASE_OUT)
+	moveUp(card)
+	moveLib.move(card, card.newCard.position + Vector2(0, stackingDistance))
 	card.initialPos = (card.newCard.position + Vector2(0, stackingDistance))
 	card.cardBelow = card.newCard
 	card.bottomCard = card.cardBelow.bottomCard
@@ -69,14 +69,15 @@ func placeCard(card, tween: Tween):
 	card.cardAbove = null
 
 #returns card back to old position when picking up
-func reject(card, tween: Tween):
-	tween.tween_property(card,"global_position",card.initialPos,0.2).set_ease(Tween.EASE_OUT)
+func reject(card):
+	moveLib.move(card, card.initialPos)
 
 #Places the location of the Slot into slot ref and changes its color, incriments the slot int
 func addSlot(card, slot: Node2D):
 	if slot.is_in_group('slot'):
 		card.slotted = card.slotted + 1
 		if not slot.filled:
+			latest = "slot"
 			slot.modulate = Color(Color.GOLD, 1)
 			slot.scale = Vector2(1.1,1.1)
 			card.newSlot = slot
@@ -86,6 +87,7 @@ func addCard(card, newCard: Node2D):
 	if newCard.is_in_group('stackable'):
 		card.carded = card.carded + 1
 		if not is_instance_valid(newCard.cardAbove):
+			latest = "card"
 			newCard.modulate = Color(Color.GOLD, 1)
 			newCard.scale = Vector2(1.1,1.1)
 			card.newCard = newCard
@@ -157,7 +159,7 @@ func frontComparator(a, b):
 	return false
 
 #Moves cards up if a middle or bottom card is removed, if bottom is removed changes the bottom of the stack to cardAbove
-func moveUp(card, tween: Tween):
+func moveUp(card):
 	if card.bottomCard == card and is_instance_valid(card.cardAbove):
 		card.cardAbove.bottomCard = card.cardAbove
 		card.cardAbove.cardBelow = null
@@ -170,22 +172,17 @@ func moveUp(card, tween: Tween):
 	if is_instance_valid(card.cardAbove):
 		var temp = card.cardAbove
 		card.cardAbove = null
-		tween.tween_property(temp,"position",temp.position - Vector2(0, stackingDistance),0.2).set_ease(Tween.EASE_OUT)
-		moveUpLoop(temp, tween)
+		moveLib.move(temp, temp.position - Vector2(0, stackingDistance))
+		moveUpLoop(temp)
 	elif is_instance_valid(card.curSlot):
 		card.curSlot.filled = false
 
-func moveUpLoop(card, tween:Tween):
+func moveUpLoop(card):
 	if is_instance_valid(card.cardAbove):
-		tween.tween_property(card.cardAbove,"position",card.cardAbove.position - Vector2(0, stackingDistance),0.2).set_ease(Tween.EASE_OUT)
-		moveUpLoop(card.cardAbove, tween)
+		moveLib.move(card.cardAbove, card.cardAbove.position - Vector2(0, stackingDistance))
+		moveUpLoop(card.cardAbove)
 
 func changeBotLoop(card):
 	if is_instance_valid(card.cardAbove):
 		card.cardAbove.bottomCard = card.bottomCard
 		changeBotLoop(card.cardAbove) 
-
-func cardReset(card):
-	card.cardAbove = null
-	card.cardBelow = null
-	card.bottomCard = self
