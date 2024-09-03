@@ -15,13 +15,16 @@ func moveScript(card):
 func leftClickAction(card):
 	globalVars.curCard.append(card)
 	pickup(card)
-	await get_tree().create_timer(0.02).timeout
+	await get_tree().create_timer(0.001).timeout
 	if globalVars.curCard.size() > 1:
 		checkFront()
 	if globalVars.curCard.front() == card:
 		card.move_to_front()
 	else:
 		card.draggable = false
+	leftHoldAction(card)
+	for elem in globalVars.curCard:
+		moveLib.moveToInitialPos(elem)
 
 func leftHoldAction(card):
 	card.global_position = get_global_mouse_position() - card.offset
