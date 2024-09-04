@@ -8,7 +8,8 @@ func moveScript(card):
 		if Input.is_action_just_pressed("leftClick"):
 			leftClickAction(card)
 		elif Input.is_action_pressed("leftClick"):
-			leftHoldAction(card)
+			if globalVars.draggingCard == true:
+				leftHoldAction(card)
 		elif Input.is_action_just_released("leftClick"):
 			leftReleaseAction(card)
 			globalVars.draggingCard = false
