@@ -11,6 +11,7 @@ func moveScript(card):
 			leftHoldAction(card)
 		elif Input.is_action_just_released("leftClick"):
 			leftReleaseAction(card)
+			globalVars.draggingCard = false
 
 func leftClickAction(card):
 	globalVars.curCard.append(card)
@@ -27,7 +28,7 @@ func leftClickAction(card):
 		fixSlot(card.slot)
 
 func leftHoldAction(card):
-	card.global_position = get_global_mouse_position() - card.offset
+	moveLib.moveFast(card, get_global_mouse_position() - card.offset)
 
 func leftReleaseAction(card):
 	globalVars.curCard.clear()
@@ -43,9 +44,8 @@ func leftReleaseAction(card):
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 func placeSlot(card):
 	if is_instance_valid(card.slot):
-		card.scale = card.scale + Vector2(1,1)
 		card.slot.cards.erase(card)
-	moveUp(card)
+		fixSlot(card.slot)
 	moveLib.move(card, card.newSlot.position)
 	card.slot = card.newSlot
 	card.newSlot = null
@@ -80,15 +80,19 @@ func addCard(card, newCard: Area2D):
 		newCard.slot.scale = Vector2(1.1,1.1)
 
 #Decriments the slotted variable, then returns the slot back to it's default color
-func removeSlot(card):
-	card.newSlot = null
+func removeSlot(card, slot):
+	if card.newSlot == slot:
+		card.newSlot = null
 
 #Decriments the slotted variable, then returns the card back to it's default color
-func removeCard(card):
-	card.newSlot = null
+func removeCard(card, slot):
+	if card.newSlot == slot:
+		card.newSlot = null
 
 #Makes card draggable and shows that it is to player by changing color and size
 func mouseOver(card):
+	if is_instance_valid(card.slot):
+		fixSlot(card.slot)
 	if not globalVars.draggingCard:
 		card.draggable = true
 		card.scale = Vector2(1.1, 1.1)
@@ -96,6 +100,8 @@ func mouseOver(card):
 
 #Returns card back to normal
 func mouseOff(card):
+	if is_instance_valid(card.slot):
+		fixSlot(card.slot)
 	if not globalVars.draggingCard:
 		card.draggable = false
 		card.modulate = card.defaultColor
@@ -114,10 +120,6 @@ func frontComparator(a, b):
 	if a.get_index() > b.get_index():
 		return true
 	return false
-
-#Moves cards up if a middle or bottom card is removed, if bottom is removed changes the bottom of the stack to cardAbove
-func moveUp(card):
-	pass
 
 func fixSlot(slot: Node2D):
 	var temp = 0

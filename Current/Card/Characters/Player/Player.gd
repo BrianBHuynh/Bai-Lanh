@@ -42,11 +42,11 @@ func _on_area_entered(area: Area2D) -> void:
 
 #For when the card leaves a slot
 func _on_body_exited(body: Node2D) -> void:
-	cards.removeSlot(self)
+	cards.removeSlot(self, body)
 
 #For when the card leaves another card
 func _on_area_exited(area: Area2D) -> void:
-	cards.removeCard(self)
+	cards.removeCard(self, area)
 
 #For when mouse enters the card
 func _on_mouse_entered() -> void:

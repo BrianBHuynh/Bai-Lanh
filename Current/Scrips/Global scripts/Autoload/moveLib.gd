@@ -10,6 +10,10 @@ func move(card, destination):
 	await tween.finished
 	animRunning = false
 
+func moveFast(card, destination):
+	tween = get_tree().create_tween()
+	tween.tween_property(card,"position",destination,0.075).set_ease(Tween.EASE_OUT)
+
 func moveToInitialPos(card):
 	tween = get_tree().create_tween()
 	animRunning = true

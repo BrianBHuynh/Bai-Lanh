@@ -9,6 +9,8 @@ func moveScript(card):
 			leftHoldAction(card)
 		elif Input.is_action_just_released("leftClick"):
 			leftReleaseAction(card)
+		elif not Input.is_anything_pressed():
+			card.draggable = false
 
 func leftClickAction(card):
 	globalVars.curCard.append(card)
