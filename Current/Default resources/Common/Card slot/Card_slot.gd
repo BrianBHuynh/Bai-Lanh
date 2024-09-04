@@ -7,6 +7,9 @@ var posAttack = 0
 var posDefense = 0
 var posSpeed = 0
 
+var cards: Array = []
+var accepting: bool = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	modulate = Color(Color.ALICE_BLUE, .7)

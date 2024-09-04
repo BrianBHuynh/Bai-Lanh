@@ -1,6 +1,7 @@
 extends Node2D
 
 
-var draggingCard = false
-var curCard = []
-var allCards = []
+var draggingCard:bool = false
+var allCards: Array = []
+var stackingDistance: int = 50
+var curCard: Array = []

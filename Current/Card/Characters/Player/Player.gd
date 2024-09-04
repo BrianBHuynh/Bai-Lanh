@@ -1,32 +1,28 @@
 extends Area2D
 
-var health = 100 #Health amount of card
-var attack = 10 #Attack value of the card
-var defense = 10 #Defense of the card
-var speed = 10 #Speed of the card
+var health: int = 100 #Health amount of card
+var attack: int = 10 #Attack value of the card
+var defense: int = 10 #Defense of the card
+var speed: int = 10 #Speed of the card
 
 #Position stats/effects should only be applied when the play button is pressed!
-var prefPos = [] #Prefered possitions of the card
-var pos = "None" #Current position
-var posHealth = 0
-var posAttack = 0
-var posDefense = 0
-var posSpeed = 0
+var prefPos: Array = [] #Prefered possitions of the card
+var pos: String = "None" #Current position
+var posHealth: int = 0
+var posAttack: int = 0
+var posDefense: int = 0
+var posSpeed: int = 0
 
-var draggable = false #If the card is draggable at that moment
-var slotted = 0 #Slotted is a int because sometimes multiple slots overlap or are placed close to eachother
-var carded = 0 #Like the above variable however applies to cards, needs to be seperated since slots take priority over cards
-var newSlot #Where the latest slot is stored
+var draggable: bool = false #If the card is draggable at that moment
+var slot #Where the current slot is stored
+
+var newSlot #Where a possible slot is
+
 var offset: Vector2 #Used to store the offset between where the card is held and the mouse
-var initialPos: Vector2 #The initial position of the card before moving
-var curSlot #Where the current slot / location is stored
-var defaultColor = modulate #for default color
-var defaultSize = Vector2(1,1) #Default size for the card
+var initialPos: Vector2 #Location of card starting scene
 
-var cardAbove = null
-var cardBelow = null
-var bottomCard = self
-var newCard = null
+var defaultColor: Color = modulate #for default color
+var defaultSize: Vector2 = Vector2(1,1) #Default size for the card
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -46,11 +42,11 @@ func _on_area_entered(area: Area2D) -> void:
 
 #For when the card leaves a slot
 func _on_body_exited(body: Node2D) -> void:
-	cards.removeSlot(self, body)
+	cards.removeSlot(self)
 
 #For when the card leaves another card
 func _on_area_exited(area: Area2D) -> void:
-	cards.removeCard(self, area)
+	cards.removeCard(self)
 
 #For when mouse enters the card
 func _on_mouse_entered() -> void:
