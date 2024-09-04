@@ -1,9 +1,9 @@
 extends Area2D
 
 var health: int = 100 #Health amount of card
-var attack: int = 15 #Attack value of the card
-var defense: int = 15 #Defense of the card
-var speed: int = 15 #Speed of the card
+var attack: int = 10 #Attack value of the card
+var defense: int = 10 #Defense of the card
+var speed: int = 10 #Speed of the card
 
 #Position stats/effects should only be applied when the play button is pressed!
 var prefPos: Array = [] #Prefered possitions of the card
@@ -28,6 +28,9 @@ var defaultSize: Vector2 = Vector2(1,1) #Default size for the card
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initialPos = global_position
+	modulate = Color(Color.RED)
+	await get_tree().create_timer(.1).timeout
+	combat.opposingParty.append(self)
 	curPosition = global_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -63,13 +66,12 @@ func posEffect(position):
 	pass
 
 func action():
-	var enemy = combat.getNext(combat.opposingParty)
+	var enemy = combat.getNext(combat.playerParty)
 	var damage = (combat.RNG.randi_range(1,10)+attack)
 	if is_instance_valid(enemy):
 		enemy.health = enemy.health - damage
 		combat.combatBoard = combat.combatBoard + "Player dealt " + str(damage) + " damage to the opponent! They have " + str(enemy.health) + " health left!"
-		moveLib.moveThenReturn(self, enemy.initialPos)
+		moveLib.moveThenReturn(self, enemy.slot.position)
 		if enemy.health <= 0:
 			combat.kill(enemy)
 			combat.combatBoard = combat.combatBoard + " Killing them!"
-	

@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://c665w5bwl7uxl"]
+[gd_scene load_steps=8 format=3 uid="uid://c665w5bwl7uxl"]
 
 [ext_resource type="Script" path="res://Debug/testing.gd" id="1_76161"]
 [ext_resource type="PackedScene" uid="uid://bxlnfw56v2sm4" path="res://Current/Default resources/Common/Card slot/Card_slot.tscn" id="1_kl1h6"]
 [ext_resource type="PackedScene" uid="uid://dh18lb7hb3xm0" path="res://Current/Card/Characters/Player/Player.tscn" id="2_hkdv2"]
 [ext_resource type="Script" path="res://Debug/gameStateChecker.gd" id="2_yahad"]
 [ext_resource type="Script" path="res://Debug/button.gd" id="4_bhsut"]
+[ext_resource type="Script" path="res://Debug/button_2.gd" id="5_pliky"]
+[ext_resource type="PackedScene" uid="uid://b2gmjq15v3m8o" path="res://Debug/debug enemy/EVIL Debug Player.tscn" id="6_smvtq"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_76161")
@@ -15,15 +17,6 @@ offset_top = 5.0
 offset_right = 551.0
 offset_bottom = 164.0
 script = ExtResource("2_yahad")
-
-[node name="Player" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(1378, 363)
-
-[node name="Player2" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(311, 362)
-
-[node name="Player3" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(442, 789)
 
 [node name="Card_slot" parent="." instance=ExtResource("1_kl1h6")]
 position = Vector2(1767, 845)
@@ -38,18 +31,51 @@ position = Vector2(1284, 837)
 position = Vector2(1027, 835)
 
 [node name="Card_slot5" parent="." instance=ExtResource("1_kl1h6")]
-position = Vector2(796, 133)
+position = Vector2(676, 565)
+
+[node name="Card_slot6" parent="." instance=ExtResource("1_kl1h6")]
+position = Vector2(478, 192)
 
 [node name="Button" type="Button" parent="."]
 offset_right = 307.0
 offset_bottom = 166.0
 script = ExtResource("4_bhsut")
 
+[node name="Button2" type="Button" parent="."]
+visible = false
+offset_left = 1632.0
+offset_top = 50.0
+offset_right = 1844.0
+offset_bottom = 156.0
+text = "Spawn enemy"
+script = ExtResource("5_pliky")
+
+[node name="EVIL PLAYER" parent="." instance=ExtResource("6_smvtq")]
+position = Vector2(1088, 251)
+
+[node name="EVIL PLAYER2" parent="." instance=ExtResource("6_smvtq")]
+position = Vector2(1346, 295)
+
+[node name="EVIL PLAYER3" parent="." instance=ExtResource("6_smvtq")]
+position = Vector2(1654, 295)
+
+[node name="EVIL PLAYER4" parent="." instance=ExtResource("6_smvtq")]
+position = Vector2(184, 867)
+
+[node name="Player" parent="." instance=ExtResource("2_hkdv2")]
+position = Vector2(134, 413)
+
+[node name="Player2" parent="." instance=ExtResource("2_hkdv2")]
+position = Vector2(178, 469)
+
+[node name="Player3" parent="." instance=ExtResource("2_hkdv2")]
+position = Vector2(218, 519)
+
 [node name="Player4" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(242, 504)
+position = Vector2(282, 561)
 
 [node name="Player5" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(391, 512)
+position = Vector2(332, 609)
 
 [node name="Player6" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(268, 739)
+position = Vector2(394, 665)

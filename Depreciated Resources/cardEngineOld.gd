@@ -34,9 +34,9 @@ func leftReleaseAction(card):
 	globalVars.curCard.clear()
 	card.modulate = card.defaultColor
 	globalVars.draggingCard = false
-	if card.slotted > 0 && is_instance_valid(card.newSlot) and not card.newSlot.filled and card.newSlot != card.curSlot and latest == "slot":
+	#if card.slotted > 0 && is_instance_valid(card.newSlot) and not card.newSlot.filled and card.newSlot != card.curSlot and latest == "slot":
 		placeSlot(card)
-	elif card.carded > 0 && is_instance_valid(card.newCard) and is_instance_valid(card.newCard.bottomCard.curSlot) and not is_instance_valid(card.newCard.cardAbove) and latest == "card":
+	#elif card.carded > 0 && is_instance_valid(card.newCard) and is_instance_valid(card.newCard.bottomCard.curSlot) and not is_instance_valid(card.newCard.cardAbove) and latest == "card":
 		placeCard(card)
 	else:
 		reject(card)
@@ -64,8 +64,8 @@ func placeCard(card):
 		card.curSlot.filled = false
 	moveUp(card)
 	moveLib.move(card, card.newCard.position + Vector2(0, stackingDistance))
-	card.initialPos = (card.newCard.position + Vector2(0, stackingDistance))
-	card.cardBelow = card.newCard
+	#card.initialPos = (card.newCard.position + Vector2(0, stackingDistance))
+	#card.cardBelow = card.newCard
 	card.bottomCard = card.cardBelow.bottomCard
 	card.cardBelow.cardAbove = card
 	card.cardBelow.scale = card.cardBelow.defaultSize

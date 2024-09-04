@@ -56,6 +56,7 @@ func placeSlot(card):
 	if not combat.playerParty.has(card):
 		combat.playerParty.append(card)
 	fixSlot(card.slot)
+	card.curPosition = card.slot.position
 
 #returns card back to old position when picking up
 func reject(card):

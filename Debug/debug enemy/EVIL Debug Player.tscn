@@ -1,14 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://dh18lb7hb3xm0"]
+[gd_scene load_steps=6 format=3 uid="uid://b2gmjq15v3m8o"]
 
-[ext_resource type="Script" path="res://Current/Card/Characters/Player/Player.gd" id="1_2lvgx"]
-[ext_resource type="Texture2D" uid="uid://b3iqmjghd7ckx" path="res://Current/Card/Characters/Player/Main Character Temp.png" id="1_8fs0u"]
-[ext_resource type="Script" path="res://Current/Card/Characters/Player/playerData.gd" id="3_rxqfx"]
+[ext_resource type="Script" path="res://Debug/debug enemy/EVIL debug Player.gd" id="1_xwdf4"]
+[ext_resource type="Texture2D" uid="uid://b3iqmjghd7ckx" path="res://Current/Card/Characters/Player/Main Character Temp.png" id="2_et286"]
+[ext_resource type="Script" path="res://Current/Card/Characters/Player/playerData.gd" id="3_lb7y8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oudid"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_8fs0u")
+"texture": ExtResource("2_et286")
 }],
 "loop": true,
 "name": &"Standby",
@@ -17,8 +17,8 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c22nx"]
 
-[node name="Player" type="Area2D" groups=["stackable"]]
-script = ExtResource("1_2lvgx")
+[node name="EVIL PLAYER" type="Area2D" groups=["stackable"]]
+script = ExtResource("1_xwdf4")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -32,10 +32,10 @@ shape = SubResource("RectangleShape2D_c22nx")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_left = -100.0
-offset_top = -226.0
-offset_right = 99.0
-offset_bottom = -150.0
-script = ExtResource("3_rxqfx")
+offset_top = -225.0
+offset_right = 98.0
+offset_bottom = -148.0
+script = ExtResource("3_lb7y8")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
