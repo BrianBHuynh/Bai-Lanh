@@ -59,6 +59,11 @@ func recalcInitiative():
 			initiative.append(opposingParty[i])
 	initiative.shuffle()
 
+func addInitiative(card):
+	for i in card.speed:
+		initiative.append(card)
+		initiative.shuffle()
+
 func nextTurn():
 	var curChar = getInitiative()
 	if is_instance_valid(curChar):

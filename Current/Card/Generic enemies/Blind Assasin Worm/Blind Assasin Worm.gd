@@ -25,6 +25,8 @@ var curPosition
 var defaultColor: Color = Color(Color.DARK_RED) #for default color
 var defaultSize: Vector2 = Vector2(1,1) #Default size for the card
 
+var summon = preload("res://Current/Card/Generic enemies/Blind Assasin Worm/Blind Assasin Worm.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initialPos = global_position
@@ -38,7 +40,23 @@ func posEffect(position):
 	pass
 
 func action():
-	var enemy = combat.getNext(combat.playerParty)
+	var enemy = combat.getNext(combat.opposingParty)
 	var damage = (combat.RNG.randi_range(1,10)+attack)
-	combatLib.physAttack(self, enemy, damage)
 	var ability = combat.RNG.randi_range(1,4)
+	match ability:
+		1:
+			combatLib.physAttack(self, enemy, damage/3)
+			combatLib.physAttack(self, enemy, damage/3)
+			combatLib.physAttack(self, enemy, damage/3)
+			combatLib.physAttack(self, enemy, damage/3)
+			combatLib.lockDown(self, enemy)
+		2:
+			combatLib.physAttack(self, enemy, damage-3)
+		3:
+			combatLib.physAttack(self, enemy, damage-2)
+		4:
+			var instance = summon.instantiate()
+			get_parent().add_child(instance)
+			instance.newSlot = slot
+			cards.placeSlot(instance)
+			combat.addInitiative(instance)
