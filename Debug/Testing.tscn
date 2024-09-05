@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c665w5bwl7uxl"]
+[gd_scene load_steps=15 format=3 uid="uid://c665w5bwl7uxl"]
 
 [ext_resource type="Script" path="res://Debug/testing.gd" id="1_76161"]
 [ext_resource type="PackedScene" uid="uid://bxlnfw56v2sm4" path="res://Current/Default resources/Common/Card slot/Card_slot.tscn" id="1_kl1h6"]
@@ -6,16 +6,23 @@
 [ext_resource type="Script" path="res://Debug/gameStateChecker.gd" id="2_yahad"]
 [ext_resource type="Script" path="res://Debug/button.gd" id="4_bhsut"]
 [ext_resource type="Script" path="res://Debug/button_2.gd" id="5_pliky"]
-[ext_resource type="PackedScene" uid="uid://b2gmjq15v3m8o" path="res://Debug/debug enemy/EVIL Debug Player.tscn" id="6_smvtq"]
+[ext_resource type="PackedScene" uid="uid://b2gmjq15v3m8o" path="res://Current/Card/Generic enemies/Turtle Dog/Turtle Dog.tscn" id="6_smvtq"]
+[ext_resource type="PackedScene" uid="uid://bao18uentpdea" path="res://Current/Card/Generic enemies/Mysterious shadow worm/Mysterious Shadow Worm.tscn" id="7_vg6fm"]
+[ext_resource type="PackedScene" uid="uid://mje2quu8aigq" path="res://Current/Card/Generic enemies/Archer/Archer.tscn" id="9_570pu"]
+[ext_resource type="PackedScene" uid="uid://d1x5j3r1mr5lm" path="res://Current/Card/Generic enemies/Blind Assasin Worm/Blind Assasin Worm.tscn" id="10_6wu3x"]
+[ext_resource type="PackedScene" uid="uid://dodnt3r6a3b0q" path="res://Current/Card/Generic Allies/Archer/Archer.tscn" id="11_liid3"]
+[ext_resource type="PackedScene" uid="uid://dxiybjbtopgrw" path="res://Current/Card/Generic Allies/Blind Assasin Worm/Blind Assasin Worm.tscn" id="12_sfqrx"]
+[ext_resource type="PackedScene" uid="uid://gucgpdljmfh7" path="res://Current/Card/Generic Allies/Mysterious shadow worm/Mysterious Shadow Worm.tscn" id="13_alims"]
+[ext_resource type="PackedScene" uid="uid://dyw7jgaftltee" path="res://Current/Card/Generic Allies/Turtle Dog/Turtle Dog.tscn" id="14_hh7tm"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_76161")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = 311.0
-offset_top = 5.0
-offset_right = 551.0
-offset_bottom = 164.0
+offset_left = 4.0
+offset_top = -5.0
+offset_right = 520.0
+offset_bottom = 206.0
 script = ExtResource("2_yahad")
 
 [node name="Card_slot" parent="." instance=ExtResource("1_kl1h6")]
@@ -34,7 +41,7 @@ position = Vector2(1027, 835)
 position = Vector2(676, 565)
 
 [node name="Card_slot6" parent="." instance=ExtResource("1_kl1h6")]
-position = Vector2(478, 192)
+position = Vector2(648, 171)
 
 [node name="Button" type="Button" parent="."]
 offset_right = 307.0
@@ -50,32 +57,44 @@ offset_bottom = 156.0
 text = "Spawn enemy"
 script = ExtResource("5_pliky")
 
-[node name="EVIL PLAYER" parent="." instance=ExtResource("6_smvtq")]
-position = Vector2(1088, 251)
-
-[node name="EVIL PLAYER2" parent="." instance=ExtResource("6_smvtq")]
-position = Vector2(1346, 295)
-
-[node name="EVIL PLAYER3" parent="." instance=ExtResource("6_smvtq")]
-position = Vector2(1654, 295)
-
-[node name="EVIL PLAYER4" parent="." instance=ExtResource("6_smvtq")]
-position = Vector2(184, 867)
-
 [node name="Player" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(134, 413)
+position = Vector2(208, 861)
 
 [node name="Player2" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(178, 469)
+position = Vector2(222, 875)
 
-[node name="Player3" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(218, 519)
+[node name="Turtle dog" parent="." instance=ExtResource("6_smvtq")]
+position = Vector2(1077, 262)
 
-[node name="Player4" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(282, 561)
+[node name="Mysterious Shadow Worm" parent="." instance=ExtResource("7_vg6fm")]
+position = Vector2(1260, 502)
 
-[node name="Player5" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(332, 609)
+[node name="Archer" parent="." instance=ExtResource("9_570pu")]
+position = Vector2(1695, 153)
 
-[node name="Player6" parent="." instance=ExtResource("2_hkdv2")]
-position = Vector2(394, 665)
+[node name="Mysterious Shadow Worm2" parent="." instance=ExtResource("10_6wu3x")]
+position = Vector2(1449, 263)
+
+[node name="Archer2" parent="." instance=ExtResource("11_liid3")]
+position = Vector2(115, 381)
+
+[node name="Archer3" parent="." instance=ExtResource("11_liid3")]
+position = Vector2(126, 404)
+
+[node name="Mysterious Shadow Worm3" parent="." instance=ExtResource("12_sfqrx")]
+position = Vector2(359, 393)
+
+[node name="Mysterious Shadow Worm4" parent="." instance=ExtResource("12_sfqrx")]
+position = Vector2(375, 416)
+
+[node name="Mysterious Shadow Worm5" parent="." instance=ExtResource("13_alims")]
+position = Vector2(523, 886)
+
+[node name="Mysterious Shadow Worm6" parent="." instance=ExtResource("13_alims")]
+position = Vector2(536, 898)
+
+[node name="Turtle dog2" parent="." instance=ExtResource("14_hh7tm")]
+position = Vector2(773, 923)
+
+[node name="Turtle dog3" parent="." instance=ExtResource("14_hh7tm")]
+position = Vector2(780, 930)

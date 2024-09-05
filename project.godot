@@ -21,6 +21,7 @@ globalVars="*res://Current/Scrips/Global scripts/Autoload/globalVars.gd"
 combat="*res://Current/Scrips/Global scripts/Autoload/combatEngine.gd"
 moveLib="*res://Current/Scrips/Global scripts/Autoload/moveLib.gd"
 cards="*res://Current/Scrips/Global scripts/Autoload/cardEngine.gd"
+combatLib="*res://Current/Scrips/Global scripts/Autoload/combatLib.gd"
 
 [display]
 

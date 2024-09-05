@@ -98,7 +98,6 @@ func mouseOver(card):
 	if not globalVars.draggingCard:
 		card.draggable = true
 		card.scale = Vector2(1.1, 1.1)
-		card.modulate = Color(Color.ALICE_BLUE, 1)
 
 #Returns card back to normal
 func mouseOff(card):

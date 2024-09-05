@@ -22,8 +22,9 @@ func moveToInitialPos(card):
 	animRunning = false
 
 func moveThenReturn(card, destination):
-	tween = get_tree().create_tween()
-	tween.tween_property(card,"position",destination,0.075).set_ease(Tween.EASE_OUT)
-	await tween.finished
-	tween = get_tree().create_tween()
-	tween.tween_property(card,"position",card.curPosition,0.2).set_ease(Tween.EASE_OUT)
+	if is_instance_valid(card):
+		tween = get_tree().create_tween()
+		tween.tween_property(card,"position",destination,0.075).set_ease(Tween.EASE_OUT)
+		await tween.finished
+		tween = get_tree().create_tween()
+		tween.tween_property(card,"position",card.curPosition,0.2).set_ease(Tween.EASE_OUT)

@@ -85,5 +85,13 @@ func kill(card):
 	for array in arrays:
 		while array.has(card):
 			array.erase(card)
+	for slot in slots:
+		while slot.cards.has(card):
+			slot.cards.erase(card)
 	await get_tree().create_timer(.125).timeout
 	card.queue_free()
+
+func clearData():
+	for array in arrays:
+		array.clear()
+	await get_tree().create_timer(.125).timeout

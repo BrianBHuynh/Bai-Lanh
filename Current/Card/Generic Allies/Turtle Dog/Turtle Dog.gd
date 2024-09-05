@@ -1,9 +1,9 @@
 extends Area2D
 
 var health: int = 100 #Health amount of card
-var attack: int = 10 #Attack value of the card
-var defense: int = 10 #Defense of the card
-var speed: int = 10 #Speed of the card
+var attack: int = 12 #Attack value of the card
+var defense: int = 15 #Defense of the card
+var speed: int = 8 #Speed of the card
 
 #Position stats/effects should only be applied when the play button is pressed!
 var prefPos: Array = [] #Prefered possitions of the card
@@ -66,4 +66,3 @@ func action():
 	var enemy = combat.getNext(combat.opposingParty)
 	var damage = (combat.RNG.randi_range(1,10)+attack)
 	combatLib.physAttack(self, enemy, damage)
-	
