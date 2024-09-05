@@ -24,9 +24,6 @@ offset_right = 520.0
 offset_bottom = 206.0
 script = ExtResource("2_yahad")
 
-[node name="Card_slot" parent="." instance=ExtResource("1_kl1h6")]
-position = Vector2(1767, 845)
-
 [node name="Card_slot2" parent="." instance=ExtResource("1_kl1h6")]
 position = Vector2(1536, 845)
 

@@ -65,5 +65,18 @@ func posEffect(position):
 func action():
 	var enemy = combat.getNext(combat.opposingParty)
 	var damage = (combat.RNG.randi_range(1,10)+attack)
-	combatLib.physAttack(self, enemy, damage)
-	
+	var ability = combat.RNG.randi_range(1,4)
+	match ability:
+		1:
+			combatLib.multiPhysAttack(self, enemy, attack-1, 7, 5)
+			combatLib.lockDown(self, enemy)
+		2:
+			combatLib.physAttack(self, enemy, damage/2)
+			combatLib.lockDown(self, enemy)
+		3:
+			combatLib.physAttack(self, enemy, damage)
+		4:
+			if defense < 15:
+				defense = defense + 2
+				combatLib.lockDown(self, enemy)
+			combatLib.physAttack(self, enemy, damage-2)

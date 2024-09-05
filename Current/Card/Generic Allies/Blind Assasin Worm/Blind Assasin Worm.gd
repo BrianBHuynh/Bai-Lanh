@@ -70,10 +70,7 @@ func action():
 	var ability = combat.RNG.randi_range(1,4)
 	match ability:
 		1:
-			combatLib.physAttack(self, enemy, damage/3)
-			combatLib.physAttack(self, enemy, damage/3)
-			combatLib.physAttack(self, enemy, damage/3)
-			combatLib.physAttack(self, enemy, damage/3)
+			combatLib.multiPhysAttack(self, enemy, attack, 5, 4)
 			combatLib.lockDown(self, enemy)
 		2:
 			combatLib.physAttack(self, enemy, damage-3)

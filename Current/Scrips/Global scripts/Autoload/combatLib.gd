@@ -4,7 +4,7 @@ func physAttack(card, target, damage):
 	if is_instance_valid(target):
 		var change = (damage-target.defense)
 		if change > 0:
-			target.health = target.health - (damage-target.defense)
+			target.health = target.health - change
 		combat.combatBoard = combat.combatBoard + card.get_name() + " dealt " + str(damage) + " damage to " + target.get_name() + "They have " + str(target.health) + " health left!"
 		moveLib.moveThenReturn(card, target.curPosition)
 		if target.health <= 0:
@@ -16,3 +16,31 @@ func lockDown(card, target):
 		moveLib.moveThenReturn(card, target.curPosition)
 		combat.initiative.erase(target)
 		combat.combatBoard = combat.combatBoard + target.get_name() + " has been locked down by " + card.get_name() 
+
+func lifeStealLesser(card, target, damage):
+	if is_instance_valid(target):
+		var change = (damage-target.defense)
+		if change > 0:
+			target.health = target.health - change
+			combat.combatBoard = combat.combatBoard + card.get_name() + " dealt " + str(change) + " damage to " + target.get_name() + "They have " + str(target.health) + " health left! \n" + card.get_name() + "healed for " + str(change/4) + " health!"
+			card.health = card.health+(change/4)
+		else:
+			combat.combatBoard = combat.combatBoard + card.get_name() + " tried to hit  " + target.get_name() + " but did no damage! \n"
+		moveLib.moveThenReturn(card, target.curPosition)
+		if target.health <= 0:
+			combat.kill(target)
+			combat.combatBoard = combat.combatBoard + " Killing them!"
+
+func multiPhysAttack(card, target, physAttack, diceMax, times):
+	if is_instance_valid(target):
+		var attacks = []
+		for i in times:
+			var change = (combat.RNG.randi_range(1,10)+physAttack) - target.defense
+			if change > 0:
+				target.health = target.health - change
+				combat.combatBoard = combat.combatBoard + card.get_name() + " dealt " + str(change) + " damage to " + target.get_name() + "\n"
+				moveLib.moveThenReturn(card, target.curPosition)
+			combat.combatBoard = combat.combatBoard + "They have " + str(target.health) + " health left! \n"
+			if target.health <= 0:
+				combat.kill(target)
+				combat.combatBoard = combat.combatBoard + target.get_name() + " died!"
