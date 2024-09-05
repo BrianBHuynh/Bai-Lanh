@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dyw7jgaftltee"]
+[gd_scene load_steps=6 format=3 uid="uid://dyw7jgaftltee"]
 
+[ext_resource type="Script" path="res://Current/Card/Generic Allies/Turtle Dog/Turtle Dog.gd" id="1_tw5nc"]
 [ext_resource type="Texture2D" uid="uid://bf71o8ualep1v" path="res://Current/Card/Generic enemies/Turtle Dog/Turtle Dog.png" id="2_omlsr"]
 [ext_resource type="Script" path="res://Current/Card/Characters/Player/playerData.gd" id="3_np21r"]
 
@@ -17,6 +18,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c22nx"]
 
 [node name="Turtle dog" type="Area2D" groups=["stackable"]]
+script = ExtResource("1_tw5nc")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
