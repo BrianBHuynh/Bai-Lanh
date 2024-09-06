@@ -7,8 +7,11 @@ var posAttack = 10
 var posDefense = 0
 var posSpeed = 0
 
-var cards: Array = []
+var cardsList: Array = []
 var accepting: bool = true
+
+var defaultColor = modulate
+var defaultSize = scale
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

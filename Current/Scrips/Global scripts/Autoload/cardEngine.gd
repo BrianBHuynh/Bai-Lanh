@@ -36,14 +36,44 @@ func leftReleaseAction(card):
 	card.modulate = card.defaultColor
 	globalVars.draggingCard = false
 	if is_instance_valid(card.newSlot) and card.newSlot.accepting:
-		placeSlot(card)
+		placeSlotPlayer(card)
 		fixSlot(card.slot)
 	else:
 		reject(card)
 		card.newSlot = null
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
-func placeSlot(card):
+func placeSlotPlayer(card):
+	if is_instance_valid(card.slot):
+		card.slot.cardsList.erase(card)
+		fixSlot(card.slot)
+	moveLib.move(card, card.newSlot.position)
+	card.slot = card.newSlot
+	card.newSlot = null
+	card.slot.scale = Vector2(1,1)
+	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
+	card.slot.cardsList.append(card)
+	if not combat.playerParty.has(card):
+		combat.playerParty.append(card)
+	fixSlot(card.slot)
+	card.curPosition = card.slot.position
+
+#Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
+func placeDrawPile(card):
+	if is_instance_valid(card.slot):
+		card.slot.cardsList.erase(card)
+		fixSlot(card.slot)
+	moveLib.move(card, card.newSlot.position)
+	card.slot = card.newSlot
+	card.newSlot = null
+	card.slot.scale = Vector2(1,1)
+	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
+	card.slot.cardsList.append(card)
+	fixSlot(card.slot)
+	card.curPosition = card.slot.position
+
+#Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
+func placeSlotOpposing(card):
 	if is_instance_valid(card.slot):
 		card.slot.cards.erase(card)
 		fixSlot(card.slot)
@@ -51,10 +81,10 @@ func placeSlot(card):
 	card.slot = card.newSlot
 	card.newSlot = null
 	card.slot.scale = Vector2(1,1)
-	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
-	card.slot.cards.append(card)
-	if not combat.playerParty.has(card):
-		combat.playerParty.append(card)
+	card.slot.modulate = Color(Color.RED, .4)
+	card.slot.cardsList.append(card)
+	if not combat.opposingParty.has(card):
+		combat.opposingParty.append(card)
 	fixSlot(card.slot)
 	card.curPosition = card.slot.position
 
@@ -85,6 +115,8 @@ func addCard(card, newCard: Area2D):
 func removeSlot(card, slot):
 	if card.newSlot == slot:
 		card.newSlot = null
+	slot.modulate = slot.defaultColor
+	slot.scale = slot.defaultSize
 
 #Decriments the slotted variable, then returns the card back to it's default color
 func removeCard(card, slot):
@@ -124,7 +156,7 @@ func frontComparator(a, b):
 
 func fixSlot(slot: Node2D):
 	var temp = 0
-	for elem in slot.cards:
+	for elem in slot.cardsList:
 		elem.move_to_front()
 		moveLib.move(elem, slot.global_position + Vector2(0,stackingDistance)*temp)
 		temp = temp + 1

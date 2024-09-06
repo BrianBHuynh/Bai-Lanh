@@ -67,18 +67,19 @@ func posEffect(position):
 func action():
 	var enemy = combat.getNext(combat.opposingParty)
 	var damage = (combat.RNG.randi_range(1,10)+attack)
-	var ability = combat.RNG.randi_range(1,4)
+	var ability = combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			combatLib.multiPhysAttack(self, enemy, attack, 5, 4)
-			combatLib.lockDown(self, enemy)
 		2:
-			combatLib.physAttack(self, enemy, damage-3)
-		3:
 			combatLib.physAttack(self, enemy, damage-2)
-		4:
+		3:
+			combatLib.physAttack(self, enemy, damage-3)
+		4: 
+			combatLib.physAttack(self, enemy, damage-5)
+		5:
 			var instance = summon.instantiate()
 			get_parent().add_child(instance)
 			instance.newSlot = slot
-			cards.placeSlot(instance)
+			cards.placeSlotPlayer(instance)
 			combat.addInitiative(instance)

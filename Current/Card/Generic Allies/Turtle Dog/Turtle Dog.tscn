@@ -17,7 +17,7 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c22nx"]
 
-[node name="Mysterious Shadow Worm" type="Area2D" groups=["stackable"]]
+[node name="Mysterious Shadow Worm" type="Area2D"]
 script = ExtResource("1_sdwlf")
 metadata/_edit_group_ = true
 
@@ -32,9 +32,10 @@ shape = SubResource("RectangleShape2D_c22nx")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_left = -100.0
-offset_top = -225.0
+offset_top = -151.0
 offset_right = 98.0
-offset_bottom = -148.0
+offset_bottom = 152.0
+mouse_filter = 2
 script = ExtResource("3_dehvo")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
