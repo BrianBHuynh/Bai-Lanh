@@ -1,8 +1,8 @@
 extends Area2D
 
-var health: int = 100 #Health amount of card
+var health: int = 150 #Health amount of card
 var attack: int = 12 #Attack value of the card
-var defense: int = 15 #Defense of the card
+var defense: int = 12 #Defense of the card
 var speed: int = 8 #Speed of the card
 
 #Position stats/effects should only be applied when the play button is pressed!
