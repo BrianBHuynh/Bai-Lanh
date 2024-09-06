@@ -21,4 +21,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	if not cardsList.is_empty():
+		accepting = false
+	elif cardsList.is_empty() and accepting == false:
+		accepting = true

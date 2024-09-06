@@ -36,6 +36,5 @@ func _on_button_pressed() -> void:
 		get_parent().add_child(instance)
 		instance.newSlot = self
 		cards.placeDrawPile(instance)
-		combat.addInitiative(instance)
 		cards.fixSlot(self)
 		drawn = drawn+1

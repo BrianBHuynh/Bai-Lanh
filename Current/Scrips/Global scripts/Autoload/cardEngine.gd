@@ -30,6 +30,7 @@ func leftClickAction(card):
 
 func leftHoldAction(card):
 	moveLib.moveFast(card, get_global_mouse_position() - card.offset)
+	card.move_to_front()
 
 func leftReleaseAction(card):
 	globalVars.curCard.clear()
@@ -55,6 +56,7 @@ func placeSlotPlayer(card):
 	card.slot.cardsList.append(card)
 	if not combat.playerParty.has(card):
 		combat.playerParty.append(card)
+		combat.addInitiative(card)
 	fixSlot(card.slot)
 	card.curPosition = card.slot.position
 

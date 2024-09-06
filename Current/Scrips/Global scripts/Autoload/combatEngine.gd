@@ -67,8 +67,9 @@ func addInitiative(card):
 func nextTurn():
 	var curChar = getInitiative()
 	if is_instance_valid(curChar):
-		combatBoard = "It is " + str(curChar) + "'s turn!"
-		curChar.action()
+		if not opposingParty.is_empty() and not playerParty.is_empty():
+			combatBoard = "It is " + str(curChar) + "'s turn! \n"
+			curChar.action()
 
 #Applies slot stats and effects
 func slotApply(card):

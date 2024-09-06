@@ -23,7 +23,7 @@ moveLib="*res://Current/Scrips/Global scripts/Autoload/moveLib.gd"
 cards="*res://Current/Scrips/Global scripts/Autoload/cardEngine.gd"
 combatLib="*res://Current/Scrips/Global scripts/Autoload/combatLib.gd"
 cardReg="*res://Current/Scrips/Global scripts/Autoload/cardRegistry.gd"
-Controls="*res://Current/Scrips/Global scripts/Autoload/controls.gd"
+controls="*res://Current/Scrips/Global scripts/Autoload/controls.gd"
 
 [display]
 
