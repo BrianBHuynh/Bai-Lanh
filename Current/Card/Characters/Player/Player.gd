@@ -13,6 +13,7 @@ var posAttack: int = 0
 var posDefense: int = 0
 var posSpeed: int = 0
 
+var buttonPressed = false
 var draggable: bool = false #If the card is draggable at that moment
 var slot #Where the current slot is stored
 
@@ -32,31 +33,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	cards.moveScript(self) #Takes care of card movement each frame
-
-#For when the card enters a slot
-func _on_body_entered(body: Node2D) -> void:
-	cards.addSlot(self, body)
-
-#For when the card enters another card
-func _on_area_entered(area: Area2D) -> void:
-	cards.addCard(self, area)
-
-#For when the card leaves a slot
-func _on_body_exited(body: Node2D) -> void:
-	cards.removeSlot(self, body)
-
-#For when the card leaves another card
-func _on_area_exited(area: Area2D) -> void:
-	cards.removeCard(self, area)
-
-#For when mouse enters the card
-func _on_mouse_entered() -> void:
-	cards.mouseOver(self)
-
-#For when mouse leaves the card
-func _on_mouse_exited() -> void:
-	cards.mouseOff(self)
+	if buttonPressed:
+		moveLib.moveFast(self, get_global_mouse_position() - offset)
+		self.move_to_front()
 
 #For when the positional effect is activated for the card
 func posEffect(position):
@@ -80,3 +59,15 @@ func action():
 				defense = defense + 2
 				combatLib.lockDown(self, enemy)
 			combatLib.physAttack(self, enemy, damage-2)
+
+
+func _on_button_pressed() -> void:
+	pass
+
+
+func _on_button_button_down() -> void:
+	buttonPressed = true
+
+
+func _on_button_button_up() -> void:
+	buttonPressed = false

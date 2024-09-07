@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Current/Card/Generic Allies/Blind Assasin Worm/Blind Assasin Worm.gd" id="1_vf0u0"]
 [ext_resource type="Texture2D" uid="uid://dt0buo1gasokm" path="res://Current/Card/Generic enemies/Blind Assasin Worm/Blind assasin Worm.png" id="2_f8scl"]
-[ext_resource type="Script" path="res://Current/Card/Characters/Player/playerData.gd" id="3_fefpn"]
+[ext_resource type="Script" path="res://Current/Cards/Player/playerData.gd" id="3_fefpn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oudid"]
 animations = [{

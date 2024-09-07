@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Current/Card/Generic Allies/Turtle Dog/Turtle Dog.gd" id="1_sdwlf"]
 [ext_resource type="Texture2D" uid="uid://d1wj1xmkiqpwd" path="res://Current/Card/Generic Allies/Turtle Dog/Turtle Dog.png" id="2_yx2i1"]
-[ext_resource type="Script" path="res://Current/Card/Characters/Player/playerData.gd" id="3_dehvo"]
+[ext_resource type="Script" path="res://Current/Cards/Player/playerData.gd" id="3_dehvo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oudid"]
 animations = [{

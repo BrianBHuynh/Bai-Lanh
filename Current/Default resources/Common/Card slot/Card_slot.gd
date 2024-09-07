@@ -25,3 +25,6 @@ func _process(_delta: float) -> void:
 		accepting = false
 	elif cardsList.is_empty() and accepting == false:
 		accepting = true
+
+func action():
+	pass

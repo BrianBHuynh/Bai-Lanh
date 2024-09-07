@@ -2,40 +2,14 @@ extends Node2D
 
 var latest = "none"
 var stackingDistance = 50
-#Takes care of card movement each turn
-func moveScript(card):
-	if card.draggable: #Prevents alot of unecessary checks, uses select and unselect cards to make sure that the card is draggable, does not allow inputs while animations are playing
-		if Input.is_action_just_pressed("leftClick"):
-			leftClickAction(card)
-		elif Input.is_action_pressed("leftClick"):
-			if globalVars.draggingCard == true:
-				leftHoldAction(card)
-		elif Input.is_action_just_released("leftClick"):
-			leftReleaseAction(card)
-			globalVars.draggingCard = false
 
-func leftClickAction(card):
-	globalVars.curCard.append(card)
-	pickup(card)
-	await get_tree().create_timer(0.001).timeout
-	if globalVars.curCard.size() > 1:
-		checkFront()
-	if globalVars.curCard.front() == card:
-		card.move_to_front()
-	else:
-		card.draggable = false
-	leftHoldAction(card)
+func holdCard(card):
 	if is_instance_valid(card.slot):
 		fixSlot(card.slot)
-
-func leftHoldAction(card):
 	moveLib.moveFast(card, get_global_mouse_position() - card.offset)
 	card.move_to_front()
 
-func leftReleaseAction(card):
-	globalVars.curCard.clear()
-	card.modulate = card.defaultColor
-	globalVars.draggingCard = false
+func releaseCard(card):
 	if is_instance_valid(card.newSlot) and card.newSlot.accepting:
 		placeSlotPlayer(card)
 		fixSlot(card.slot)
@@ -95,7 +69,7 @@ func reject(card):
 	if is_instance_valid(card.slot):
 		fixSlot(card.slot)
 	else:
-		moveLib.move(card, card.initialPos)
+		moveLib.move(card, card.curPosition)
 
 #Places the location of the Slot into slot ref and changes its color, incriments the slot int
 func addSlot(card, slot: Node2D):
@@ -124,23 +98,6 @@ func removeSlot(card, slot):
 func removeCard(card, slot):
 	if card.newSlot == slot:
 		card.newSlot = null
-
-#Makes card draggable and shows that it is to player by changing color and size
-func mouseOver(card):
-	if is_instance_valid(card.slot):
-		fixSlot(card.slot)
-	if not globalVars.draggingCard:
-		card.draggable = true
-		card.scale = Vector2(1.1, 1.1)
-
-#Returns card back to normal
-func mouseOff(card):
-	if is_instance_valid(card.slot):
-		fixSlot(card.slot)
-	if not globalVars.draggingCard:
-		card.draggable = false
-		card.modulate = card.defaultColor
-		card.scale = card.defaultSize
 
 #Moves card to front, calculates offset and initial position of card, sets dragging to be true
 func pickup(card):

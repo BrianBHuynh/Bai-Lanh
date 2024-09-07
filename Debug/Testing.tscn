@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c665w5bwl7uxl"]
+[gd_scene load_steps=9 format=3 uid="uid://c665w5bwl7uxl"]
 
 [ext_resource type="Script" path="res://Debug/testing.gd" id="1_76161"]
 [ext_resource type="PackedScene" uid="uid://bxlnfw56v2sm4" path="res://Current/Default resources/Common/Card slot/Card_slot.tscn" id="1_kl1h6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Debug/button_2.gd" id="5_pliky"]
 [ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://Current/Default resources/Common/Enemy slot/Card_slot.tscn" id="6_lbqm6"]
 [ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://Current/Default resources/Common/cardDeck/Card_slot.tscn" id="7_frj81"]
+[ext_resource type="PackedScene" uid="uid://bw7n1jssiq5i3" path="res://Current/Cards/Player/Player.tscn" id="8_0xvsl"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_76161")
@@ -90,3 +91,6 @@ offset_right = 612.0
 offset_bottom = 775.0
 text = "Reset"
 script = ExtResource("5_pliky")
+
+[node name="Area2D" parent="." instance=ExtResource("8_0xvsl")]
+position = Vector2(330, 361)

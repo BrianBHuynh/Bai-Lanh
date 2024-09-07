@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Current/Card/Generic Allies/Archer/Archer.gd" id="1_hd758"]
 [ext_resource type="Texture2D" uid="uid://75p0q0bnf5vv" path="res://Current/Card/Generic enemies/Archer/Archer.png" id="2_i6mmu"]
-[ext_resource type="Script" path="res://Current/Card/Characters/Player/playerData.gd" id="3_i231a"]
+[ext_resource type="Script" path="res://Current/Cards/Player/playerData.gd" id="3_i231a"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oudid"]
 animations = [{

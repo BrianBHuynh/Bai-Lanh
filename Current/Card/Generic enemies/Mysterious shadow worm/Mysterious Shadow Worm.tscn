@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Current/Card/Generic enemies/Mysterious shadow worm/Mysterious Shadow Worm.gd" id="1_mdk3f"]
 [ext_resource type="Texture2D" uid="uid://dj02hdcwha6s" path="res://Current/Card/Generic enemies/Mysterious shadow worm/Mysterious Shadow Worm.png" id="2_vn243"]
-[ext_resource type="Script" path="res://Current/Card/Characters/Player/playerData.gd" id="3_j3d3q"]
+[ext_resource type="Script" path="res://Current/Cards/Player/playerData.gd" id="3_j3d3q"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oudid"]
 animations = [{

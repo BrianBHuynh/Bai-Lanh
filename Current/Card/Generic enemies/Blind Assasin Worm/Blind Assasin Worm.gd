@@ -1,7 +1,7 @@
 extends Area2D
 
-var health: int = 100 #Health amount of card
-var attack: int = 15 #Attack value of the card
+var health: int = 75 #Health amount of card
+var attack: int = 10 #Attack value of the card
 var defense: int = 8 #Defense of the card
 var speed: int = 8 #Speed of the card
 

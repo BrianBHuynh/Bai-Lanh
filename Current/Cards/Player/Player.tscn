@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://bw7n1jssiq5i3"]
+
+[ext_resource type="Script" path="res://Current/Cards/Player/Player.gd" id="1_urlbl"]
+[ext_resource type="Texture2D" uid="uid://tfwrvq65j4fx" path="res://Current/Cards/Player/Player.png" id="2_n3w8e"]
+[ext_resource type="Script" path="res://Current/Cards/Player/playerData.gd" id="3_7hs7d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhksn"]
+size = Vector2(1348, 1918)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ow15"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n3w8e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_urlbl")
+
+[node name="Button" type="Button" parent="."]
+offset_left = -68.0
+offset_top = -96.0
+offset_right = 68.0
+offset_bottom = 96.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -68.0
+offset_top = 83.0
+offset_right = 68.0
+offset_bottom = 96.0
+mouse_filter = 2
+script = ExtResource("3_7hs7d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.1, 0.1)
+shape = SubResource("RectangleShape2D_dhksn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_6ow15")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="button_down" from="Button" to="." method="_on_card_held"]
+[connection signal="button_up" from="Button" to="." method="_on_card_released"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_mouse_exited"]

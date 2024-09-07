@@ -2,7 +2,7 @@ extends Node
 
 func physAttack(card, target, damage):
 	if is_instance_valid(target):
-		var change = (damage-target.defense)
+		var change = (damage-target.physDefense)
 		if change > 0:
 			target.health = target.health - change
 		combat.combatBoard = combat.combatBoard + card.get_name() + " dealt " + str(damage) + " damage to " + target.get_name() + " They have " + str(target.health) + " health left! \n"
