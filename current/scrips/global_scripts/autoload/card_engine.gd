@@ -4,8 +4,6 @@ var latest = "none"
 var stacking_distance = 50
 
 func hold_card(card):
-	if is_instance_valid(card.slot):
-		fix_slot(card.slot)
 	move_lib.move_fast(card, get_global_mouse_position() - card.offset)
 	card.move_to_front()
 
@@ -32,7 +30,7 @@ func place_slot_player(card):
 		combat.player_party.append(card)
 		combat.add_initiative(card)
 	fix_slot(card.slot)
-	card.cur_position = card.slot.position
+	card.current_position = card.slot.position
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 func place_draw_pile(card):
@@ -46,7 +44,7 @@ func place_draw_pile(card):
 	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
 	card.slot.cards_list.append(card)
 	fix_slot(card.slot)
-	card.cur_position = card.slot.position
+	card.current_position = card.slot.position
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 func place_slot_opposing(card):
@@ -62,14 +60,14 @@ func place_slot_opposing(card):
 	if not combat.opposing_party.has(card):
 		combat.opposing_party.append(card)
 	fix_slot(card.slot)
-	card.cur_position = card.slot.position
+	card.current_position = card.slot.position
 
 #returns card back to old position when picking up
 func reject(card):
 	if is_instance_valid(card.slot):
 		fix_slot(card.slot)
 	else:
-		move_lib.move(card, card.cur_position)
+		move_lib.move(card, card.current_position)
 
 #Places the location of the Slot into slot ref and changes its color, incriments the slot int
 func add_slot(card, slot: Node2D):
@@ -90,7 +88,7 @@ func add_card(card, new_card: Area2D):
 #Decriments the slotted variable, then returns the slot back to it's default color
 func remove_slot(card, slot):
 	if card.new_slot == slot:
-		card.new_card = null
+		card.new_slot = null
 	slot.modulate = slot.default_color
 	slot.scale = slot.default_size
 

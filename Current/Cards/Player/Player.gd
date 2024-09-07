@@ -1,29 +1,29 @@
 extends Node2D
 
-var health: int = 100 #Health amount of card
-var phys_attack: int = 10 #physical Attack value of the card
-var mag_attack: int = 10 #Magic attack value of the card
-var phys_defense: int = 10 #Physical defense of the card
-var mag_defense: int = 10 #Magical defense of the card
-var speed: int = 10 #Speed of the card
+@export var health: int = 100 #Health amount of card
+@export var phys_attack: int = 10 #physical Attack value of the card
+@export var mag_attack: int = 10 #Magic attack value of the card
+@export var phys_defense: int = 10 #Physical defense of the card
+@export var mag_defense: int = 10 #Magical defense of the card
+@export var speed: int = 10 #Speed of the card
 
-#Same stats as above but for shifted form
-var shifted_health: int = 100
-var shifted_phys_attack: int = 10
-var shifted_mag_attack: int = 10
-var shifted_phys_defense: int = 10
-var shifted_mag_defense: int = 10
-var shifted_speed: int = 10
+#Modifiers for shifting, are added or subtracted from the normal stats when shifting
+@export var shifted_health: int = 100
+@export var shifted_phys_attack: int = 10
+@export var shifted_mag_attack: int = 10
+@export var shifted_phys_defense: int = 10
+@export var shifted_mag_defense: int = 10
+@export var shifted_speed: int = 10
 
 #Position stats/effects should only be applied when the play button is pressed!
 var pref_pos: Array = [] #Prefered possitions of the card
 var pos: String = "None" #Current position
 
 #Stats changed for being in the prefered positions
-var pos_health: int = 0
-var pos_attack: int = 0
-var pos_defense: int = 0
-var pos_speed: int = 0
+@export var pos_health: int = 0
+@export var pos_attack: int = 0
+@export var pos_defense: int = 0
+@export var pos_speed: int = 0
 
 var slot #Where the current slot is stored
 var new_slot #Where a possible slot is
@@ -36,7 +36,8 @@ var default_size: Vector2 = Vector2(1,1) #Default size for the card
 
 var held: bool = false
 
-var shifted: bool = false
+@export var shifted: bool = false
+@export var friendly: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,13 +46,14 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if held == true:
+	if held and friendly:
 		cards.hold_card(self)
 
 
 func _on_card_held() -> void:
 	held = true
-	cards.hold_card(self)
+	offset = get_global_mouse_position() - global_position
+	scale = Vector2(1.5,1.5)
 
 
 func _on_card_released() -> void:
@@ -82,11 +84,51 @@ func _on_mouse_exited() -> void:
 
 func card_highlight():
 	modulate = Color(Color.PALE_GOLDENROD)
-	scale = Vector2(1.5,1.5)
 
 func card_normalize():
 	modulate = default_color
 	scale = default_size
+
+func shift():
+	if not shifted:
+		shifted = true
+		health = health + shifted_health
+		phys_attack = phys_attack + shifted_phys_attack 
+		mag_attack = mag_attack + shifted_mag_attack 
+		phys_defense = phys_defense + shifted_phys_defense 
+		mag_defense = mag_defense + shifted_mag_defense 
+		speed = speed + shifted_speed
+	else:
+		shifted = false
+		health = health - shifted_health
+		phys_attack = phys_attack - shifted_phys_attack 
+		mag_attack = mag_attack - shifted_mag_attack 
+		phys_defense = phys_defense - shifted_phys_defense 
+		mag_defense = mag_defense - shifted_mag_defense 
+		speed = speed - shifted_speed
+
+func get_target():
+	if friendly:
+		if shifted:
+			combat.get_target(combat.opposing_party)
+		else:
+			combat.get_target(combat.opposing_party)
+	else:
+		if shifted:
+			combat.get_target(combat.player_party)
+		else:
+			combat.get_target(combat.player_party)
+
+func damage_physical(damage):
+	if (damage - phys_defense) > 0:
+		health = health-damage
+
+func damage_magical(damage):
+	if (damage - mag_defense) > 0:
+		health = health-damage
+
+func damage_true(damage):
+	health = health-damage
 
 func action():
 	if is_instance_valid(slot):

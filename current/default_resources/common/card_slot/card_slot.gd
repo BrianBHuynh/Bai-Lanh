@@ -2,16 +2,16 @@ extends StaticBody2D
 
 var filled = false
 var pos = "Default"
-var posHealth = 100
-var posAttack = 10
-var posDefense = 0
-var posSpeed = 0
+var pos_health = 100
+var pos_attack = 10
+var pos_defense = 0
+var pos_speed = 0
 
-var cardsList: Array = []
+var cards_list: Array = []
 var accepting: bool = true
 
-var defaultColor = modulate
-var defaultSize = scale
+var default_color = modulate
+var default_size = scale
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,10 +21,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if not cardsList.is_empty():
+	if not cards_list.is_empty():
 		accepting = false
-	elif cardsList.is_empty() and accepting == false:
+	elif cards_list.is_empty() and accepting == false:
 		accepting = true
 
 func action():
-	pass
+	pass #this type has no actions

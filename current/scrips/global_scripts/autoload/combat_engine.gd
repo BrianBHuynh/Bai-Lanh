@@ -43,7 +43,7 @@ func get_initiative():
 		recalc_initiative()
 	return initiative.pop_front()
 
-func getNext(array):
+func get_target(array):
 	agro_calc.clear()
 	agro_calc.append_array(array)
 	agro_calc.shuffle()

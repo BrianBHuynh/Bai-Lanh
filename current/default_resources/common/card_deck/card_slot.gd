@@ -2,19 +2,19 @@ extends StaticBody2D
 
 var filled = false
 var pos = "Default"
-var posHealth = 100
-var posAttack = 10
-var posDefense = 0
-var posSpeed = 0
+var pos_health = 100
+var pos_attack = 10
+var pos_defense = 0
+var pos_speed = 0
 
-var cardsList: Array = []
+var cards_list: Array = []
 var accepting: bool = false
 
-var maxCap = 7
+var max_cap = 7
 var drawn = 0
 
-var defaultColor = Color(Color.GRAY, .7)
-var defaultSize = scale
+var default_color = Color(Color.GRAY, .7)
+var default_size = scale
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,12 +29,15 @@ func _process(_delta: float) -> void:
 
 
 func _on_button_pressed() -> void:
-	if drawn < maxCap:
+	if drawn < max_cap:
 		var summon = card_reg.ally_list.duplicate().pick_random()
 		var instance = summon.instantiate()
 		instance.position = position
 		get_parent().add_child(instance)
-		instance.newSlot = self
+		instance.new_slot = self
 		cards.place_draw_pile(instance)
-		cards.fixSlot(self)
+		cards.fix_slot(self)
 		drawn = drawn+1
+
+func action():
+	pass #this type has no actions
