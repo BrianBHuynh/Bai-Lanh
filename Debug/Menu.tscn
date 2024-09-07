@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://b13jgner4fco7"]
 
 [ext_resource type="Script" path="res://Debug/testing.gd" id="1_v81w1"]
-[ext_resource type="Script" path="res://Debug/gameStateChecker.gd" id="2_f54gy"]
-[ext_resource type="PackedScene" uid="uid://bxlnfw56v2sm4" path="res://Current/Default resources/Common/Card slot/Card_slot.tscn" id="3_icekf"]
+[ext_resource type="Script" path="res://Debug/game_state_checker.gd" id="2_f54gy"]
+[ext_resource type="PackedScene" uid="uid://bxlnfw56v2sm4" path="res://current/default_resources/common/card_slot/card_slot.tscn" id="3_icekf"]
 [ext_resource type="Script" path="res://Debug/button.gd" id="4_atux7"]
 [ext_resource type="Script" path="res://Debug/button_2.gd" id="5_34gp4"]
-[ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://Current/Default resources/Common/Enemy slot/Card_slot.tscn" id="6_hp8rq"]
-[ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://Current/Default resources/Common/cardDeck/Card_slot.tscn" id="7_ki1ax"]
+[ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://current/default_resources/common/enemy_slot/card_slot.tscn" id="6_hp8rq"]
+[ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://current/default_resources/common/card_deck/card_slot.tscn" id="7_ki1ax"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_v81w1")

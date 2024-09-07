@@ -1,16 +1,16 @@
 [gd_scene load_steps=9 format=3 uid="uid://c665w5bwl7uxl"]
 
-[ext_resource type="Script" path="res://Debug/testing.gd" id="1_76161"]
-[ext_resource type="PackedScene" uid="uid://bxlnfw56v2sm4" path="res://Current/Default resources/Common/Card slot/Card_slot.tscn" id="1_kl1h6"]
-[ext_resource type="Script" path="res://Debug/gameStateChecker.gd" id="2_yahad"]
-[ext_resource type="Script" path="res://Debug/button.gd" id="4_bhsut"]
-[ext_resource type="Script" path="res://Debug/button_2.gd" id="5_pliky"]
-[ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://Current/Default resources/Common/Enemy slot/Card_slot.tscn" id="6_lbqm6"]
-[ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://Current/Default resources/Common/cardDeck/Card_slot.tscn" id="7_frj81"]
-[ext_resource type="PackedScene" uid="uid://bw7n1jssiq5i3" path="res://Current/Cards/Player/Player.tscn" id="8_0xvsl"]
+[ext_resource type="Script" path="res://Debug/testing.gd" id="1_qugj8"]
+[ext_resource type="Script" path="res://Debug/game_state_checker.gd" id="2_yv8qg"]
+[ext_resource type="PackedScene" uid="uid://bxlnfw56v2sm4" path="res://current/default_resources/common/card_slot/card_slot.tscn" id="3_we5mw"]
+[ext_resource type="Script" path="res://Debug/button.gd" id="4_b0pia"]
+[ext_resource type="Script" path="res://Debug/button_2.gd" id="5_o0oja"]
+[ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://current/default_resources/common/enemy_slot/card_slot.tscn" id="6_8o2lf"]
+[ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://current/default_resources/common/card_deck/card_slot.tscn" id="7_o657w"]
+[ext_resource type="PackedScene" uid="uid://bw7n1jssiq5i3" path="res://current/cards/player/player.tscn" id="8_tv0xf"]
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_76161")
+script = ExtResource("1_qugj8")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_left = 4.0
@@ -19,21 +19,21 @@ offset_right = 676.0
 offset_bottom = 512.0
 theme_override_font_sizes/normal_font_size = 20
 tab_size = 6
-script = ExtResource("2_yahad")
+script = ExtResource("2_yv8qg")
 
-[node name="Card_slot2" parent="." instance=ExtResource("1_kl1h6")]
+[node name="Card_slot2" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1555, 910)
 
-[node name="Card_slot3" parent="." instance=ExtResource("1_kl1h6")]
+[node name="Card_slot3" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1330, 909)
 
-[node name="Card_slot4" parent="." instance=ExtResource("1_kl1h6")]
+[node name="Card_slot4" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1108, 905)
 
-[node name="Card_slot5" parent="." instance=ExtResource("1_kl1h6")]
+[node name="Card_slot5" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(875, 902)
 
-[node name="Card_slot6" parent="." instance=ExtResource("1_kl1h6")]
+[node name="Card_slot6" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1780, 909)
 
 [node name="Button" type="Button" parent="."]
@@ -43,7 +43,7 @@ offset_right = 621.0
 offset_bottom = 1006.0
 text = "Next turn
 "
-script = ExtResource("4_bhsut")
+script = ExtResource("4_b0pia")
 
 [node name="Button2" type="Button" parent="."]
 visible = false
@@ -52,36 +52,36 @@ offset_top = 50.0
 offset_right = 1844.0
 offset_bottom = 156.0
 text = "Spawn enemy"
-script = ExtResource("5_pliky")
+script = ExtResource("5_o0oja")
 
-[node name="Enemy_slot" parent="." instance=ExtResource("6_lbqm6")]
+[node name="Enemy_slot" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1321, 155)
 
-[node name="Enemy_slot2" parent="." instance=ExtResource("6_lbqm6")]
+[node name="Enemy_slot2" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1532, 154)
 
-[node name="Enemy_slot3" parent="." instance=ExtResource("6_lbqm6")]
+[node name="Enemy_slot3" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1105, 154)
 
-[node name="Enemy_slot4" parent="." instance=ExtResource("6_lbqm6")]
+[node name="Enemy_slot4" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1005, 492)
 
-[node name="Enemy_slot5" parent="." instance=ExtResource("6_lbqm6")]
+[node name="Enemy_slot5" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1230, 497)
 
-[node name="Enemy_slot6" parent="." instance=ExtResource("6_lbqm6")]
+[node name="Enemy_slot6" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1448, 497)
 
-[node name="Enemy_slot7" parent="." instance=ExtResource("6_lbqm6")]
+[node name="Enemy_slot7" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1664, 499)
 
-[node name="Enemy_slot8" parent="." instance=ExtResource("7_frj81")]
+[node name="Enemy_slot8" parent="." instance=ExtResource("7_o657w")]
 position = Vector2(109, 732)
 
-[node name="Enemy_slot9" parent="." instance=ExtResource("6_lbqm6")]
+[node name="Enemy_slot9" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(782, 490)
 
-[node name="Enemy_slot10" parent="." instance=ExtResource("6_lbqm6")]
+[node name="Enemy_slot10" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(883, 151)
 
 [node name="Button3" type="Button" parent="."]
@@ -90,7 +90,7 @@ offset_top = 588.0
 offset_right = 612.0
 offset_bottom = 775.0
 text = "Reset"
-script = ExtResource("5_pliky")
+script = ExtResource("5_o0oja")
 
-[node name="Area2D" parent="." instance=ExtResource("8_0xvsl")]
+[node name="Area2D" parent="." instance=ExtResource("8_tv0xf")]
 position = Vector2(330, 361)

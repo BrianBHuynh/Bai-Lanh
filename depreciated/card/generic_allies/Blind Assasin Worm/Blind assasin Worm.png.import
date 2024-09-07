@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tfwrvq65j4fx"
-path="res://.godot/imported/player.png-51ae1842b19be2e9734d2562df905cdb.ctex"
+uid="uid://yefcoxqv2knf"
+path="res://.godot/imported/Blind assasin Worm.png-67db6e8d0993887084248bd3751552b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://current/cards/player/player.png"
-dest_files=["res://.godot/imported/player.png-51ae1842b19be2e9734d2562df905cdb.ctex"]
+source_file="res://depreciated/card/generic_allies/Blind Assasin Worm/Blind assasin Worm.png"
+dest_files=["res://.godot/imported/Blind assasin Worm.png-67db6e8d0993887084248bd3751552b7.ctex"]
 
 [params]
 

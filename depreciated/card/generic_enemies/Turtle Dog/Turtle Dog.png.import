@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tfwrvq65j4fx"
-path="res://.godot/imported/player.png-51ae1842b19be2e9734d2562df905cdb.ctex"
+uid="uid://bf71o8ualep1v"
+path="res://.godot/imported/Turtle Dog.png-550c264ded990eb76535fbb582d15083.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://current/cards/player/player.png"
-dest_files=["res://.godot/imported/player.png-51ae1842b19be2e9734d2562df905cdb.ctex"]
+source_file="res://depreciated/card/generic_enemies/Turtle Dog/Turtle Dog.png"
+dest_files=["res://.godot/imported/Turtle Dog.png-550c264ded990eb76535fbb582d15083.ctex"]
 
 [params]
 

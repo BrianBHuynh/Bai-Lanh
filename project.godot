@@ -11,19 +11,19 @@ config_version=5
 [application]
 
 config/name="Bai Lanh"
-run/main_scene="res://Debug/Testing.tscn"
+run/main_scene="res://Debug/testing.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-globalVars="*res://Current/Scrips/Global scripts/Autoload/globalVars.gd"
-combat="*res://Current/Scrips/Global scripts/Autoload/combatEngine.gd"
-moveLib="*res://Current/Scrips/Global scripts/Autoload/moveLib.gd"
-cards="*res://Current/Scrips/Global scripts/Autoload/cardEngine.gd"
-combatLib="*res://Current/Scrips/Global scripts/Autoload/combatLib.gd"
-cardReg="*res://Current/Scrips/Global scripts/Autoload/cardRegistry.gd"
-controls="*res://Current/Scrips/Global scripts/Autoload/controls.gd"
+global_vars="*res://current/scrips/global_scripts/autoload/global_vars.gd"
+combat="*res://current/scrips/global_scripts/autoload/combat_engine.gd"
+move_lib="*res://current/scrips/global_scripts/autoload/move_lib.gd"
+cards="*res://current/scrips/global_scripts/autoload/card_engine.gd"
+combat_lib="*res://current/scrips/global_scripts/autoload/combat_lib.gd"
+card_reg="*res://current/scrips/global_scripts/autoload/card_registry.gd"
+controls="*res://current/scrips/global_scripts/autoload/controls.gd"
 
 [display]
 

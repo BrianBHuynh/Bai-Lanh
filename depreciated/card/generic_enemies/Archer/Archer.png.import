@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tfwrvq65j4fx"
-path="res://.godot/imported/player.png-51ae1842b19be2e9734d2562df905cdb.ctex"
+uid="uid://75p0q0bnf5vv"
+path="res://.godot/imported/Archer.png-32e097c91166765446c793432fc022f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://current/cards/player/player.png"
-dest_files=["res://.godot/imported/player.png-51ae1842b19be2e9734d2562df905cdb.ctex"]
+source_file="res://depreciated/card/generic_enemies/Archer/Archer.png"
+dest_files=["res://.godot/imported/Archer.png-32e097c91166765446c793432fc022f5.ctex"]
 
 [params]
 
