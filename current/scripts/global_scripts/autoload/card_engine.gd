@@ -20,12 +20,15 @@ func place_slot_player(card):
 	if is_instance_valid(card.slot):
 		card.slot.cards_list.erase(card)
 		fix_slot(card.slot)
+		remove_slot_effects(card, card.slot)
 	move_lib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
 	card.slot.cards_list.append(card)
+	card.pos = card.slot.pos
+	apply_slot_effects(card, card.slot)
 	if not combat.player_party.has(card):
 		combat.player_party.append(card)
 		combat.add_initiative(card)
@@ -51,12 +54,15 @@ func place_slot_opposing(card):
 	if is_instance_valid(card.slot):
 		card.slot.cards.erase(card)
 		fix_slot(card.slot)
+		remove_slot_effects(card, card.slot)
 	move_lib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.RED, .4)
 	card.slot.cards_list.append(card)
+	card.pos = card.slot.pos
+	apply_slot_effects(card, card.slot)
 	if not combat.opposing_party.has(card):
 		combat.opposing_party.append(card)
 	fix_slot(card.slot)
@@ -117,3 +123,44 @@ func fix_slot(slot: Node2D):
 		elem.move_to_front()
 		move_lib.move(elem, slot.global_position + Vector2(0,stacking_distance)*temp)
 		temp = temp + 1
+
+func shift(card):
+	if not card.shifted:
+		card.shifted = true
+		card.health = card.health + card.shifted_health
+		card.phys_attack = card.phys_attack + card.shifted_phys_attack 
+		card.mag_attack = card.mag_attack + card.shifted_mag_attack 
+		card.phys_defense = card.phys_defense + card.shifted_phys_defense 
+		card.mag_defense = card.mag_defense + card.shifted_mag_defense 
+		card.speed = card.speed + card.shifted_speed
+		card.tags.append(card.shifted_tags)
+	else:
+		card.shifted = false
+		card.health = card.health - card.shifted_health
+		card.phys_attack = card.phys_attack - card.shifted_phys_attack 
+		card.mag_attack = card.mag_attack - card.shifted_mag_attack 
+		card.phys_defense = card.phys_defense - card.shifted_phys_defense 
+		card.mag_defense = card.mag_defense - card.shifted_mag_defense 
+		card.speed = card.speed - card.shifted_speed
+		for i in card.shifted_tags.size():
+			card.tags.erase(card.shifted_tags[i])
+
+
+func apply_slot_effects(card, slot):
+	card.health = card.health + slot.health
+	card.phys_attack = card.phys_attack + slot.phys_attack 
+	card.mag_attack = card.mag_attack + slot.mag_attack 
+	card.phys_defense = card.phys_defense + slot.phys_defense 
+	card.mag_defense = card.mag_defense + slot.mag_defense 
+	card.speed = card.speed + slot.speed
+	card.tags.append_array(slot.tags)
+
+func remove_slot_effects(card, slot):
+	card.health = card.health + slot.health
+	card.phys_attack = card.phys_attack + slot.phys_attack
+	card.mag_attack = card.mag_attack + slot.mag_attack 
+	card.phys_defense = card.phys_defense + slot.phys_defense 
+	card.mag_defense = card.mag_defense + slot.mag_defense 
+	card.speed = card.speed + slot.speed
+	for i in slot.tags.size():
+		card.tags.erase(slot.tags[i])

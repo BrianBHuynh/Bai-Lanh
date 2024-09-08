@@ -13,5 +13,5 @@ scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_t0xfq")
 
 [node name="Sprite2D" type="Sprite2D" parent="." groups=["slot"]]
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_m6rn2")

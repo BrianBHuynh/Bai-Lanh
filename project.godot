@@ -17,13 +17,13 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-global_vars="*res://current/scrips/global_scripts/autoload/global_vars.gd"
-combat="*res://current/scrips/global_scripts/autoload/combat_engine.gd"
-move_lib="*res://current/scrips/global_scripts/autoload/move_lib.gd"
-cards="*res://current/scrips/global_scripts/autoload/card_engine.gd"
-combat_lib="*res://current/scrips/global_scripts/autoload/combat_lib.gd"
-card_reg="*res://current/scrips/global_scripts/autoload/card_registry.gd"
-controls="*res://current/scrips/global_scripts/autoload/controls.gd"
+global_vars="*res://current/scripts/global_scripts/autoload/global_vars.gd"
+combat="*res://current/scripts/global_scripts/autoload/combat_engine.gd"
+move_lib="*res://current/scripts/global_scripts/autoload/move_lib.gd"
+cards="*res://current/scripts/global_scripts/autoload/card_engine.gd"
+combat_lib="*res://current/scripts/global_scripts/autoload/combat_lib.gd"
+card_reg="*res://current/scripts/global_scripts/autoload/card_registry.gd"
+controls="*res://current/scripts/global_scripts/autoload/controls.gd"
 
 [display]
 

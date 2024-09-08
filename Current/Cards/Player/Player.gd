@@ -1,11 +1,14 @@
 extends Node2D
 
+@export var card_name = "Player"
+
 @export var health: int = 100 #Health amount of card
 @export var phys_attack: int = 10 #physical Attack value of the card
 @export var mag_attack: int = 10 #Magic attack value of the card
 @export var phys_defense: int = 10 #Physical defense of the card
 @export var mag_defense: int = 10 #Magical defense of the card
 @export var speed: int = 10 #Speed of the card
+@export var tags: Array = []
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var shifted_health: int = 100
@@ -14,6 +17,7 @@ extends Node2D
 @export var shifted_phys_defense: int = 10
 @export var shifted_mag_defense: int = 10
 @export var shifted_speed: int = 10
+@export var shifted_tags: Array = []
 
 #Position stats/effects should only be applied when the play button is pressed!
 var pref_pos: Array = [] #Prefered possitions of the card
@@ -24,6 +28,7 @@ var pos: String = "None" #Current position
 @export var pos_attack: int = 0
 @export var pos_defense: int = 0
 @export var pos_speed: int = 0
+@export var pos_tags: Array = []
 
 var slot #Where the current slot is stored
 var new_slot #Where a possible slot is
@@ -88,24 +93,6 @@ func card_highlight():
 func card_normalize():
 	modulate = default_color
 	scale = default_size
-
-func shift():
-	if not shifted:
-		shifted = true
-		health = health + shifted_health
-		phys_attack = phys_attack + shifted_phys_attack 
-		mag_attack = mag_attack + shifted_mag_attack 
-		phys_defense = phys_defense + shifted_phys_defense 
-		mag_defense = mag_defense + shifted_mag_defense 
-		speed = speed + shifted_speed
-	else:
-		shifted = false
-		health = health - shifted_health
-		phys_attack = phys_attack - shifted_phys_attack 
-		mag_attack = mag_attack - shifted_mag_attack 
-		phys_defense = phys_defense - shifted_phys_defense 
-		mag_defense = mag_defense - shifted_mag_defense 
-		speed = speed - shifted_speed
 
 func get_target():
 	if friendly:
