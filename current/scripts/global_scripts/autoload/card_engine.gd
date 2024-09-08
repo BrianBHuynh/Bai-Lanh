@@ -164,3 +164,22 @@ func remove_slot_effects(card, slot):
 	card.speed = card.speed + slot.speed
 	for i in slot.tags.size():
 		card.tags.erase(slot.tags[i])
+
+func pos_apply(card):
+	card.health = card.health + card.pos_health
+	card.phys_attack = card.phys_attack + card.pos_phys_attack 
+	card.mag_attack = card.mag_attack + card.pos_mag_attack 
+	card.phys_defense = card.phys_defense + card.pos_phys_defense 
+	card.mag_defense = card.mag_defense + card.pos_mag_defense 
+	card.speed = card.speed + card.pos_speed
+	card.tags.append(card.pos_tags)
+
+func pos_remove(card):
+	card.health = card.health - card.pos_health
+	card.phys_attack = card.phys_attack - card.pos_phys_attack 
+	card.mag_attack = card.mag_attack - card.pos_mag_attack 
+	card.phys_defense = card.phys_defense - card.pos_phys_defense 
+	card.mag_defense = card.mag_defense - card.pos_mag_defense 
+	card.speed = card.speed - card.pos_speed
+	for i in card.pos_tags.size():
+		card.tags.erase(card.pos_tags[i])

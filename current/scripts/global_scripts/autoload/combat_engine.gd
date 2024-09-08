@@ -67,8 +67,8 @@ func add_initiative(card):
 func next_turn():
 	var curChar = get_initiative()
 	if is_instance_valid(curChar):
+		combat_board = ""
 		if not opposing_party.is_empty() and not player_party.is_empty():
-			combat_board = "It is " + str(curChar) + "'s turn! \n"
 			curChar.action()
 
 #Applies slot stats and effects

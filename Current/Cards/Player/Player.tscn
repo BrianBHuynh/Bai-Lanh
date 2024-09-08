@@ -27,14 +27,6 @@ offset_top = -96.0
 offset_right = 68.0
 offset_bottom = 96.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = -68.0
-offset_top = 83.0
-offset_right = 68.0
-offset_bottom = 96.0
-mouse_filter = 2
-script = ExtResource("2_tdpih")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.1, 0.1)
 shape = SubResource("RectangleShape2D_dhksn")
@@ -42,6 +34,15 @@ shape = SubResource("RectangleShape2D_dhksn")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_6ow15")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -68.0
+offset_top = 44.0
+offset_right = 68.0
+offset_bottom = 96.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 10
+script = ExtResource("2_tdpih")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

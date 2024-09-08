@@ -11,12 +11,12 @@ extends Node2D
 @export var tags: Array = []
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
-@export var shifted_health: int = 100
-@export var shifted_phys_attack: int = 10
-@export var shifted_mag_attack: int = 10
-@export var shifted_phys_defense: int = 10
-@export var shifted_mag_defense: int = 10
-@export var shifted_speed: int = 10
+@export var shifted_health: int = 0
+@export var shifted_phys_attack: int = 0
+@export var shifted_mag_attack: int = 0
+@export var shifted_phys_defense: int = 0
+@export var shifted_mag_defense: int = 0
+@export var shifted_speed: int = 0
 @export var shifted_tags: Array = []
 
 #Position stats/effects should only be applied when the play button is pressed!
@@ -25,8 +25,10 @@ var pos: String = "None" #Current position
 
 #Stats changed for being in the prefered positions
 @export var pos_health: int = 0
-@export var pos_attack: int = 0
-@export var pos_defense: int = 0
+@export var pos_phys_attack: int = 0
+@export var pos_mag_attack: int = 0
+@export var pos_phys_defense: int = 0
+@export var pos_mag_defense: int = 0
 @export var pos_speed: int = 0
 @export var pos_tags: Array = []
 
@@ -97,14 +99,14 @@ func card_normalize():
 func get_target():
 	if friendly:
 		if shifted:
-			combat.get_target(combat.opposing_party)
+			return combat.get_target(combat.opposing_party)
 		else:
-			combat.get_target(combat.opposing_party)
+			return combat.get_target(combat.opposing_party)
 	else:
 		if shifted:
-			combat.get_target(combat.player_party)
+			return combat.get_target(combat.player_party)
 		else:
-			combat.get_target(combat.player_party)
+			return combat.get_target(combat.player_party)
 
 func damage_physical(damage):
 	if (damage - phys_defense) > 0:
@@ -140,7 +142,24 @@ func action():
 			default_action()
 
 func default_action():
-	pass #Should normally never be called as long as the card is in a slot
+	var enemy = get_target()
+	var damage = (combat.RNG.randi_range(1,10)+phys_attack)
+	var ability = combat.RNG.randi_range(1,4)
+	match ability:
+		1:
+			combat_lib.multi_phys_attack(self, enemy, phys_attack-1, 7, 5)
+			combat_lib.lock_down(self, enemy)
+		2:
+			combat_lib.phys_attack(self, enemy, damage/2)
+			combat_lib.lock_down(self, enemy)
+		3:
+			combat_lib.phys_attack(self, enemy, damage)
+		4:
+			if phys_defense < 15:
+				phys_defense = phys_defense + 2
+				combat_lib.lock_down(self, enemy)
+			combat_lib.phys_attack(self, enemy, damage-2)
+
 
 func front_action():
 	pass #Should normally be called when standing in the front

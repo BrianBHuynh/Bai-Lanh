@@ -2,12 +2,12 @@ extends StaticBody2D
 
 var filled = false
 @export var pos = "Default"
-@export var health: int = 100
-@export var phys_attack: int = 10
-@export var mag_attack: int = 10
-@export var phys_defense: int = 10
-@export var mag_defense: int = 10
-@export var speed: int = 10
+@export var health: int = 0
+@export var phys_attack: int = 0
+@export var mag_attack: int = 0
+@export var phys_defense: int = 0
+@export var mag_defense: int = 0
+@export var speed: int = 0
 @export var tags:Array = []
 
 var cards_list: Array = []
