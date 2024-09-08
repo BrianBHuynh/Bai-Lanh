@@ -88,14 +88,15 @@ func pos_apply(card):
 		card.posEffect(card.cur_slot.pos)
 
 func kill(card):
-	for array in arrays:
-		while array.has(card):
-			array.erase(card)
-	for slot in slots:
-		while slot.cards_list.has(card):
-			slot.cards_list.erase(card)
-	await get_tree().create_timer(.125).timeout
-	card.queue_free()
+	if is_instance_valid(card):
+		for array in arrays:
+			while array.has(card):
+				array.erase(card)
+		for slot in slots:
+			while slot.cards_list.has(card):
+				slot.cards_list.erase(card)
+		await get_tree().create_timer(.125).timeout
+		card.queue_free()
 
 func clear_data():
 	for array in arrays:

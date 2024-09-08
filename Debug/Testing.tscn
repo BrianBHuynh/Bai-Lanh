@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c665w5bwl7uxl"]
+[gd_scene load_steps=9 format=3 uid="uid://c665w5bwl7uxl"]
 
 [ext_resource type="Script" path="res://Debug/testing.gd" id="1_qugj8"]
 [ext_resource type="Script" path="res://Debug/game_state_checker.gd" id="2_yv8qg"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Debug/button_2.gd" id="5_o0oja"]
 [ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://current/default_resources/common/enemy_slot/card_slot.tscn" id="6_8o2lf"]
 [ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://current/default_resources/common/card_deck/card_slot.tscn" id="7_o657w"]
+[ext_resource type="PackedScene" uid="uid://blk7mwnwy84ux" path="res://current/default_resources/common/next_card_preview/card_slot.tscn" id="8_prltj"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qugj8")
@@ -90,3 +91,6 @@ offset_right = 612.0
 offset_bottom = 775.0
 text = "Reset"
 script = ExtResource("5_o0oja")
+
+[node name="EnemySlot" parent="." instance=ExtResource("8_prltj")]
+position = Vector2(454, 326)

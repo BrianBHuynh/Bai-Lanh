@@ -58,6 +58,8 @@ func place_slot_opposing(card):
 	move_lib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
+	card.default_color = Color(Color.PALE_VIOLET_RED)
+	card.modulate = Color(Color.PALE_VIOLET_RED)
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.RED, .4)
 	card.slot.cards_list.append(card)

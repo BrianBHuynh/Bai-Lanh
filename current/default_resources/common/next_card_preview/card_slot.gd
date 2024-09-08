@@ -13,7 +13,7 @@ var filled = false
 var cards_list: Array = []
 var accepting: bool = false
 
-var max_cap = 7
+var max_cap = 1
 var drawn = 0
 
 var default_color = Color(Color.GRAY, .7)
@@ -30,15 +30,15 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_button_pressed() -> void:
-	if drawn < max_cap:
-		var summon = card_reg.ally_list.duplicate().pick_random()
-		var instance = summon.instantiate()
-		instance.position = position
+	if is_instance_valid(combat.initiative.front()) and drawn == 0:
+		var instance = combat.initiative.front().duplicate()
+		instance.global_position = position
 		get_parent().add_child(instance)
-		instance.new_slot = self
-		cards.place_draw_pile(instance)
-		cards.fix_slot(self)
-		drawn = drawn+1
+		instance.get_child(0).disabled = true
+		instance.friendly = true
+		await get_tree().create_timer(5).timeout
+		instance.queue_free()
+		drawn = drawn-1
 
 func action():
 	pass #this type has no actions
