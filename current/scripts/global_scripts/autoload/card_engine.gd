@@ -1,6 +1,5 @@
 extends Node2D
 
-var latest = "none"
 var stacking_distance = 50
 
 func hold_card(card):
@@ -27,7 +26,11 @@ func place_slot_player(card):
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
 	card.slot.cards_list.append(card)
+	if card.pref_pos.contains(card.pos):
+		pos_remove(card)
 	card.pos = card.slot.pos
+	if card.pref_pos.contains(card.pos):
+		pos_apply(card)
 	apply_slot_effects(card, card.slot)
 	if not combat.player_party.has(card):
 		combat.player_party.append(card)
@@ -40,12 +43,19 @@ func place_draw_pile(card):
 	if is_instance_valid(card.slot):
 		card.slot.cards_list.erase(card)
 		fix_slot(card.slot)
+		remove_slot_effects(card, card.slot)
 	move_lib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
 	card.slot.cards_list.append(card)
+	if card.pref_pos.contains(card.pos):
+		pos_remove(card)
+	card.pos = card.slot.pos
+	if card.pref_pos.contains(card.pos):
+		pos_apply(card)
+	apply_slot_effects(card, card.slot)
 	fix_slot(card.slot)
 	card.current_position = card.slot.position
 
@@ -63,7 +73,11 @@ func place_slot_opposing(card):
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.RED, .4)
 	card.slot.cards_list.append(card)
+	if card.pref_pos.contains(card.pos):
+		pos_remove(card)
 	card.pos = card.slot.pos
+	if card.pref_pos.contains(card.pos):
+		pos_apply(card)
 	apply_slot_effects(card, card.slot)
 	if not combat.opposing_party.has(card):
 		combat.opposing_party.append(card)

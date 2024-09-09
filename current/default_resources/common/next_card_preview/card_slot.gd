@@ -31,6 +31,7 @@ func _process(_delta: float) -> void:
 
 func _on_button_pressed() -> void:
 	if is_instance_valid(combat.initiative.front()) and drawn == 0:
+		drawn = drawn + 1
 		var instance = combat.initiative.front().duplicate()
 		instance.global_position = position
 		get_parent().add_child(instance)

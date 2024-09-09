@@ -49,6 +49,9 @@ var held: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_position = position
+	if self.friendly == false:
+		self.default_color = Color(Color.PALE_VIOLET_RED)
+		self.modulate = Color(Color.PALE_VIOLET_RED)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -99,14 +102,42 @@ func card_normalize():
 func get_target():
 	if friendly:
 		if shifted:
-			return combat.get_target(combat.opposing_party)
+			if pos == "front":
+				pass
+			elif pos == "center":
+				pass
+			elif pos == "back":
+				pass
+			else:
+				return combat.get_target(combat.opposing_party)
 		else:
-			return combat.get_target(combat.opposing_party)
+			if pos == "front":
+				pass
+			elif pos == "center":
+				pass
+			elif pos == "back":
+				pass
+			else:
+				return combat.get_target(combat.opposing_party)
 	else:
 		if shifted:
-			return combat.get_target(combat.player_party)
+			if pos == "front":
+				pass
+			elif pos == "center":
+				pass
+			elif pos == "back":
+				pass
+			else:
+				return combat.get_target(combat.player_party)
 		else:
-			return combat.get_target(combat.player_party)
+			if pos == "front":
+				pass
+			elif pos == "center":
+				pass
+			elif pos == "back":
+				pass
+			else:
+				return combat.get_target(combat.player_party)
 
 func damage_physical(damage):
 	if (damage - phys_defense) > 0:
