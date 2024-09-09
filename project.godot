@@ -11,17 +11,19 @@ config_version=5
 [application]
 
 config/name="Bai Lanh"
-run/main_scene="res://Debug/Testing.tscn"
+run/main_scene="res://Debug/testing.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-globalVars="*res://Current/Scrips/Global scripts/Autoload/globalVars.gd"
-combat="*res://Current/Scrips/Global scripts/Autoload/combatEngine.gd"
-moveLib="*res://Current/Scrips/Global scripts/Autoload/moveLib.gd"
-cards="*res://Current/Scrips/Global scripts/Autoload/cardEngine.gd"
-combatLib="*res://Current/Scrips/Global scripts/Autoload/combatLib.gd"
+global_vars="*res://current/scripts/global_scripts/autoload/global_vars.gd"
+combat="*res://current/scripts/global_scripts/autoload/combat_engine.gd"
+move_lib="*res://current/scripts/global_scripts/autoload/move_lib.gd"
+cards="*res://current/scripts/global_scripts/autoload/card_engine.gd"
+combat_lib="*res://current/scripts/global_scripts/autoload/combat_lib.gd"
+card_reg="*res://current/scripts/global_scripts/autoload/card_registry.gd"
+controls="*res://current/scripts/global_scripts/autoload/controls.gd"
 
 [display]
 
@@ -39,6 +41,11 @@ leftClick={
 rightClick={
 "deadzone": 0.3,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+escape={
+"deadzone": 0.75,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 
