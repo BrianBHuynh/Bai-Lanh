@@ -26,10 +26,10 @@ func place_slot_player(card):
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
 	card.slot.cards_list.append(card)
-	if card.pref_pos.contains(card.pos):
+	if card.pref_pos.has(card.pos):
 		pos_remove(card)
 	card.pos = card.slot.pos
-	if card.pref_pos.contains(card.pos):
+	if card.pref_pos.has(card.pos):
 		pos_apply(card)
 	apply_slot_effects(card, card.slot)
 	if not combat.player_party.has(card):
@@ -50,10 +50,10 @@ func place_draw_pile(card):
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
 	card.slot.cards_list.append(card)
-	if card.pref_pos.contains(card.pos):
+	if card.pref_pos.has(card.pos):
 		pos_remove(card)
 	card.pos = card.slot.pos
-	if card.pref_pos.contains(card.pos):
+	if card.pref_pos.has(card.pos):
 		pos_apply(card)
 	apply_slot_effects(card, card.slot)
 	fix_slot(card.slot)
@@ -73,10 +73,10 @@ func place_slot_opposing(card):
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.RED, .4)
 	card.slot.cards_list.append(card)
-	if card.pref_pos.contains(card.pos):
+	if card.pref_pos.has(card.pos):
 		pos_remove(card)
 	card.pos = card.slot.pos
-	if card.pref_pos.contains(card.pos):
+	if card.pref_pos.has(card.pos):
 		pos_apply(card)
 	apply_slot_effects(card, card.slot)
 	if not combat.opposing_party.has(card):

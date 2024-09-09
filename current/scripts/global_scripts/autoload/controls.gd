@@ -1,7 +1,7 @@
 extends Node
 
 var menu
-var menuOpen = false
+var menu_open = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -10,9 +10,9 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("escape"):
-		if not menuOpen:
+		if not menu_open:
 			get_tree().root.add_child(menu)
-			menuOpen = true
+			menu_open = true
 		else:
 			get_tree().root.remove_child(menu)
-			menuOpen = false
+			menu_open = false

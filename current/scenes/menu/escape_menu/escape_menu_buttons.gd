@@ -13,8 +13,8 @@ func _process(delta: float) -> void:
 func _on_button_3_pressed() -> void:
 	get_tree().reload_current_scene()
 	get_tree().root.remove_child(controls.menu)
-	controls.menuOpen = false
-	combat.clearData()
+	controls.menu_open = false
+	combat.clear_data()
 
 
 func _on_button_4_pressed() -> void:
@@ -22,12 +22,12 @@ func _on_button_4_pressed() -> void:
 		combat.next_turn()
 
 func _on_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Current/Scenes/Combat/combatSmall.tscn")
+	get_tree().change_scene_to_file("res://current/scenes/combat/combat_small.tscn")
 	get_tree().root.remove_child(controls.menu)
-	controls.menuOpen = false
+	controls.menu_open = false
 
 
 func _on_button_2_pressed() -> void:
-	get_tree().change_scene_to_file("res://Debug/Testing.tscn")
+	get_tree().change_scene_to_file("res://Debug/testing.tscn")
 	get_tree().root.remove_child(controls.menu)
-	controls.menuOpen = false
+	controls.menu_open = false
