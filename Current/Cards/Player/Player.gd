@@ -141,11 +141,11 @@ func get_target():
 
 func damage_physical(damage):
 	if (damage - phys_defense) > 0:
-		health = health-damage
+		health = health-(damage-phys_defense)
 
 func damage_magical(damage):
 	if (damage - mag_defense) > 0:
-		health = health-damage
+		health = health-(damage-mag_defense)
 
 func damage_true(damage):
 	health = health-damage
