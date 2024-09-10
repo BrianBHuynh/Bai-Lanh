@@ -9,7 +9,7 @@ var opposing_party: Array = []
 
 #Player positions
 var player_front: Array = []
-var player_mid: Array = []
+var player_center: Array = []
 var player_back: Array = []
 #Player roles
 var player_tanks: Array = []
@@ -18,7 +18,7 @@ var player_support: Array = []
 
 #Opponent positions
 var opposing_front: Array = []
-var opposing_mid: Array = []
+var opposing_center: Array = []
 var opposing_back: Array = []
 
 #Opponent roles
@@ -36,12 +36,12 @@ var agro_calc: Array = []
 var RNG = RandomNumberGenerator.new()
 
 var combat_board = ""
-var arrays: Array = [slots, player_party, opposing_party, player_front, player_mid, player_back, player_tanks, player_dps, player_support, opposing_front, opposing_mid, opposing_back, opposing_tanks, opposing_dps, opposing_support, initiative, agro_calc]
+var arrays: Array = [slots, player_party, opposing_party, player_front, player_center, player_back, player_tanks, player_dps, player_support, opposing_front, opposing_center, opposing_back, opposing_tanks, opposing_dps, opposing_support, initiative, agro_calc]
 #returns next in initiative, if initiative is empty repopulates it
 func get_initiative():
 	if initiative.is_empty():
-		recalc_initiative()
-	return initiative.pop_front()
+		pass
+	return initiative.pick_random()
 
 func get_target(array):
 	agro_calc.clear()
@@ -49,20 +49,20 @@ func get_target(array):
 	agro_calc.shuffle()
 	return agro_calc.pop_front()
 
-#Assumes both parties are alive and appends both to initiative, then shuffles. Multiplies occurance of each character by the amount of speed they have
-func recalc_initiative():
-	for i in player_party.size():
-		for j in player_party[i].speed:
-			initiative.append(player_party[i])
-	for i in opposing_party.size():
-		for j in opposing_party[i].speed:
-			initiative.append(opposing_party[i])
-	initiative.shuffle()
-
 func add_initiative(card):
 	for i in card.speed:
 		initiative.append(card)
 		initiative.shuffle()
+
+func remove_initiative(card):
+	while initiative.has(card):
+		initiative.erase(card)
+
+func update_initiative(card):
+	if initiative.has(card):
+		remove_initiative(card)
+		add_initiative(card)
+		combat_board = "New num" + str(initiative.has(card))
 
 func next_turn():
 	var curChar = get_initiative()

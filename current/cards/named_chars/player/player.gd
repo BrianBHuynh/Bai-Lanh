@@ -2,7 +2,7 @@ extends Node2D
 
 @export var card_name = "Player"
 
-@export var health: int = 100 #Health amount of card
+@export var health: float = 100.0 #Health amount of card
 @export var phys_attack: int = 10 #physical Attack value of the card
 @export var mag_attack: int = 10 #Magic attack value of the card
 @export var phys_defense: int = 10 #Physical defense of the card
@@ -11,7 +11,7 @@ extends Node2D
 @export var tags: Array = []
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
-@export var shifted_health: int = 0
+@export var shifted_health: float = 0.0
 @export var shifted_phys_attack: int = 0
 @export var shifted_mag_attack: int = 0
 @export var shifted_phys_defense: int = 0
@@ -24,7 +24,7 @@ var pref_pos: Array = [] #Prefered possitions of the card
 var pos: String = "None" #Current position
 
 #Stats changed for being in the prefered positions
-@export var pos_health: int = 0
+@export var pos_health: float = 0.0
 @export var pos_phys_attack: int = 0
 @export var pos_mag_attack: int = 0
 @export var pos_phys_defense: int = 0
@@ -55,7 +55,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if held and friendly:
 		cards.hold_card(self)
 
@@ -99,43 +99,44 @@ func card_normalize():
 	modulate = default_color
 	scale = default_size
 
+#function is formatted this way so that it is readable and customizable, keeping it in per card allows for more control
 func get_target():
 	if friendly:
-		if shifted:
+		if not shifted:
 			if pos == "front":
-				pass
+				return combat.get_target(combat.opposing_party)
 			elif pos == "center":
-				pass
+				return combat.get_target(combat.opposing_party)
 			elif pos == "back":
-				pass
+				return combat.get_target(combat.opposing_party)
 			else:
 				return combat.get_target(combat.opposing_party)
 		else:
 			if pos == "front":
-				pass
+				return combat.get_target(combat.opposing_party)
 			elif pos == "center":
-				pass
+				return combat.get_target(combat.opposing_party)
 			elif pos == "back":
-				pass
+				return combat.get_target(combat.opposing_party)
 			else:
 				return combat.get_target(combat.opposing_party)
 	else:
-		if shifted:
+		if not shifted:
 			if pos == "front":
-				pass
+				return combat.get_target(combat.player_party)
 			elif pos == "center":
-				pass
+				return combat.get_target(combat.player_party)
 			elif pos == "back":
-				pass
+				return combat.get_target(combat.player_party)
 			else:
 				return combat.get_target(combat.player_party)
 		else:
 			if pos == "front":
-				pass
+				return combat.get_target(combat.player_party)
 			elif pos == "center":
-				pass
+				return combat.get_target(combat.player_party)
 			elif pos == "back":
-				pass
+				return combat.get_target(combat.player_party)
 			else:
 				return combat.get_target(combat.player_party)
 
@@ -181,7 +182,7 @@ func default_action():
 			combat_lib.multi_phys_attack(self, enemy, phys_attack-1, 7, 5)
 			combat_lib.lock_down(self, enemy)
 		2:
-			combat_lib.phys_attack(self, enemy, damage/2)
+			combat_lib.phys_attack(self, enemy, damage/2.0)
 			combat_lib.lock_down(self, enemy)
 		3:
 			combat_lib.phys_attack(self, enemy, damage)
@@ -191,24 +192,30 @@ func default_action():
 				combat_lib.lock_down(self, enemy)
 			combat_lib.phys_attack(self, enemy, damage-2)
 
-
+#Should normally be called when standing in the front
 func front_action():
-	pass #Should normally be called when standing in the front
+	default_action()
 
+#Should normally be called when standing in the center
 func center_action():
-	pass #Should normally be called when standing in the center
+	default_action()
 
+#Should normally be called when standing in the center
 func back_action():
-	pass #Should normally be called when standing in the center
+	default_action()
 
+#Should normally never be called as long as the card is in a slot
 func shifted_default_action():
-	pass #Should normally never be called as long as the card is in a slot
+	default_action()
 
+#Should normally be called when standing in the front
 func shifted_front_action():
-	pass #Should normally be called when standing in the front
+	default_action()
 
+#Should normally be called when standing in the center
 func shifted_center_action():
-	pass #Should normally be called when standing in the center
+	default_action()
 
+#Should normally be called when standing in the center
 func shifted_back_action():
-	pass #Should normally be called when standing in the center
+	default_action()

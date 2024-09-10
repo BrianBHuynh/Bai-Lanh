@@ -37,6 +37,7 @@ func place_slot_player(card):
 		combat.add_initiative(card)
 	fix_slot(card.slot)
 	card.current_position = card.slot.position
+	card.slot.place_action(card)
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 func place_draw_pile(card):
@@ -160,6 +161,7 @@ func shift(card):
 		card.speed = card.speed - card.shifted_speed
 		for i in card.shifted_tags.size():
 			card.tags.erase(card.shifted_tags[i])
+	combat.update_initiative(self)
 
 
 func apply_slot_effects(card, slot):
@@ -170,16 +172,18 @@ func apply_slot_effects(card, slot):
 	card.mag_defense = card.mag_defense + slot.mag_defense 
 	card.speed = card.speed + slot.speed
 	card.tags.append_array(slot.tags)
+	combat.update_initiative(self)
 
 func remove_slot_effects(card, slot):
-	card.health = card.health + slot.health
-	card.phys_attack = card.phys_attack + slot.phys_attack
-	card.mag_attack = card.mag_attack + slot.mag_attack 
-	card.phys_defense = card.phys_defense + slot.phys_defense 
-	card.mag_defense = card.mag_defense + slot.mag_defense 
-	card.speed = card.speed + slot.speed
+	card.health = card.health - slot.health
+	card.phys_attack = card.phys_attack - slot.phys_attack
+	card.mag_attack = card.mag_attack - slot.mag_attack 
+	card.phys_defense = card.phys_defense - slot.phys_defense 
+	card.mag_defense = card.mag_defense - slot.mag_defense 
+	card.speed = card.speed - slot.speed
 	for i in slot.tags.size():
 		card.tags.erase(slot.tags[i])
+	combat.update_initiative(self)
 
 func pos_apply(card):
 	card.health = card.health + card.pos_health
@@ -189,6 +193,7 @@ func pos_apply(card):
 	card.mag_defense = card.mag_defense + card.pos_mag_defense 
 	card.speed = card.speed + card.pos_speed
 	card.tags.append(card.pos_tags)
+	combat.update_initiative(self)
 
 func pos_remove(card):
 	card.health = card.health - card.pos_health
@@ -199,3 +204,4 @@ func pos_remove(card):
 	card.speed = card.speed - card.pos_speed
 	for i in card.pos_tags.size():
 		card.tags.erase(card.pos_tags[i])
+	combat.update_initiative(card)

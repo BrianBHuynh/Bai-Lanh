@@ -2,13 +2,14 @@ extends StaticBody2D
 
 var filled = false
 @export var pos = "Default"
-@export var health: int = 0
+@export var health: float = 0.0
 @export var phys_attack: int = 0
 @export var mag_attack: int = 0
 @export var phys_defense: int = 0
 @export var mag_defense: int = 0
 @export var speed: int = 0
 @export var tags:Array = []
+@export var shift:bool = false
 
 var cards_list: Array = []
 var accepting: bool = false
@@ -42,4 +43,8 @@ func _on_button_pressed() -> void:
 		drawn = drawn-1
 
 func action():
-	pass #this type has no actions
+	if shift:
+		cards.shift(cards_list.front())
+
+func place_action(card):
+	pass
