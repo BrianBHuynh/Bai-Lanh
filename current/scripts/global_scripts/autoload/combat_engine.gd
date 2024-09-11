@@ -62,7 +62,6 @@ func update_initiative(card):
 	if initiative.has(card):
 		remove_initiative(card)
 		add_initiative(card)
-		combat_board = "New num" + str(initiative.has(card))
 
 func next_turn():
 	var curChar = get_initiative()

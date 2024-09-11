@@ -1,36 +1,36 @@
 extends Node2D
+class_name Card
 
-@export var card_name = "Player"
+var title: String = "Card"
 
-@export var health: float = 100.0 #Health amount of card
-@export var phys_attack: int = 10 #physical Attack value of the card
-@export var mag_attack: int = 10 #Magic attack value of the card
-@export var phys_defense: int = 10 #Physical defense of the card
-@export var mag_defense: int = 10 #Magical defense of the card
-@export var speed: int = 10 #Speed of the card
-@export var tags: Array = []
+var health: float = 100.0 #Health amount of card
+var phys_attack: int = 10 #physical Attack value of the card
+var mag_attack: int = 10 #Magic attack value of the card
+var phys_defense: int = 10 #Physical defense of the card
+var mag_defense: int = 10 #Magical defense of the card
+var speed: int = 10 #Speed of the card
+var tags: Array = []
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
-@export var shifted_health: float = 0.0
-@export var shifted_phys_attack: int = 0
-@export var shifted_mag_attack: int = 0
-@export var shifted_phys_defense: int = 0
-@export var shifted_mag_defense: int = 0
-@export var shifted_speed: int = 0
-@export var shifted_tags: Array = []
+var shifted_health: float = 0.0
+var shifted_phys_attack: int = 0
+var shifted_mag_attack: int = 0
+var shifted_phys_defense: int = 0
+var shifted_mag_defense: int = 0
+var shifted_speed: int = 0
+var shifted_tags: Array = []
+#Stats changed for being in the prefered positions
+var pos_health: float = 0.0
+var pos_phys_attack: int = 0
+var pos_mag_attack: int = 0
+var pos_phys_defense: int = 0
+var pos_mag_defense: int = 0
+var pos_speed: int = 0
+var pos_tags: Array = []
 
 #Position stats/effects should only be applied when the play button is pressed!
 var pref_pos: Array = [] #Prefered possitions of the card
 var pos: String = "None" #Current position
-
-#Stats changed for being in the prefered positions
-@export var pos_health: float = 0.0
-@export var pos_phys_attack: int = 0
-@export var pos_mag_attack: int = 0
-@export var pos_phys_defense: int = 0
-@export var pos_mag_defense: int = 0
-@export var pos_speed: int = 0
-@export var pos_tags: Array = []
 
 var slot #Where the current slot is stored
 var new_slot #Where a possible slot is
@@ -43,22 +43,27 @@ var default_size: Vector2 = Vector2(1,1) #Default size for the card
 
 var held: bool = false
 
-@export var shifted: bool = false
-@export var friendly: bool = true
+var shifted: bool = false
+var friendly: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	current_position = position
-	if self.friendly == false:
-		self.default_color = Color(Color.PALE_VIOLET_RED)
-		self.modulate = Color(Color.PALE_VIOLET_RED)
+	initialize()
 
+func initialize():
+	current_position = position
+	if friendly == false:
+		default_color = Color(Color.PALE_VIOLET_RED)
+		modulate = Color(Color.PALE_VIOLET_RED)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if held and friendly:
-		cards.hold_card(self)
+		hold_card()
 
+func hold_card():
+	move_lib.move_fast(self, get_global_mouse_position() - offset)
+	move_to_front()
 
 func _on_card_held() -> void:
 	held = true
@@ -68,8 +73,22 @@ func _on_card_held() -> void:
 
 func _on_card_released() -> void:
 	held = false
-	cards.release_card(self)
+	release_card()
 
+func release_card():
+	if is_instance_valid(new_slot) and new_slot.accepting:
+		cards.place_slot_player(self)
+		cards.fix_slot(slot)
+	else:
+		reject()
+		new_slot = null
+
+#returns card back to old position when picking up
+func reject():
+	if is_instance_valid(slot):
+		cards.fix_slot(slot)
+	else:
+		move_lib.move(self, current_position)
 
 func _on_body_entered(body: Node2D) -> void:
 	cards.add_slot(self, body)
@@ -98,6 +117,71 @@ func card_highlight():
 func card_normalize():
 	modulate = default_color
 	scale = default_size
+
+func shift():
+	if not shifted:
+		shifted = true
+		health = health + shifted_health
+		phys_attack = phys_attack + shifted_phys_attack 
+		mag_attack = mag_attack + shifted_mag_attack 
+		phys_defense = phys_defense + shifted_phys_defense 
+		mag_defense = mag_defense + shifted_mag_defense 
+		speed = speed + shifted_speed
+		tags.append(shifted_tags)
+	else:
+		shifted = false
+		health = health - shifted_health
+		phys_attack = phys_attack - shifted_phys_attack 
+		mag_attack = mag_attack - shifted_mag_attack 
+		phys_defense = phys_defense - shifted_phys_defense 
+		mag_defense = mag_defense - shifted_mag_defense 
+		speed = speed - shifted_speed
+		for i in shifted_tags.size():
+			tags.erase(shifted_tags[i])
+	combat.update_initiative(self)
+
+
+func apply_slot_effects():
+	health = health + slot.health
+	phys_attack = phys_attack + slot.phys_attack 
+	mag_attack = mag_attack + slot.mag_attack 
+	phys_defense = phys_defense + slot.phys_defense 
+	mag_defense = mag_defense + slot.mag_defense 
+	speed = speed + slot.speed
+	tags.append_array(slot.tags)
+	combat.update_initiative(self)
+
+func remove_slot_effects():
+	health = health - slot.health
+	phys_attack = phys_attack - slot.phys_attack
+	mag_attack = mag_attack - slot.mag_attack 
+	phys_defense = phys_defense - slot.phys_defense 
+	mag_defense = mag_defense - slot.mag_defense 
+	speed = speed - slot.speed
+	for i in slot.tags.size():
+		tags.erase(slot.tags[i])
+	combat.update_initiative(self)
+
+func pos_apply():
+	health = health + pos_health
+	phys_attack = phys_attack + pos_phys_attack 
+	mag_attack = mag_attack + pos_mag_attack 
+	phys_defense = phys_defense + pos_phys_defense 
+	mag_defense = mag_defense + pos_mag_defense 
+	speed = speed + pos_speed
+	tags.append(pos_tags)
+	combat.update_initiative(self)
+
+func pos_remove():
+	health = health - pos_health
+	phys_attack = phys_attack - pos_phys_attack 
+	mag_attack = mag_attack - pos_mag_attack 
+	phys_defense = phys_defense - pos_phys_defense 
+	mag_defense = mag_defense - pos_mag_defense 
+	speed = speed - pos_speed
+	for i in pos_tags.size():
+		tags.erase(pos_tags[i])
+	combat.update_initiative(self)
 
 #function is formatted this way so that it is readable and customizable, keeping it in per card allows for more control
 func get_target():
@@ -174,23 +258,7 @@ func action():
 			default_action()
 
 func default_action():
-	var enemy = get_target()
-	var damage = (combat.RNG.randi_range(1,10)+phys_attack)
-	var ability = combat.RNG.randi_range(1,4)
-	match ability:
-		1:
-			combat_lib.multi_phys_attack(self, enemy, phys_attack-1, 7, 5)
-			combat_lib.lock_down(self, enemy)
-		2:
-			combat_lib.phys_attack(self, enemy, damage/2.0)
-			combat_lib.lock_down(self, enemy)
-		3:
-			combat_lib.phys_attack(self, enemy, damage)
-		4:
-			if phys_defense < 15:
-				phys_defense = phys_defense + 2
-				combat_lib.lock_down(self, enemy)
-			combat_lib.phys_attack(self, enemy, damage-2)
+	pass
 
 #Should normally be called when standing in the front
 func front_action():

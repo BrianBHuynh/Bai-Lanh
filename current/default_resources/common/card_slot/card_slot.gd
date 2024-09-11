@@ -32,7 +32,7 @@ func _process(_delta: float) -> void:
 
 func action():
 	if shift:
-		cards.shift(cards_list.front())
+		cards_list.front().shift()
 
 func place_action(card):
 	pass

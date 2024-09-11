@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c665w5bwl7uxl"]
+[gd_scene load_steps=11 format=3 uid="uid://c665w5bwl7uxl"]
 
 [ext_resource type="Script" path="res://Debug/testing.gd" id="1_qugj8"]
 [ext_resource type="Script" path="res://Debug/game_state_checker.gd" id="2_yv8qg"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://current/default_resources/common/enemy_slot/card_slot.tscn" id="6_8o2lf"]
 [ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://current/default_resources/common/card_deck/card_slot.tscn" id="7_o657w"]
 [ext_resource type="PackedScene" uid="uid://blk7mwnwy84ux" path="res://current/default_resources/common/next_card_preview/card_slot.tscn" id="8_prltj"]
+[ext_resource type="PackedScene" uid="uid://bw7n1jssiq5i3" path="res://current/default_resources/template/template_card/template.tscn" id="9_xbnrv"]
+[ext_resource type="PackedScene" uid="uid://cvqa650h56av4" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.tscn" id="10_pv8tr"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qugj8")
@@ -62,3 +64,12 @@ position = Vector2(742, 259)
 
 [node name="CardDeck2" parent="." instance=ExtResource("7_o657w")]
 position = Vector2(185, 532)
+
+[node name="Area2D" parent="." instance=ExtResource("9_xbnrv")]
+position = Vector2(372, 179)
+card_health = 1000.0
+
+[node name="Card" parent="." instance=ExtResource("10_pv8tr")]
+position = Vector2(444, 398)
+card_health = 6000.0
+card_friendly = false
