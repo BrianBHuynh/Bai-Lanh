@@ -2,6 +2,7 @@ extends Node2D
 
 var stacking_distance = 50
 
+#region Place slot
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 func place_slot_player(card: Card) -> void:
 	if is_instance_valid(card.slot):
@@ -73,7 +74,9 @@ func place_slot_opposing(card: Card) -> void:
 		Combat.opposing_party.append(card)
 	fix_slot(card.slot)
 	card.current_position = card.slot.position
+#endregion
 
+#region Add/Remove Slot
 #Places the location of the Slot into slot ref and changes its color, incriments the slot int
 func add_slot(card: Card, slot: Node2D) -> void:
 	if slot.is_in_group('slot') and slot.accepting:
@@ -101,6 +104,7 @@ func remove_slot(card: Card, slot) -> void:
 func remove_card(card: Card, slot) -> void:
 	if card.new_slot == slot:
 		card.new_slot = null
+#endregion
 
 #Moves card to front, calculates offset and initial position of card, sets dragging to be true
 func pickup(card: Card) -> void:

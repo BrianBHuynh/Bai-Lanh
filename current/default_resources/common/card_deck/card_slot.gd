@@ -14,7 +14,7 @@ var filled = false
 var cards_list: Array = []
 var accepting: bool = false
 
-var max_cap = 500
+var max_cap = 7
 var drawn = 0
 
 var default_color = Color(Color.GRAY, .7)

@@ -34,17 +34,16 @@ func life_steal_lesser(card, target, damage) -> void:
 func multi_phys_attack(card, target, phys_attack_stat, diceMax, times) -> void:
 	if is_instance_valid(target):
 		Combat.combat_board = Combat.combat_board + card.title + " lets out a flurry of blows! \n"
-		var attacks = []
 		for i in times:
-			var change = (Combat.RNG.randi_range(1,10)+phys_attack_stat) - target.phys_defense
-			if change > 0:
-				target.health = target.health - change
-				Combat.combat_board = Combat.combat_board + target.title +  " -" + str(change) + " health\n"
-				MoveLib.move_then_return(card, target.current_position)
-			Combat.combat_board = Combat.combat_board + "They have " + str(target.health) + " health left! \n"
-			if target.health <= 0:
-				Combat.kill(target)
-				Combat.combat_board = Combat.combat_board + target.title + " died! \n"
+				var change = (Combat.RNG.randi_range(1,diceMax)+phys_attack_stat) - target.phys_defense
+				if change > 0:
+					target.health = target.health - change
+					Combat.combat_board = Combat.combat_board + target.title +  " -" + str(change) + " health\n"
+					MoveLib.move_then_return(card, target.current_position)
+				Combat.combat_board = Combat.combat_board + "They have " + str(target.health) + " health left! \n"
+		if target.health <= 0:
+			Combat.kill(target)
+			Combat.combat_board = Combat.combat_board + target.title + " died! \n"
 
 func baton_pass(card, target) -> void:
 	target.action()

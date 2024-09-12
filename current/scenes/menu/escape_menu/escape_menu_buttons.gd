@@ -7,7 +7,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func _on_button_3_pressed() -> void:
@@ -22,12 +22,12 @@ func _on_button_4_pressed() -> void:
 		Combat.next_turn()
 
 func _on_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://current/scenes/Combat/Combat_small.tscn")
+	get_tree().change_scene_to_file("res://current/scenes/combat/combat_small.tscn")
 	get_tree().root.remove_child(Controls.menu)
 	Controls.menu_open = false
 
 
 func _on_button_2_pressed() -> void:
-	get_tree().change_scene_to_file("res://Debug/testing.tscn")
+	get_tree().change_scene_to_file("res://debug/testing.tscn")
 	get_tree().root.remove_child(Controls.menu)
 	Controls.menu_open = false
