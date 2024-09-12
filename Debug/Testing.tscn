@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c665w5bwl7uxl"]
+[gd_scene load_steps=9 format=3 uid="uid://c665w5bwl7uxl"]
 
 [ext_resource type="Script" path="res://Debug/testing.gd" id="1_qugj8"]
 [ext_resource type="Script" path="res://Debug/game_state_checker.gd" id="2_yv8qg"]
@@ -8,8 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://current/default_resources/common/enemy_slot/card_slot.tscn" id="6_8o2lf"]
 [ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://current/default_resources/common/card_deck/card_slot.tscn" id="7_o657w"]
 [ext_resource type="PackedScene" uid="uid://blk7mwnwy84ux" path="res://current/default_resources/common/next_card_preview/card_slot.tscn" id="8_prltj"]
-[ext_resource type="PackedScene" uid="uid://bw7n1jssiq5i3" path="res://current/default_resources/template/template_card/template.tscn" id="9_xbnrv"]
-[ext_resource type="PackedScene" uid="uid://db8qojd0nkjhe" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.tscn" id="10_pv8tr"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qugj8")
@@ -65,11 +63,62 @@ position = Vector2(742, 259)
 [node name="CardDeck2" parent="." instance=ExtResource("7_o657w")]
 position = Vector2(185, 532)
 
-[node name="Area2D" parent="." instance=ExtResource("9_xbnrv")]
-position = Vector2(372, 179)
-card_health = 1000.0
+[node name="EnemySlot2" parent="." instance=ExtResource("6_8o2lf")]
+position = Vector2(1227, 169)
 
-[node name="Card" parent="." instance=ExtResource("10_pv8tr")]
-position = Vector2(444, 398)
-card_health = 6000.0
-card_friendly = false
+[node name="EnemySlot3" parent="." instance=ExtResource("6_8o2lf")]
+position = Vector2(1444, 156)
+
+[node name="EnemySlot4" parent="." instance=ExtResource("6_8o2lf")]
+position = Vector2(1629, 124)
+
+[node name="EnemySlot5" parent="." instance=ExtResource("6_8o2lf")]
+position = Vector2(1819, 196)
+
+[node name="CardSlot2" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(1076, 906)
+
+[node name="CardSlot3" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(1229, 899)
+
+[node name="CardSlot4" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(1375, 899)
+
+[node name="CardSlot5" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(1522, 898)
+
+[node name="CardSlot6" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(1668, 899)
+
+[node name="EnemySlot6" parent="." instance=ExtResource("6_8o2lf")]
+position = Vector2(893, 492)
+
+[node name="EnemySlot7" parent="." instance=ExtResource("6_8o2lf")]
+position = Vector2(1111, 511)
+
+[node name="EnemySlot8" parent="." instance=ExtResource("6_8o2lf")]
+position = Vector2(1373, 524)
+
+[node name="EnemySlot9" parent="." instance=ExtResource("6_8o2lf")]
+position = Vector2(1601, 524)
+
+[node name="EnemySlot10" parent="." instance=ExtResource("6_8o2lf")]
+position = Vector2(1835, 549)
+
+[node name="CardSlot7" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(776, 894)
+
+[node name="CardSlot8" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(1824, 907)
+
+[node name="CardSlot9" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(418, 479)
+
+[node name="CardSlot10" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(573, 479)
+
+[node name="CardSlot11" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(718, 518)
+
+[node name="CardSlot12" parent="." instance=ExtResource("3_we5mw")]
+position = Vector2(78, 907)

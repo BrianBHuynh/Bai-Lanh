@@ -31,12 +31,12 @@ func life_steal_lesser(card, target, damage) -> void:
 			Combat.kill(target)
 			Combat.combat_board = Combat.combat_board + " Killing them! \n"
 
-func multi_phys_attack(card, target, phys_attack, diceMax, times) -> void:
+func multi_phys_attack(card, target, phys_attack_stat, diceMax, times) -> void:
 	if is_instance_valid(target):
 		Combat.combat_board = Combat.combat_board + card.title + " lets out a flurry of blows! \n"
 		var attacks = []
 		for i in times:
-			var change = (Combat.RNG.randi_range(1,10)+phys_attack) - target.phys_defense
+			var change = (Combat.RNG.randi_range(1,10)+phys_attack_stat) - target.phys_defense
 			if change > 0:
 				target.health = target.health - change
 				Combat.combat_board = Combat.combat_board + target.title +  " -" + str(change) + " health\n"

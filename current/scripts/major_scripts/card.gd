@@ -175,7 +175,7 @@ func shift() -> void:
 		phys_defense = phys_defense + shifted_phys_defense 
 		mag_defense = mag_defense + shifted_mag_defense 
 		speed = speed + shifted_speed
-		tags.append(shifted_tags)
+		tags.append_array(shifted_tags)
 	else:
 		shifted = false
 		health = health - shifted_health
@@ -217,7 +217,7 @@ func pos_apply() -> void:
 	phys_defense = phys_defense + pos_phys_defense 
 	mag_defense = mag_defense + pos_mag_defense 
 	speed = speed + pos_speed
-	tags.append(pos_tags)
+	tags.append_array(pos_tags)
 	Combat.update_initiative(self)
 
 func pos_remove() -> void:

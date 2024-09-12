@@ -18,7 +18,7 @@ func _on_button_3_pressed() -> void:
 
 
 func _on_button_4_pressed() -> void:
-	for i in 10:
+	for i in 10000:
 		Combat.next_turn()
 
 func _on_button_pressed() -> void:
