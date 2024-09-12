@@ -19,7 +19,7 @@ var default_size = scale
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	combat.slots.append(self)
+	Combat.slots.append(self)
 	modulate = Color(Color.ALICE_BLUE, .7)
 
 

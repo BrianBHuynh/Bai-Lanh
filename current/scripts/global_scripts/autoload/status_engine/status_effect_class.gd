@@ -1,11 +1,11 @@
 extends Node
-class_name status_effect
+class_name StatusEffect
 
 var status: String
 var turns: int
 var activation: String
 var potency: int
-var card
+var card: Card
 
 func _init(status, turns, activation, potency, card) -> void:
 	self.status = status

@@ -1,3 +1,3 @@
 extends Node
 
-func 
+var status_effects: Array[StatusEffect] = []

@@ -21,7 +21,7 @@ var default_size = scale
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	combat.slots.append(self)
+	Combat.slots.append(self)
 	modulate = Color(Color.RED, .7)
 
 
@@ -33,19 +33,18 @@ func _process(_delta: float) -> void:
 
 func _on_button_pressed() -> void:
 	if cards_list.size() < max_cap:
-		var summon = card_reg.enemy_list.pick_random()
+		var summon = CardReg.enemy_list.pick_random()
 		var instance = summon.instantiate()
 		instance.position = position
 		get_parent().add_child(instance)
 		instance.new_slot = self
 		instance.friendly = false
-		cards.place_slot_opposing(instance)
-		combat.add_initiative(instance)
-		cards.fix_slot(self)
+		Cards.place_slot_opposing(instance)
+		Cards.fix_slot(self)
 
 func action():
 	if shift:
-		cards.shift(cards_list.front())
+		Cards.shift(cards_list.front())
 
 func place_action(card):
 	pass

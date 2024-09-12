@@ -1,6 +1,6 @@
 extends Node
 
-var menu
+var menu: Node
 var menu_open = false
 
 # Called when the node enters the scene tree for the first time.

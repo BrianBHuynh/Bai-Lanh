@@ -1,5 +1,6 @@
 extends Card
 
+#region Card stats
 @export var card_title: String = "Card"
 
 @export var card_health: float = 150.0 #Health amount of card
@@ -8,7 +9,7 @@ extends Card
 @export var card_phys_defense: int = 10 #Physical defense of the card
 @export var card_mag_defense: int = 10 #Magical defense of the card
 @export var card_speed: int = 10 #Speed of the card
-@export var card_tags: Array = []
+@export var card_tags: Array[String] = []
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = 0.0
@@ -17,7 +18,7 @@ extends Card
 @export var card_shifted_phys_defense: int = 0
 @export var card_shifted_mag_defense: int = 0
 @export var card_shifted_speed: int = 0
-@export var card_shifted_tags: Array = []
+@export var card_shifted_tags: Array[String] = []
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 0.0
@@ -26,17 +27,19 @@ extends Card
 @export var card_pos_phys_defense: int = 0
 @export var card_pos_mag_defense: int = 0
 @export var card_pos_speed: int = 0
-@export var card_pos_tags: Array = []
+@export var card_pos_tags: Array[String] = []
 
 #Position stats/effects should only be applied when the play button is pressed!
-@export var card_pref_pos: Array = [] #Prefered possitions of the car
+@export var card_pref_pos: Array[String] = [] #Prefered possitions of the car
 
 @export var card_default_color: Color = modulate #for default color
 @export var card_default_size: Vector2 = Vector2(1,1) #Default size for the ca
 
 @export var card_shifted: bool = false
 @export var card_friendly: bool = true
+#endregion
 
+#region Card initialization
 func _ready() -> void:
 	title = card_title
 	health = card_health
@@ -67,22 +70,24 @@ func _ready() -> void:
 		shift()
 	friendly = card_friendly
 	initialize()
+#endregion
 
+#region Actions
 func default_action():
 	var enemy = get_target()
-	var damage = (combat.RNG.randi_range(1,10)+phys_attack)
-	var ability = combat.RNG.randi_range(1,5)
+	var damage = (Combat.RNG.randi_range(1,10)+phys_attack)
+	var ability = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
-			combat_lib.phys_attack(self, enemy, damage)
+			CombatLib.phys_attack(self, enemy, damage)
 		2:
-			combat_lib.phys_attack(self, enemy, damage+1)
+			CombatLib.phys_attack(self, enemy, damage+1)
 		3:
-			combat_lib.phys_attack(self, enemy, damage)
+			CombatLib.phys_attack(self, enemy, damage)
 		4: 
-			combat_lib.phys_attack(self, enemy, damage)
+			CombatLib.phys_attack(self, enemy, damage)
 		5:
-			combat_lib.phys_attack(self, enemy, damage)
+			CombatLib.phys_attack(self, enemy, damage)
 
 #Should normally be called when standing in the front
 #func front_action():
@@ -111,42 +116,45 @@ func default_action():
 #Should normally be called when standing in the center
 #func shifted_back_action():
 #	default_action()
+#endregion
 
+#region Targeting
 #func get_target():
 #	if friendly:
 #		if not shifted:
 #			if pos == "front":
-#				return combat.get_target(combat.opposing_party)
+#				return Combat.get_target(Combat.opposing_party)
 #			elif pos == "center":
-#				return combat.get_target(combat.opposing_party)
+#				return Combat.get_target(Combat.opposing_party)
 #			elif pos == "back":
-#				return combat.get_target(combat.opposing_party)
+#				return Combat.get_target(Combat.opposing_party)
 #			else:
-#				return combat.get_target(combat.opposing_party)
+#				return Combat.get_target(Combat.opposing_party)
 #		else:
 #			if pos == "front":
-#				return combat.get_target(combat.opposing_party)
+#				return Combat.get_target(Combat.opposing_party)
 #			elif pos == "center":
-#				return combat.get_target(combat.opposing_party)
+#				return Combat.get_target(Combat.opposing_party)
 #			elif pos == "back":
-#				return combat.get_target(combat.opposing_party)
+#				return Combat.get_target(Combat.opposing_party)
 #			else:
-#				return combat.get_target(combat.opposing_party)
+#				return Combat.get_target(Combat.opposing_party)
 #	else:
 #		if not shifted:
 #			if pos == "front":
-#				return combat.get_target(combat.player_party)
+#				return Combat.get_target(Combat.player_party)
 #			elif pos == "center":
-#				return combat.get_target(combat.player_party)
+#				return Combat.get_target(Combat.player_party)
 #			elif pos == "back":
-#				return combat.get_target(combat.player_party)
+#				return Combat.get_target(Combat.player_party)
 #			else:
-#				return combat.get_target(combat.player_party)
+#				return Combat.get_target(Combat.player_party)
 #		else:
 #			if pos == "front":
-#				return combat.get_target(combat.player_party)
+#				return Combat.get_target(Combat.player_party)
 #			elif pos == "center":
 #			elif pos == "back":
-#				return combat.get_target(combat.player_party)
+#				return Combat.get_target(Combat.player_party)
 #			else:
-#				return combat.get_target(combat.player_party)
+#				return Combat.get_target(Combat.player_party)
+#endregion

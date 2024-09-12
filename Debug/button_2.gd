@@ -11,6 +11,6 @@ func _process(delta: float) -> void:
 	pass
 
 func _pressed() -> void:
-	combat.clear_data()
+	Combat.clear_data()
 	await get_tree().create_timer(.5).timeout
 	get_tree().change_scene_to_file("res://Debug/Testing.tscn")

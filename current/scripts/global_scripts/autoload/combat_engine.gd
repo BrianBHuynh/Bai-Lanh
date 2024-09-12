@@ -1,42 +1,43 @@
-extends Node2D
+extends Node
 
 #All slots are initialized here at the start of the scene
-var slots = [] 
+var slots: Array = [] 
 
 #Players and Opposing parties
-var player_party: Array = []
-var opposing_party: Array = []
+var player_party: Array[Card] = []
+var opposing_party: Array[Card] = []
 
 #Player positions
-var player_front: Array = []
-var player_center: Array = []
-var player_back: Array = []
+var player_front: Array[Card] = []
+var player_center: Array[Card] = []
+var player_back: Array[Card] = []
+
 #Player roles
-var player_tanks: Array = []
-var player_dps: Array = []
-var player_support: Array = []
+var player_tanks: Array[Card] = []
+var player_dps: Array[Card] = []
+var player_support: Array[Card] = []
 
 #Opponent positions
-var opposing_front: Array = []
-var opposing_center: Array = []
-var opposing_back: Array = []
+var opposing_front: Array[Card] = []
+var opposing_center: Array[Card] = []
+var opposing_back: Array[Card] = []
 
 #Opponent roles
-var opposing_tanks: Array = []
-var opposing_dps: Array = []
-var opposing_support: Array = []
+var opposing_tanks: Array[Card] = []
+var opposing_dps: Array[Card] = []
+var opposing_support: Array[Card] = []
 
 #Turn order
-var initiative: Array = []
+var initiative: Array[Card] = []
 
 #Used for complex agro calculation
-var agro_calc: Array = []
+var agro_calc: Array[Card] = []
 
 #RNG is pain
-var RNG = RandomNumberGenerator.new()
+var RNG: RandomNumberGenerator = RandomNumberGenerator.new()
 
-var combat_board = ""
-var arrays: Array = [slots, player_party, opposing_party, player_front, player_center, player_back, player_tanks, player_dps, player_support, opposing_front, opposing_center, opposing_back, opposing_tanks, opposing_dps, opposing_support, initiative, agro_calc]
+var combat_board:String = ""
+var arrays: Array[Array] = [slots, player_party, opposing_party, player_front, player_center, player_back, player_tanks, player_dps, player_support, opposing_front, opposing_center, opposing_back, opposing_tanks, opposing_dps, opposing_support, initiative, agro_calc]
 #returns next in initiative, if initiative is empty repopulates it
 func get_initiative():
 	if initiative.is_empty():
@@ -50,9 +51,10 @@ func get_target(array):
 	return agro_calc.pop_front()
 
 func add_initiative(card):
-	for i in card.speed:
-		initiative.append(card)
-		initiative.shuffle()
+	if not initiative.has(card):
+		for i in card.speed:
+			initiative.append(card)
+			initiative.shuffle()
 
 func remove_initiative(card):
 	while initiative.has(card):

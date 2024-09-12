@@ -8,7 +8,7 @@ func place_slot_player(card: Card):
 		card.slot.cards_list.erase(card)
 		fix_slot(card.slot)
 		card.remove_slot_effects()
-	move_lib.move(card, card.new_slot.position)
+	MoveLib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
 	card.slot.scale = Vector2(1,1)
@@ -20,9 +20,9 @@ func place_slot_player(card: Card):
 	if card.pref_pos.has(card.pos):
 		card.pos_apply()
 	card.apply_slot_effects()
-	if not combat.player_party.has(card):
-		combat.player_party.append(card)
-		combat.add_initiative(card)
+	if not Combat.player_party.has(card):
+		Combat.player_party.append(card)
+		Combat.add_initiative(card)
 	fix_slot(card.slot)
 	card.current_position = card.slot.position
 	card.slot.place_action(card)
@@ -33,7 +33,7 @@ func place_draw_pile(card: Card):
 		card.slot.cards_list.erase(card)
 		fix_slot(card.slot)
 		card.remove_slot_effects()
-	move_lib.move(card, card.new_slot.position)
+	MoveLib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
 	card.slot.scale = Vector2(1,1)
@@ -54,7 +54,7 @@ func place_slot_opposing(card: Card):
 		card.slot.cards.erase(card)
 		fix_slot(card.slot)
 		card.remove_slot_effects()
-	move_lib.move(card, card.new_slot.position)
+	MoveLib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
 	card.default_color = Color(Color.PALE_VIOLET_RED)
@@ -68,8 +68,9 @@ func place_slot_opposing(card: Card):
 	if card.pref_pos.has(card.pos):
 		card.pos_apply()
 	card.apply_slot_effects()
-	if not combat.opposing_party.has(card):
-		combat.opposing_party.append(card)
+	Combat.add_initiative(card)
+	if not Combat.opposing_party.has(card):
+		Combat.opposing_party.append(card)
 	fix_slot(card.slot)
 	card.current_position = card.slot.position
 
@@ -104,12 +105,12 @@ func remove_card(card: Card, slot):
 #Moves card to front, calculates offset and initial position of card, sets dragging to be true
 func pickup(card: Card):
 	card.offset = get_global_mouse_position() - card.global_position #dubious
-	global_vars.dragging_card = true
+	GlobalVars.dragging_card = true
 	card.modulate = Color(Color.LIGHT_GOLDENROD, 1.5);
 
 func fix_slot(slot: Node2D):
 	var temp = 0
 	for elem in slot.cards_list:
 		elem.move_to_front()
-		move_lib.move(elem, slot.global_position + Vector2(0,stacking_distance)*temp)
+		MoveLib.move(elem, slot.global_position + Vector2(0,stacking_distance)*temp)
 		temp = temp + 1
