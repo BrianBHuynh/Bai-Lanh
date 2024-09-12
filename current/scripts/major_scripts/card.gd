@@ -103,13 +103,13 @@ func _on_mouse_entered() -> void:
 	highlight()
 
 func _on_mouse_exited() -> void:
-	if not inspected:
+	if not inspected and not held:
 		normalize()
 #endregion
 
 #region Movement and other card functions
 
-func hold_card():
+func hold_card() -> void:
 	MoveLib.move_fast(self, get_global_mouse_position() - offset)
 	move_to_front()
 
@@ -136,7 +136,7 @@ func uninspect() -> void:
 	MoveLib.change_scale(self, default_size)
 	inspected = false
 
-func release_card():
+func release_card() -> void:
 	if is_instance_valid(new_slot) and new_slot.accepting and friendly:
 		Cards.place_slot_player(self)
 		Cards.fix_slot(slot)
@@ -145,7 +145,7 @@ func release_card():
 		new_slot = null
 
 #returns card back to old position when picking up
-func reject():
+func reject() -> void:
 	if is_instance_valid(slot):
 		Cards.fix_slot(slot)
 	else:
@@ -160,13 +160,13 @@ func highlight():
 		if Vector2(1.2,1.2) > scale:
 			MoveLib.change_scale(self, Vector2(1.2,1.2))
 
-func normalize():
+func normalize() -> void:
 	modulate = default_color
 	MoveLib.change_scale(self, default_size)
 #endregion
 
 #region Stats update
-func shift():
+func shift() -> void:
 	if not shifted:
 		shifted = true
 		health = health + shifted_health
@@ -189,7 +189,7 @@ func shift():
 	Combat.update_initiative(self)
 
 
-func apply_slot_effects():
+func apply_slot_effects() -> void:
 	health = health + slot.health
 	phys_attack = phys_attack + slot.phys_attack 
 	mag_attack = mag_attack + slot.mag_attack 
@@ -199,7 +199,7 @@ func apply_slot_effects():
 	tags.append_array(slot.tags)
 	Combat.update_initiative(self)
 
-func remove_slot_effects():
+func remove_slot_effects() -> void:
 	health = health - slot.health
 	phys_attack = phys_attack - slot.phys_attack
 	mag_attack = mag_attack - slot.mag_attack 
@@ -210,7 +210,7 @@ func remove_slot_effects():
 		tags.erase(slot.tags[i])
 	Combat.update_initiative(self)
 
-func pos_apply():
+func pos_apply() -> void:
 	health = health + pos_health
 	phys_attack = phys_attack + pos_phys_attack 
 	mag_attack = mag_attack + pos_mag_attack 
@@ -220,7 +220,7 @@ func pos_apply():
 	tags.append(pos_tags)
 	Combat.update_initiative(self)
 
-func pos_remove():
+func pos_remove() -> void:
 	health = health - pos_health
 	phys_attack = phys_attack - pos_phys_attack 
 	mag_attack = mag_attack - pos_mag_attack 
@@ -234,7 +234,7 @@ func pos_remove():
 
 #region Combat
 #function is formatted this way so that it is readable and customizable, keeping it in per card allows for more control
-func get_target():
+func get_target() -> Card:
 	if friendly:
 		if not shifted:
 			if pos == "front":
@@ -274,18 +274,18 @@ func get_target():
 			else:
 				return Combat.get_target(Combat.player_party)
 
-func damage_physical(damage):
+func damage_physical(damage)-> void:
 	if (damage - phys_defense) > 0:
 		health = health-(damage-phys_defense)
 
-func damage_magical(damage):
+func damage_magical(damage)-> void:
 	if (damage - mag_defense) > 0:
 		health = health-(damage-mag_defense)
 
-func damage_true(damage):
+func damage_true(damage)-> void:
 	health = health-damage
 
-func action():
+func action() -> void:
 	if is_instance_valid(slot):
 		slot.action()
 	if shifted:
@@ -307,34 +307,34 @@ func action():
 		else:
 			default_action()
 
-func default_action():
+func default_action() -> void:
 	pass
 
 #Should normally be called when standing in the front
-func front_action():
+func front_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the center
-func center_action():
+func center_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the center
-func back_action():
+func back_action() -> void:
 	default_action()
 
 #Should normally never be called as long as the card is in a slot
-func shifted_default_action():
+func shifted_default_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the front
-func shifted_front_action():
+func shifted_front_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the center
-func shifted_center_action():
+func shifted_center_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the center
-func shifted_back_action():
+func shifted_back_action() -> void:
 	default_action()
 #endregion

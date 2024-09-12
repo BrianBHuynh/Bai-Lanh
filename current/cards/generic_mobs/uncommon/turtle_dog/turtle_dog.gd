@@ -73,7 +73,7 @@ func _ready() -> void:
 #endregion
 
 #region Actions
-func default_action():
+func default_action() -> void:
 	var enemy = get_target()
 	var damage = (Combat.RNG.randi_range(1,10)+phys_attack)
 	var ability = Combat.RNG.randi_range(1,5)
@@ -90,36 +90,36 @@ func default_action():
 			CombatLib.phys_attack(self, enemy, damage)
 
 #Should normally be called when standing in the front
-#func front_action():
+#func front_action() -> void:
 #	default_action()
 
 #Should normally be called when standing in the center
-#func center_action():
+#func center_action() -> void:
 #	default_action()
 
 #Should normally be called when standing in the center
-#func back_action():
+#func back_action() -> void:
 #	default_action()
 
 #Should normally never be called as long as the card is in a slot
-#func shifted_default_action():
+#func shifted_default_action() -> void:
 #	default_action()
 
 #Should normally be called when standing in the front
-#func shifted_front_action():
+#func shifted_front_action() -> void:
 #	default_action()
 
 #Should normally be called when standing in the center
-#func shifted_center_action():
+#func shifted_center_action() -> void:
 #	default_action()
 
 #Should normally be called when standing in the center
-#func shifted_back_action():
+#func shifted_back_action() -> void:
 #	default_action()
 #endregion
 
 #region Targeting
-#func get_target():
+#func get_target() -> void:
 #	if friendly:
 #		if not shifted:
 #			if pos == "front":

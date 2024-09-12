@@ -38,34 +38,35 @@ var RNG: RandomNumberGenerator = RandomNumberGenerator.new()
 
 var combat_board:String = ""
 var arrays: Array[Array] = [slots, player_party, opposing_party, player_front, player_center, player_back, player_tanks, player_dps, player_support, opposing_front, opposing_center, opposing_back, opposing_tanks, opposing_dps, opposing_support, initiative, agro_calc]
+
 #returns next in initiative, if initiative is empty repopulates it
-func get_initiative():
+func get_initiative() -> Card:
 	if initiative.is_empty():
 		pass
 	return initiative.pick_random()
 
-func get_target(array):
+func get_target(array) -> Card:
 	agro_calc.clear()
 	agro_calc.append_array(array)
 	agro_calc.shuffle()
 	return agro_calc.pop_front()
 
-func add_initiative(card):
+func add_initiative(card) -> void:
 	if not initiative.has(card):
 		for i in card.speed:
 			initiative.append(card)
 			initiative.shuffle()
 
-func remove_initiative(card):
+func remove_initiative(card) -> void:
 	while initiative.has(card):
 		initiative.erase(card)
 
-func update_initiative(card):
+func update_initiative(card) -> void:
 	if initiative.has(card):
 		remove_initiative(card)
 		add_initiative(card)
 
-func next_turn():
+func next_turn() -> void:
 	var curChar = get_initiative()
 	if is_instance_valid(curChar):
 		combat_board = ""
@@ -73,14 +74,14 @@ func next_turn():
 			curChar.action()
 
 #Applies slot stats and effects
-func slot_apply(card):
+func slot_apply(card) -> void:
 	card.health = card.health + card.cur_slot.slot_health
 	card.attack = card.attack + card.cur_slot.slot_attack
 	card.defense = card.defense + card.cur_slot.slot_defense
 	card.speed = card.speed + card.cur_slot.slot_speed
 	card.cur_slot.activate()
 
-func pos_apply(card):
+func pos_apply(card) -> void:
 	if card.pref_pos.has(card.cur_slot.pos):
 		card.health = card.health + card.pos_health
 		card.attack = card.attack + card.pos_attack
@@ -88,7 +89,7 @@ func pos_apply(card):
 		card.speed = card.speed + card.pos_speed
 		card.posEffect(card.cur_slot.pos)
 
-func kill(card):
+func kill(card) -> void:
 	if is_instance_valid(card):
 		for array in arrays:
 			while array.has(card):
@@ -99,7 +100,7 @@ func kill(card):
 		await get_tree().create_timer(.125).timeout
 		card.queue_free()
 
-func clear_data():
+func clear_data() -> void:
 	for array in arrays:
 		array.clear()
 	await get_tree().create_timer(.125).timeout

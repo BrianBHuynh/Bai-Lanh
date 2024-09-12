@@ -1,6 +1,6 @@
 extends Node
 
-func phys_attack(card, target, damage):
+func phys_attack(card, target, damage) -> void:
 	if is_instance_valid(target):
 		var change = (damage-target.phys_defense)
 		if change > 0:
@@ -11,13 +11,13 @@ func phys_attack(card, target, damage):
 			Combat.kill(target)
 			Combat.combat_board = Combat.combat_board + " Killing them!\n"
 
-func lock_down(card, target):
+func lock_down(card, target) -> void:
 	if is_instance_valid(target):
 		MoveLib.move_then_return(card, target.current_position)
 		Combat.initiative.erase(target)
 		Combat.combat_board = Combat.combat_board + target.title + " has been locked down by " + card.title + "\n"
 
-func life_steal_lesser(card, target, damage):
+func life_steal_lesser(card, target, damage) -> void:
 	if is_instance_valid(target):
 		var change = (damage-target.defense)
 		if change > 0:
@@ -31,7 +31,7 @@ func life_steal_lesser(card, target, damage):
 			Combat.kill(target)
 			Combat.combat_board = Combat.combat_board + " Killing them! \n"
 
-func multi_phys_attack(card, target, phys_attack, diceMax, times):
+func multi_phys_attack(card, target, phys_attack, diceMax, times) -> void:
 	if is_instance_valid(target):
 		Combat.combat_board = Combat.combat_board + card.title + " lets out a flurry of blows! \n"
 		var attacks = []
@@ -46,6 +46,6 @@ func multi_phys_attack(card, target, phys_attack, diceMax, times):
 				Combat.kill(target)
 				Combat.combat_board = Combat.combat_board + target.title + " died! \n"
 
-func baton_pass(card, target):
+func baton_pass(card, target) -> void:
 	target.action()
 	Combat.combat_board = Combat.combat_board + card.title + "passes off the baton to " + target.title + "\n"
