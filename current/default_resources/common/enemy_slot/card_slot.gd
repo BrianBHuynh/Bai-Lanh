@@ -39,6 +39,7 @@ func _on_button_pressed() -> void:
 		get_parent().add_child(instance)
 		instance.new_slot = self
 		instance.friendly = false
+		instance.initialize()
 		Cards.place_slot_opposing(instance)
 		Cards.fix_slot(self)
 
