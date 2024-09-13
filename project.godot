@@ -11,21 +11,21 @@ config_version=5
 [application]
 
 config/name="Bai Lanh"
-run/main_scene="res://debug/testing.tscn"
+run/main_scene="res://temp_debug/testing.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GlobalVars="*res://current/scripts/global_scripts/autoload/global_vars.gd"
-Combat="*res://current/scripts/global_scripts/autoload/combat_engine.gd"
-MoveLib="*res://current/scripts/global_scripts/autoload/move_lib.gd"
-Cards="*res://current/scripts/global_scripts/autoload/card_engine.gd"
-CombatLib="*res://current/scripts/global_scripts/autoload/combat_lib.gd"
-CardReg="*res://current/scripts/global_scripts/autoload/card_registry.gd"
-Controls="*res://current/scripts/global_scripts/autoload/controls.gd"
-Status="*res://current/scripts/global_scripts/autoload/status_engine/status_engine.gd"
-StatusLib="*res://current/scripts/global_scripts/autoload/status_engine/status_lib.gd"
+GlobalVars="*res://temp_current/scripts/global_scripts/autoload/global_vars.gd"
+Combat="*res://temp_current/scripts/global_scripts/autoload/combat_engine.gd"
+MoveLib="*res://temp_current/scripts/global_scripts/autoload/move_lib.gd"
+Cards="*res://temp_current/scripts/global_scripts/autoload/card_engine.gd"
+CombatLib="*res://temp_current/scripts/global_scripts/autoload/combat_lib.gd"
+CardReg="*res://temp_current/scripts/global_scripts/autoload/card_registry.gd"
+Controls="*res://temp_current/scripts/global_scripts/autoload/controls.gd"
+Status="*res://temp_current/scripts/global_scripts/autoload/status_engine/status_engine.gd"
+StatusLib="*res://temp_current/scripts/global_scripts/autoload/status_engine/status_lib.gd"
 
 [display]
 
