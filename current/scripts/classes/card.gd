@@ -66,7 +66,6 @@ func initialize() -> void:
 		modulate = Color(Color.PALE_VIOLET_RED)
 		await get_tree().create_timer(.25).timeout
 		shadow_hide()
-		get_child(0).modulate = Color(Color.BLACK,0)
 		Combat.opposing_party.append(self)
 		Combat.add_initiative(self)
 #endregion
@@ -87,7 +86,7 @@ func _on_button_down() -> void:
 		inspect()
 
 func _on_button_up() -> void:
-	if Input.is_action_just_released("leftClick"):
+	if Input.is_action_just_released("leftClick") and friendly:
 		on_card_released()
 		shadow_hide()
 		await get_tree().create_timer(1).timeout

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://htmk0dy1pev0"]
 
-[ext_resource type="Script" path="res://current/default_resources/template/template_card/template.gd" id="1_pj743"]
+[ext_resource type="Script" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.gd" id="1_c1khr"]
 [ext_resource type="Texture2D" uid="uid://lcbwrvrqghy7" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.png" id="2_d4fxa"]
 [ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_lb2m7"]
 
@@ -19,7 +19,7 @@ animations = [{
 size = Vector2(1348, 1918)
 
 [node name="Card" type="Area2D"]
-script = ExtResource("1_pj743")
+script = ExtResource("1_c1khr")
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.1, 0.1)

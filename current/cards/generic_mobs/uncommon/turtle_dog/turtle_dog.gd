@@ -1,7 +1,7 @@
 extends Card
 
 #region Card stats
-@export var card_title: String = "Card"
+@export var card_title: String = "Turtle Dog"
 
 @export var card_health: float = 150.0 #Health amount of card
 @export var card_phys_attack: int = 10 #physical Attack value of the card
@@ -21,19 +21,19 @@ extends Card
 @export var card_shifted_tags: Array[String] = []
 
 #Stats changed for being in the prefered positions
-@export var card_pos_health: float = 0.0
-@export var card_pos_phys_attack: int = 0
-@export var card_pos_mag_attack: int = 0
-@export var card_pos_phys_defense: int = 0
-@export var card_pos_mag_defense: int = 0
-@export var card_pos_speed: int = 0
+@export var card_pos_health: float = 25
+@export var card_pos_phys_attack: int = -1
+@export var card_pos_mag_attack: int = -1
+@export var card_pos_phys_defense: int = 2
+@export var card_pos_mag_defense: int = 2
+@export var card_pos_speed: int = -1
 @export var card_pos_tags: Array[String] = []
 
 #Position stats/effects should only be applied when the play button is pressed!
-@export var card_pref_pos: Array[String] = [] #Prefered possitions of the car
+@export var card_pref_pos: Array[String] = ["front"] #Prefered possitions of the card
 
 @export var card_default_color: Color = modulate #for default color
-@export var card_default_size: Vector2 = Vector2(1,1) #Default size for the ca
+@export var card_default_size: Vector2 = Vector2(1,1) #Default size for the card
 
 @export var card_shifted: bool = false
 @export var card_friendly: bool = true
