@@ -58,13 +58,15 @@ var friendly: bool = true
 func _ready() -> void:
 	initialize()
 
-func initialize():
+func initialize() -> void:
 	current_position = position
 	shadow_scale = get_child(0).scale
-	if friendly == false:
+	if not friendly:
 		default_color = Color(Color.PALE_VIOLET_RED)
 		modulate = Color(Color.PALE_VIOLET_RED)
 		await get_tree().create_timer(.25).timeout
+		shadow_hide()
+		get_child(0).modulate = Color(Color.BLACK,0)
 		Combat.opposing_party.append(self)
 		Combat.add_initiative(self)
 #endregion

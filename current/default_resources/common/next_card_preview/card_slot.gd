@@ -36,8 +36,8 @@ func _on_button_pressed() -> void:
 		var instance = Combat.initiative.front().duplicate()
 		instance.global_position = position
 		get_parent().add_child(instance)
-		instance.get_child(0).disabled = true
-		instance.friendly = true
+		instance.friendly = false
+		instance.initialize()
 		await get_tree().create_timer(5).timeout
 		instance.queue_free()
 		drawn = drawn-1
