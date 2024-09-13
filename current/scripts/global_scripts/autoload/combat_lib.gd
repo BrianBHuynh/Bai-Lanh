@@ -46,5 +46,13 @@ func multi_phys_attack(card, target, phys_attack_stat, diceMax, times) -> void:
 			Combat.combat_board = Combat.combat_board + target.title + " died! \n"
 
 func baton_pass(card, target) -> void:
-	target.action()
-	Combat.combat_board = Combat.combat_board + card.title + "passes off the baton to " + target.title + "\n"
+	if is_instance_valid(target):
+		target.action()
+		Combat.combat_board = Combat.combat_board + card.title + "passes off the baton to " + target.title + "\n"
+
+func poison(card, target, damage, duration) -> void:
+	if is_instance_valid(card):
+		var poison_status = StatusEffect.new("poison", duration, "every_turn", damage, target)
+		Status.apply(poison_status)
+		Combat.combat_board = Combat.combat_board + "Poison applied to" + target.title + "\n"
+		MoveLib.move_then_return(card, target.current_position)

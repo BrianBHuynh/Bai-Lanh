@@ -13,11 +13,12 @@ func poison(effect: StatusEffect, stage: int) -> void:
 		0:
 			pass
 		1:
-			effect.card.damage_magical(effect.potency)
+			effect.card.direct_damage_magical(effect.potency)
 			effect.turns = effect.turns-1
 			if effect.turns <= 0:
-				poison(effect, 2)
-		2: pass
+				Status.cleanse(effect)
+		2: 
+			Combat.combat_board = Combat.combat_board + "Poison wore off\n"
 
 func clear_poison(effect: StatusEffect) -> void:
 	pass
