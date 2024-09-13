@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://current/default_resources/template/template_card/template.gd" id="1_pj743"]
 [ext_resource type="Texture2D" uid="uid://lcbwrvrqghy7" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.png" id="2_d4fxa"]
-[ext_resource type="Script" path="res://current/scripts/common_scripts/playerData.gd" id="3_lb2m7"]
+[ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_lb2m7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6ow15"]
 animations = [{
