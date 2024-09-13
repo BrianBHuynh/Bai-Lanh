@@ -1,13 +1,15 @@
 extends Node
 
+#region Status 'dictionary'
 func call_effect(effect: StatusEffect, stage: int) -> void:
 	match effect.status:
 		"poison":
 			poison(effect, stage)
 		"sleep":
 			pass
+#endregion
 
-
+#region Statuses list
 func poison(effect: StatusEffect, stage: int) -> void:
 	match stage:
 		0:
@@ -19,6 +21,4 @@ func poison(effect: StatusEffect, stage: int) -> void:
 				Status.cleanse(effect)
 		2: 
 			Combat.combat_board = Combat.combat_board + "Poison wore off\n"
-
-func clear_poison(effect: StatusEffect) -> void:
-	pass
+#endregion

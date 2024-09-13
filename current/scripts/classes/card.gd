@@ -119,7 +119,7 @@ func _on_mouse_exited() -> void:
 
 #region Movement and other card functions
 
-func hold_card():
+func hold_card() -> void:
 	MoveLib.move_fast(self, get_global_mouse_position() - offset)
 	move_to_front()
 
@@ -146,7 +146,7 @@ func uninspect() -> void:
 	MoveLib.change_scale(self, default_size)
 	inspected = false
 
-func release_card():
+func release_card() -> void:
 	if is_instance_valid(new_slot) and new_slot.accepting and friendly:
 		Cards.place_slot_player(self)
 		Cards.fix_slot(slot)
@@ -155,13 +155,13 @@ func release_card():
 		new_slot = null
 
 #returns card back to old position when picking up
-func reject():
+func reject() -> void:
 	if is_instance_valid(slot):
 		Cards.fix_slot(slot)
 	else:
 		MoveLib.move(self, current_position)
 
-func highlight():
+func highlight() -> void:
 	if friendly:
 		modulate = Color(Color.PALE_GOLDENROD)
 		if Vector2(1.2,1.2) > scale:
@@ -171,13 +171,25 @@ func highlight():
 		if Vector2(1.2,1.2) > scale:
 			MoveLib.change_scale(self, Vector2(1.2,1.2))
 
-func normalize():
+func normalize() -> void:
 	modulate = default_color
 	MoveLib.change_scale(self, default_size)
+
+func shadow() -> void:
+	var distance: Vector2 = global_position - get_viewport_rect().size/2
+	
+	get_child(0).position = distance / 30
+	MoveLib.change_color(get_child(0), Color(Color.BLACK, .25-distance.length()/10000))
+	MoveLib.change_scale(get_child(0), shadow_scale+distance.abs()/50000)
+	shadowed = true
+
+func shadow_hide() -> void:
+	get_child(0).position = (global_position - get_viewport_rect().size/2) / 30
+	MoveLib.change_color(get_child(0), Color(Color.BLACK, 0))
 #endregion
 
 #region Stats update
-func shift():
+func shift() -> void:
 	if not shifted:
 		shifted = true
 		health = health + shifted_health
@@ -200,7 +212,7 @@ func shift():
 	Combat.update_initiative(self)
 
 
-func apply_slot_effects():
+func apply_slot_effects() -> void:
 	health = health + slot.health
 	phys_attack = phys_attack + slot.phys_attack 
 	mag_attack = mag_attack + slot.mag_attack 
@@ -210,7 +222,7 @@ func apply_slot_effects():
 	tags.append_array(slot.tags)
 	Combat.update_initiative(self)
 
-func remove_slot_effects():
+func remove_slot_effects() -> void:
 	health = health - slot.health
 	phys_attack = phys_attack - slot.phys_attack
 	mag_attack = mag_attack - slot.mag_attack 
@@ -221,7 +233,7 @@ func remove_slot_effects():
 		tags.erase(slot.tags[i])
 	Combat.update_initiative(self)
 
-func pos_apply():
+func pos_apply() -> void:
 	health = health + pos_health
 	phys_attack = phys_attack + pos_phys_attack 
 	mag_attack = mag_attack + pos_mag_attack 
@@ -231,7 +243,7 @@ func pos_apply():
 	tags.append_array(pos_tags)
 	Combat.update_initiative(self)
 
-func pos_remove():
+func pos_remove() -> void:
 	health = health - pos_health
 	phys_attack = phys_attack - pos_phys_attack 
 	mag_attack = mag_attack - pos_mag_attack 
@@ -245,7 +257,7 @@ func pos_remove():
 
 #region Combat
 #function is formatted this way so that it is readable and customizable, keeping it in per card allows for more control
-func get_target():
+func get_target() -> Card:
 	if friendly:
 		if not shifted:
 			if pos == "front":
@@ -285,31 +297,31 @@ func get_target():
 			else:
 				return Combat.get_target(Combat.player_party)
 
-func damage_physical(damage):
+func damage_physical(damage) -> void:
 	if (damage - phys_defense) > 0:
 		health = health-(damage-phys_defense)
 	check_death()
 
-func direct_damage_physical(damage):
+func direct_damage_physical(damage) -> void:
 	if (damage - phys_defense) > 0:
 		health = health-(damage-phys_defense)
 	check_death()
 
-func damage_magical(damage):
+func damage_magical(damage) -> void:
 	if (damage - mag_defense) > 0:
 		health = health-(damage-mag_defense)
 	check_death()
 
-func direct_damage_magical(damage):
+func direct_damage_magical(damage) -> void:
 	if (damage - mag_defense) > 0:
 		health = health-(damage-mag_defense)
 	check_death()
 
-func damage_true(damage):
+func damage_true(damage) -> void:
 	health = health-damage
 	check_death()
 
-func direct_damage_true(damage):
+func direct_damage_true(damage) -> void:
 	health = health-damage
 	check_death()
 
@@ -321,9 +333,9 @@ func check_death() -> void:
 		for array in Combat.arrays:
 			while array.has(self):
 				array.erase(self)
-		for slot in Combat.slots:
-			while slot.cards_list.has(self):
-				slot.cards_list.erase(self)
+		for elem in Combat.slots:
+			while elem.cards_list.has(self):
+				elem.cards_list.erase(self)
 		await get_tree().create_timer(.125).timeout
 		self.queue_free()
 
@@ -334,13 +346,13 @@ func kill() -> void:
 	for array in Combat.arrays:
 		while array.has(self):
 			array.erase(self)
-	for slot in Combat.slots:
-		while slot.cards_list.has(self):
-			slot.cards_list.erase(self)
+	for elem in Combat.slots:
+		while elem.cards_list.has(self):
+			elem.cards_list.erase(self)
 	await get_tree().create_timer(.125).timeout
 	self.queue_free()
 
-func action():
+func action() -> void:
 	if is_instance_valid(slot):
 		slot.action()
 	for status in statuses:
@@ -364,47 +376,35 @@ func action():
 		else:
 			default_action()
 
-func default_action():
+func default_action() -> void:
 	pass
 
 #Should normally be called when standing in the front
-func front_action():
+func front_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the center
-func center_action():
+func center_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the center
-func back_action():
+func back_action() -> void:
 	default_action()
 
 #Should normally never be called as long as the card is in a slot
-func shifted_default_action():
+func shifted_default_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the front
-func shifted_front_action():
+func shifted_front_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the center
-func shifted_center_action():
+func shifted_center_action() -> void:
 	default_action()
 
 #Should normally be called when standing in the center
-func shifted_back_action():
+func shifted_back_action() -> void:
 	default_action()
 
 #endregion
-
-func shadow():
-	var distance: Vector2 = global_position - get_viewport_rect().size/2
-	
-	get_child(0).position = distance / 30
-	MoveLib.change_color(get_child(0), Color(Color.BLACK, .25-distance.length()/10000))
-	MoveLib.change_scale(get_child(0), shadow_scale+distance.abs()/50000)
-	shadowed = true
-
-func shadow_hide():
-	get_child(0).position = (global_position - get_viewport_rect().size/2) / 30
-	MoveLib.change_color(get_child(0), Color(Color.BLACK, 0))

@@ -2,6 +2,7 @@ extends Node
 
 var status_effects: Array[StatusEffect] = []
 
+#region Primary status functions
 func call_status(effect: StatusEffect, stage: int) -> void:
 	if is_instance_valid(effect.card):
 		StatusLib.call_effect(effect, stage)
@@ -24,7 +25,9 @@ func apply(effect: StatusEffect) -> void:
 		"every_turn":
 			status_effects.append(effect)
 			call_status(effect, 0)
+#endregion
 
+#region Cleanse
 func cleanse_all(card: Card) -> void:
 	if is_instance_valid(card):
 		for status in card.perma_statuses:
@@ -68,3 +71,4 @@ func cleanse(status: StatusEffect):
 		status.card.statuses.erase(status)
 	elif status_effects.has(status):
 		status_effects.erase(status)
+#endregion
