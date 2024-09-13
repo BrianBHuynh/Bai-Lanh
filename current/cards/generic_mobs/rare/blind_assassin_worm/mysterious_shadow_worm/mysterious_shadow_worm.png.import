@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tfwrvq65j4fx"
-path="res://.godot/imported/player.png-51ae1842b19be2e9734d2562df905cdb.ctex"
+uid="uid://cwtk67dbnccw7"
+path="res://.godot/imported/mysterious_shadow_worm.png-c9309bea111a3ca0a614561c1f4323e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://current/cards/player/player.png"
-dest_files=["res://.godot/imported/player.png-51ae1842b19be2e9734d2562df905cdb.ctex"]
+source_file="res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/mysterious_shadow_worm.png"
+dest_files=["res://.godot/imported/mysterious_shadow_worm.png-c9309bea111a3ca0a614561c1f4323e7.ctex"]
 
 [params]
 

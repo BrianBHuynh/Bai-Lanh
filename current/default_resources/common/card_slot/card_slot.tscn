@@ -5,7 +5,7 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t0xfq"]
 
-[node name="Card_slot" type="StaticBody2D" groups=["slot"]]
+[node name="CardSlot" type="StaticBody2D" groups=["slot"]]
 script = ExtResource("1_nfg4x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
