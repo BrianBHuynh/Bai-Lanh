@@ -42,6 +42,7 @@ var new_slot #Where a possible slot is
 var offset: Vector2 #Used to store the offset between where the card is held and the mouse
 var current_position #Where the card is currently resting, set at the start to where the card enters the scene tree for the first time
 var shadowed #if a shadow is being cast
+var shadow_scale: Vector2
 var default_color: Color = modulate #for default color
 var default_size: Vector2 = Vector2(1,1) #Default size for the card
 
@@ -59,6 +60,7 @@ func _ready() -> void:
 
 func initialize():
 	current_position = position
+	shadow_scale = get_child(0).scale
 	if friendly == false:
 		default_color = Color(Color.PALE_VIOLET_RED)
 		modulate = Color(Color.PALE_VIOLET_RED)
@@ -396,10 +398,13 @@ func shifted_back_action():
 #endregion
 
 func shadow():
-	get_child(0).position = (global_position - get_viewport_rect().size/2) / 30
-	MoveLib.change_color(self.get_child(0), Color(Color.BLACK, .25))
+	var distance: Vector2 = global_position - get_viewport_rect().size/2
+	
+	get_child(0).position = distance / 30
+	MoveLib.change_color(get_child(0), Color(Color.BLACK, .25-distance.length()/10000))
+	MoveLib.change_scale(get_child(0), shadow_scale+distance.abs()/50000)
 	shadowed = true
 
 func shadow_hide():
 	get_child(0).position = (global_position - get_viewport_rect().size/2) / 30
-	MoveLib.change_color(self.get_child(0), Color(Color.BLACK, 0))
+	MoveLib.change_color(get_child(0), Color(Color.BLACK, 0))
