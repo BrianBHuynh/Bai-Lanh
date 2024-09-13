@@ -29,7 +29,8 @@ var pos_mag_defense: int = 0
 var pos_speed: int = 0
 var pos_tags: Array[String] = []
 
-var status: Array[StatusEffect] = []
+var statuses: Array[StatusEffect] = []
+var perma_statuses: Array[StatusEffect] = []
 
 #Position stats/effects should only be applied when the play button is pressed!
 var pref_pos: Array[String] = [] #Prefered possitions of the card
@@ -40,7 +41,7 @@ var new_slot #Where a possible slot is
 
 var offset: Vector2 #Used to store the offset between where the card is held and the mouse
 var current_position #Where the card is currently resting, set at the start to where the card enters the scene tree for the first time
-
+var shadowed #if a shadow is being cast
 var default_color: Color = modulate #for default color
 var default_size: Vector2 = Vector2(1,1) #Default size for the card
 
@@ -71,6 +72,9 @@ func initialize():
 func _process(_delta: float) -> void:
 	if held and friendly:
 		hold_card()
+		shadow()
+	elif shadowed:
+		shadow_hide()
 
 func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick"):
@@ -81,6 +85,10 @@ func _on_button_down() -> void:
 func _on_button_up() -> void:
 	if Input.is_action_just_released("leftClick"):
 		on_card_released()
+		shadow_hide()
+		await get_tree().create_timer(1).timeout
+		shadowed = false
+
 	else:
 		uninspect()
 
@@ -103,7 +111,7 @@ func _on_mouse_entered() -> void:
 	highlight()
 
 func _on_mouse_exited() -> void:
-	if not inspected:
+	if not inspected and not held:
 		normalize()
 #endregion
 
@@ -150,6 +158,7 @@ func reject():
 		Cards.fix_slot(slot)
 	else:
 		MoveLib.move(self, current_position)
+
 func highlight():
 	if friendly:
 		modulate = Color(Color.PALE_GOLDENROD)
@@ -277,17 +286,63 @@ func get_target():
 func damage_physical(damage):
 	if (damage - phys_defense) > 0:
 		health = health-(damage-phys_defense)
+	check_death()
+
+func direct_damage_physical(damage):
+	if (damage - phys_defense) > 0:
+		health = health-(damage-phys_defense)
+	check_death()
 
 func damage_magical(damage):
 	if (damage - mag_defense) > 0:
 		health = health-(damage-mag_defense)
+	check_death()
+
+func direct_damage_magical(damage):
+	if (damage - mag_defense) > 0:
+		health = health-(damage-mag_defense)
+	check_death()
 
 func damage_true(damage):
 	health = health-damage
+	check_death()
+
+func direct_damage_true(damage):
+	health = health-damage
+	check_death()
+
+func check_death() -> void:
+	if health <= 0:
+		for status in statuses:
+			status.queue_free()
+		statuses.clear()
+		for array in Combat.arrays:
+			while array.has(self):
+				array.erase(self)
+		for slot in Combat.slots:
+			while slot.cards_list.has(self):
+				slot.cards_list.erase(self)
+		await get_tree().create_timer(.125).timeout
+		self.queue_free()
+
+func kill() -> void:
+	for status in statuses:
+		status.queue_free()
+	statuses.clear()
+	for array in Combat.arrays:
+		while array.has(self):
+			array.erase(self)
+	for slot in Combat.slots:
+		while slot.cards_list.has(self):
+			slot.cards_list.erase(self)
+	await get_tree().create_timer(.125).timeout
+	self.queue_free()
 
 func action():
 	if is_instance_valid(slot):
 		slot.action()
+	for status in statuses:
+		Status.call_status(status, 1)
 	if shifted:
 		if pos == "front":
 			shifted_front_action()
@@ -337,4 +392,14 @@ func shifted_center_action():
 #Should normally be called when standing in the center
 func shifted_back_action():
 	default_action()
+
 #endregion
+
+func shadow():
+	get_child(0).position = (global_position - get_viewport_rect().size/2) / 30
+	MoveLib.change_color(self.get_child(0), Color(Color.BLACK, .25))
+	shadowed = true
+
+func shadow_hide():
+	get_child(0).position = (global_position - get_viewport_rect().size/2) / 30
+	MoveLib.change_color(self.get_child(0), Color(Color.BLACK, 0))

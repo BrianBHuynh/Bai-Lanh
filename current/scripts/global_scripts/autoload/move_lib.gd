@@ -6,7 +6,7 @@ var animRunning = false
 func move(card, destination) -> void:
 	tween = get_tree().create_tween()
 	animRunning = true
-	tween.tween_property(card,"position",destination,0.2).set_ease(Tween.EASE_OUT)
+	tween.tween_property(card,"position",destination,0.3).set_ease(Tween.EASE_OUT)
 	await tween.finished
 	animRunning = false
 
@@ -33,3 +33,8 @@ func change_scale(card, size) -> void:
 	if is_instance_valid(card):
 		tween = get_tree().create_tween()
 		tween.tween_property(card,"scale",size,0.1).set_ease(Tween.EASE_OUT)
+
+func change_color(card, color) -> void:
+	if is_instance_valid(card):
+		tween = get_tree().create_tween()
+		tween.tween_property(card,"modulate",color,0.15).set_ease(Tween.EASE_OUT)

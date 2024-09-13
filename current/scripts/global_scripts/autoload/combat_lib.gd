@@ -8,7 +8,7 @@ func phys_attack(card, target, damage) -> void:
 		Combat.combat_board = Combat.combat_board + card.title + " dealt " + str(damage) + " damage to " + target.title + " They have " + str(target.health) + " health left! \n"
 		MoveLib.move_then_return(card, target.current_position)
 		if target.health <= 0:
-			Combat.kill(target)
+			target.kill()
 			Combat.combat_board = Combat.combat_board + " Killing them!\n"
 
 func lock_down(card, target) -> void:
@@ -28,7 +28,7 @@ func life_steal_lesser(card, target, damage) -> void:
 			Combat.combat_board = Combat.combat_board + card.title + " tried to hit  " + target.title + " but did no damage! \n"
 		MoveLib.move_then_return(card, target.current_position)
 		if target.health <= 0:
-			Combat.kill(target)
+			target.kill()
 			Combat.combat_board = Combat.combat_board + " Killing them! \n"
 
 func multi_phys_attack(card, target, phys_attack_stat, diceMax, times) -> void:
@@ -42,7 +42,7 @@ func multi_phys_attack(card, target, phys_attack_stat, diceMax, times) -> void:
 					MoveLib.move_then_return(card, target.current_position)
 				Combat.combat_board = Combat.combat_board + "They have " + str(target.health) + " health left! \n"
 		if target.health <= 0:
-			Combat.kill(target)
+			target.kill()
 			Combat.combat_board = Combat.combat_board + target.title + " died! \n"
 
 func baton_pass(card, target) -> void:

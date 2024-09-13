@@ -1,11 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bw7n1jssiq5i3"]
+[gd_scene load_steps=7 format=3 uid="uid://bw7n1jssiq5i3"]
 
 [ext_resource type="Script" path="res://current/default_resources/template/template_card/template.gd" id="1_1clrp"]
 [ext_resource type="Texture2D" uid="uid://tfwrvq65j4fx" path="res://current/default_resources/template/template_card/template.png" id="2_sdeo6"]
 [ext_resource type="Script" path="res://current/scripts/common_scripts/playerData.gd" id="3_7uu02"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhksn"]
-size = Vector2(1348, 1918)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6ow15"]
 animations = [{
@@ -18,8 +15,18 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhksn"]
+size = Vector2(1348, 1918)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_xvxym"]
+polygon = PackedVector2Array(0, -125, 0, 0)
+
 [node name="Card" type="Area2D"]
 script = ExtResource("1_1clrp")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_6ow15")
 
 [node name="Button" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -46,6 +53,10 @@ scale = Vector2(0.05, 0.05)
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 200
 script = ExtResource("3_7uu02")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+scale = Vector2(0.432501, 0.711062)
+occluder = SubResource("OccluderPolygon2D_xvxym")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

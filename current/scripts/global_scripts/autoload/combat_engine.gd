@@ -67,6 +67,7 @@ func update_initiative(card) -> void:
 		add_initiative(card)
 
 func next_turn() -> void:
+	Status.tick()
 	var curChar = get_initiative()
 	if is_instance_valid(curChar):
 		combat_board = ""
@@ -88,17 +89,6 @@ func pos_apply(card) -> void:
 		card.defense = card.defense + card.pos_defense
 		card.speed = card.speed + card.pos_speed
 		card.posEffect(card.cur_slot.pos)
-
-func kill(card) -> void:
-	if is_instance_valid(card):
-		for array in arrays:
-			while array.has(card):
-				array.erase(card)
-		for slot in slots:
-			while slot.cards_list.has(card):
-				slot.cards_list.erase(card)
-		await get_tree().create_timer(.125).timeout
-		card.queue_free()
 
 func clear_data() -> void:
 	for array in arrays:

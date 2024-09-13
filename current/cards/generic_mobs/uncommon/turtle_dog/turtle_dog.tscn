@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://db8qojd0nkjhe"]
+[gd_scene load_steps=6 format=3 uid="uid://c515ohhmqmqw0"]
 
 [ext_resource type="Script" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.gd" id="1_c4uj8"]
 [ext_resource type="Texture2D" uid="uid://lcbwrvrqghy7" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.png" id="2_d4fxa"]
