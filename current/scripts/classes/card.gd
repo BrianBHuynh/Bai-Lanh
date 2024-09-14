@@ -3,6 +3,7 @@ class_name Card
 
 #region Card stats
 var title: String = "Card"
+var flavor_text: String
 
 var health: float = 100.0 #Health amount of card
 var phys_attack: int = 10 #physical Attack value of the card
@@ -211,6 +212,7 @@ func shift() -> void:
 		for i in shifted_tags.size():
 			tags.erase(shifted_tags[i])
 	Combat.update_initiative(self)
+	check_death()
 
 
 func apply_slot_effects() -> void:
@@ -222,6 +224,7 @@ func apply_slot_effects() -> void:
 	speed = speed + slot.speed
 	tags.append_array(slot.tags)
 	Combat.update_initiative(self)
+	check_death()
 
 func remove_slot_effects() -> void:
 	health = health - slot.health
@@ -233,6 +236,7 @@ func remove_slot_effects() -> void:
 	for i in slot.tags.size():
 		tags.erase(slot.tags[i])
 	Combat.update_initiative(self)
+	check_death()
 
 func pos_apply() -> void:
 	health = health + pos_health
@@ -243,6 +247,7 @@ func pos_apply() -> void:
 	speed = speed + pos_speed
 	tags.append_array(pos_tags)
 	Combat.update_initiative(self)
+	check_death()
 
 func pos_remove() -> void:
 	health = health - pos_health
@@ -254,6 +259,7 @@ func pos_remove() -> void:
 	for i in pos_tags.size():
 		tags.erase(pos_tags[i])
 	Combat.update_initiative(self)
+	check_death()
 #endregion
 
 #region Combat
@@ -297,6 +303,46 @@ func get_target() -> Card:
 				return Combat.get_target(Combat.player_party)
 			else:
 				return Combat.get_target(Combat.player_party)
+
+func get_ally() -> Card:
+	if friendly:
+		if not shifted:
+			if pos == "front":
+				return Combat.get_target(Combat.player_party)
+			elif pos == "center":
+				return Combat.get_target(Combat.player_party)
+			elif pos == "back":
+				return Combat.get_target(Combat.player_party)
+			else:
+				return Combat.get_target(Combat.player_party)
+		else:
+			if pos == "front":
+				return Combat.get_target(Combat.player_party)
+			elif pos == "center":
+				return Combat.get_target(Combat.player_party)
+			elif pos == "back":
+				return Combat.get_target(Combat.player_party)
+			else:
+				return Combat.get_target(Combat.player_party)
+	else:
+		if not shifted:
+			if pos == "front":
+				return Combat.get_target(Combat.opposing_party)
+			elif pos == "center":
+				return Combat.get_target(Combat.opposing_party)
+			elif pos == "back":
+				return Combat.get_target(Combat.opposing_party)
+			else:
+				return Combat.get_target(Combat.opposing_party)
+		else:
+			if pos == "front":
+				return Combat.get_target(Combat.opposing_party)
+			elif pos == "center":
+				return Combat.get_target(Combat.opposing_party)
+			elif pos == "back":
+				return Combat.get_target(Combat.opposing_party)
+			else:
+				return Combat.get_target(Combat.opposing_party)
 
 func damage_physical(damage) -> void:
 	if (damage - phys_defense) > 0:
@@ -353,32 +399,22 @@ func kill() -> void:
 	await get_tree().create_timer(.125).timeout
 	self.queue_free()
 
-func action() -> void:
-	if is_instance_valid(slot):
-		slot.action()
-	for status in statuses:
-		Status.call_status(status, 1)
-	if shifted:
-		if pos == "front":
-			shifted_front_action()
-		elif pos == "center":
-			shifted_center_action()
-		elif pos == "back":
-			shifted_back_action()
-		else:
-			shifted_default_action()
-	else:
-		if pos == "front":
-			front_action()
-		elif pos == "center":
-			center_action()
-		elif pos == "back":
-			back_action()
-		else:
-			default_action()
-
 func default_action() -> void:
-	pass
+	var enemy = get_target()
+	var ally = get_ally()
+	var damage = (Combat.RNG.randi_range(1,10))
+	var ability = Combat.RNG.randi_range(1,5)
+	match ability:
+		1:
+			pass
+		2:
+			pass
+		3:
+			pass
+		4: 
+			pass
+		5:
+			pass
 
 #Should normally be called when standing in the front
 func front_action() -> void:
@@ -398,14 +434,14 @@ func shifted_default_action() -> void:
 
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
-	default_action()
+	shifted_default_action()
 
 #Should normally be called when standing in the center
 func shifted_center_action() -> void:
-	default_action()
+	shifted_default_action()
 
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
-	default_action()
+	shifted_default_action()
 
 #endregion

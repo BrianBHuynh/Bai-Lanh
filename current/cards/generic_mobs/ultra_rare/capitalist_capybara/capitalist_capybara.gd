@@ -1,37 +1,37 @@
 extends Card
 
 #region Card stats
-@export var card_title: String = "Card"
-@export var card_flavor_text: String = "default text"
+@export var card_title: String = "Cappy"
+@export var card_flavor_text: String = "A weird capybara thing"
 
 @export var card_health: float = 100.0 #Health amount of card
-@export var card_phys_attack: int = 10 #physical Attack value of the card
-@export var card_mag_attack: int = 10 #Magic attack value of the card
-@export var card_phys_defense: int = 10 #Physical defense of the card
-@export var card_mag_defense: int = 10 #Magical defense of the card
-@export var card_speed: int = 10 #Speed of the card
-@export var card_tags: Array[String] = []
+@export var card_phys_attack: int = 12 #physical Attack value of the card
+@export var card_mag_attack: int = 8 #Magic attack value of the card
+@export var card_phys_defense: int = 12 #Physical defense of the card
+@export var card_mag_defense: int = 8 #Magical defense of the card
+@export var card_speed: int = 6 #Speed of the card
+@export var card_tags: Array[String] = ["cute_animal", "animal", "capitalist", "streamer"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = 0.0
-@export var card_shifted_phys_attack: int = 0
-@export var card_shifted_mag_attack: int = 0
-@export var card_shifted_phys_defense: int = 0
-@export var card_shifted_mag_defense: int = 0
-@export var card_shifted_speed: int = 0
-@export var card_shifted_tags: Array[String] = []
+@export var card_shifted_phys_attack: int = 1
+@export var card_shifted_mag_attack: int = 1
+@export var card_shifted_phys_defense: int = 1
+@export var card_shifted_mag_defense: int = 1
+@export var card_shifted_speed: int = -1
+@export var card_shifted_tags: Array[String] = ["detective"]
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 0.0
-@export var card_pos_phys_attack: int = 0
-@export var card_pos_mag_attack: int = 0
-@export var card_pos_phys_defense: int = 0
-@export var card_pos_mag_defense: int = 0
-@export var card_pos_speed: int = 0
-@export var card_pos_tags: Array[String] = []
+@export var card_pos_phys_attack: int = 2
+@export var card_pos_mag_attack: int = 2
+@export var card_pos_phys_defense: int = -1
+@export var card_pos_mag_defense: int = -1
+@export var card_pos_speed: int = 3
+@export var card_pos_tags: Array[String] = ["on_time"]
 
 #Position stats/effects should only be applied when the play button is pressed!
-@export var card_pref_pos: Array[String] = [] #Prefered possitions of the car
+@export var card_pref_pos: Array[String] = ["center"] #Prefered possitions of the car
 
 @export var card_default_color: Color = modulate #for default color
 @export var card_default_size: Vector2 = Vector2(1,1) #Default size for the ca
@@ -77,48 +77,117 @@ func _ready() -> void:
 #region Actions
 func default_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
-			pass
+			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			Combat.combat_board = Combat.combat_board + "Capytax! \n"
 		2:
-			pass
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
+			Combat.combat_board = Combat.combat_board + "Investigation!\n"
 		3:
-			pass
+			CombatLib.phys_attack(self, enemy, damage+phys_attack)
 		4: 
-			pass
+			CombatLib.baton_pass(self, get_ally())
+			Combat.combat_board = Combat.combat_board + "Collab time!\n"
 		5:
-			pass
+			CombatLib.self_heal(self, 1+damage+mag_attack/3)
+			Combat.combat_board = Combat.combat_board + "Cappy is distracted!\n"
 
 #Should normally be called when standing in the front
 #func front_action() -> void:
 #	default_action()
 
 #Should normally be called when standing in the center
-#func center_action() -> void:
-#	default_action()
+func center_action() -> void:
+	var enemy = get_target()
+	var damage = (Combat.RNG.randi_range(1,10))
+	var ability = Combat.RNG.randi_range(1,6)
+	match ability:
+		1:
+			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			Combat.combat_board = Combat.combat_board + "Capytax! \n"
+		2:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
+			Combat.combat_board = Combat.combat_board + "Investigation!\n"
+		3:
+			CombatLib.phys_attack(self, enemy, damage+phys_attack)
+		4: 
+			CombatLib.baton_pass(self, get_ally())
+			Combat.combat_board = Combat.combat_board + "Collab time!\n"
+		5:
+			CombatLib.self_heal(self, 1+damage+mag_attack/3)
+			Combat.combat_board = Combat.combat_board + "Cappy is distracted!\n"
+		6:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack)
+			Combat.combat_board = Combat.combat_board + "CRIT investigation!\n"
 
 #Should normally be called when standing in the center
 #func back_action() -> void:
 #	default_action()
 
 #Should normally never be called as long as the card is in a slot
-#func shifted_default_action() -> void:
-#	default_action()
+func shifted_default_action() -> void:
+	var enemy = get_target()
+	var damage = (Combat.RNG.randi_range(1,10))
+	var ability = Combat.RNG.randi_range(1,6)
+	match ability:
+		1:
+			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			Combat.combat_board = Combat.combat_board + "Capytax! \n"
+		2:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
+			Combat.combat_board = Combat.combat_board + "Investigation!\n"
+		3:
+			CombatLib.phys_attack(self, enemy, damage+phys_attack)
+		4: 
+			CombatLib.baton_pass(self, get_ally())
+			Combat.combat_board = Combat.combat_board + "Collab time!\n"
+		5:
+			CombatLib.self_heal(self, 1+damage+mag_attack/3)
+			Combat.combat_board = Combat.combat_board + "Cappy is distracted!\n"
+		6:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack)
+			Combat.combat_board = Combat.combat_board + "CRIT investigation!\n"
 
 #Should normally be called when standing in the front
-#func shifted_front_action() -> void:
-#	shifted_default_action()
+func shifted_front_action() -> void:
+	shifted_default_action()
 
 #Should normally be called when standing in the center
-#func shifted_center_action() -> void:
-#	shifted_default_action()
+func shifted_center_action() -> void:
+	var enemy = get_target()
+	var damage = (Combat.RNG.randi_range(1,10))
+	var ability = Combat.RNG.randi_range(1,5)
+	match ability:
+		1:
+			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			Combat.combat_board = Combat.combat_board + "Capytax! \n"
+		2:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
+			Combat.combat_board = Combat.combat_board + "Investigation!\n"
+		3:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack)
+			Combat.combat_board = Combat.combat_board + "CRIT investigation!\n"
+		4: 
+			CombatLib.baton_pass(self, get_ally())
+			Combat.combat_board = Combat.combat_board + "Collab time!\n"
+		5:
+			CombatLib.self_heal(self, 1+damage+mag_attack/3)
+			Combat.combat_board = Combat.combat_board + "Cappy is distracted!\n"
+
 
 #Should normally be called when standing in the center
-#func shifted_back_action() -> void:
-#	shifted_default_action()
+func shifted_back_action() -> void:
+	shifted_default_action()
 #endregion
 
 #region Targeting

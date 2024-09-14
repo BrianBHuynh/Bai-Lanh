@@ -21,4 +21,14 @@ func poison(effect: StatusEffect, stage: int) -> void:
 				Status.cleanse(effect)
 		2: 
 			Combat.combat_board = Combat.combat_board + "Poison wore off\n"
+
+func stun(effect: StatusEffect, stage: int) -> void:
+	match stage:
+		0:
+			effect.card.speed = effect.card.speed - 1
+		1:
+			pass
+		2: 
+			effect.card.speed = effect.card.speed + 1
+			Combat.combat_board = Combat.combat_board + "is no longer stunned!\n"
 #endregion
