@@ -344,7 +344,7 @@ func get_ally() -> Card:
 			else:
 				return Combat.get_target(Combat.opposing_party)
 
-func damage_physical(damage) -> int:
+func damage_physical(damage: int) -> int:
 	var change = damage - phys_defense
 	if change > 0:
 		health = health-change
@@ -354,7 +354,7 @@ func damage_physical(damage) -> int:
 		return 1
 	check_death()
 
-func direct_damage_physical(damage) -> int:
+func direct_damage_physical(damage: int) -> int:
 	var change = damage - phys_defense
 	if change > 0:
 		health = health-change
@@ -364,7 +364,7 @@ func direct_damage_physical(damage) -> int:
 		return 1
 	check_death()
 
-func damage_magical(damage) -> int:
+func damage_magical(damage: int) -> int:
 	var change = damage - mag_defense
 	if change > 0:
 		health = health-change
@@ -374,7 +374,7 @@ func damage_magical(damage) -> int:
 		return 1
 	check_death()
 
-func direct_damage_magical(damage) -> int:
+func direct_damage_magical(damage: int) -> int:
 	var change = damage - mag_defense
 	if change > 0:
 		health = health-change
@@ -384,12 +384,12 @@ func direct_damage_magical(damage) -> int:
 		return 1
 	check_death()
 
-func damage_true(change) -> int:
+func damage_true(change: int) -> int:
 	health = health - change
 	check_death()
 	return change
 
-func direct_damage_true(change) -> int:
+func direct_damage_true(change: int) -> int:
 	health = health - change
 	check_death()
 	return change
@@ -446,10 +446,10 @@ func action() -> void:
 			default_action()
 
 func default_action() -> void:
-	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var enemy: Card = get_target()
+	var ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			pass
@@ -489,5 +489,4 @@ func shifted_center_action() -> void:
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
 	shifted_default_action()
-
 #endregion

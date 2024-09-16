@@ -43,7 +43,7 @@ func poison(card, target, damage, duration) -> void:
 
 func lock_down(card, target) -> void:
 	if is_instance_valid(target):
-		var stun_status = StatusEffect.new("stun", 1, "on_turn", 2, target)
+		var stun_status = StatusEffect.new("slow", target.speed, "every_turn", 2, target)
 		Status.apply(stun_status)
 		MoveLib.move_then_return(card, target.current_position)
 		Combat.combat_board = Combat.combat_board + target.title + " has been locked down by " + card.title + "\n"
