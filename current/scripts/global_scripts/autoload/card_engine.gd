@@ -95,17 +95,15 @@ func add_card(card: Card, new_card: Area2D) -> void:
 
 #Decriments the slotted variable, then returns the slot back to it's default color
 func remove_slot(card: Card, slot) -> void:
-	if card.new_slot == slot:
-		card.new_slot = null
 	slot.modulate = slot.default_color
 	slot.scale = slot.default_size
 
 #Decriments the slotted variable, then returns the card back to it's default color
 func remove_card(card: Card, slot) -> void:
-	if card.new_slot == slot:
-		card.new_slot = null
+	pass
 #endregion
 
+#region Misc mechanics
 #Moves card to front, calculates offset and initial position of card, sets dragging to be true
 func pickup(card: Card) -> void:
 	card.offset = get_global_mouse_position() - card.global_position #dubious
@@ -118,3 +116,4 @@ func fix_slot(slot: Node2D) -> void:
 		elem.move_to_front()
 		MoveLib.move(elem, slot.global_position + Vector2(0,stacking_distance)*temp)
 		temp = temp + 1
+#endregion

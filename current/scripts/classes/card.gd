@@ -344,33 +344,55 @@ func get_ally() -> Card:
 			else:
 				return Combat.get_target(Combat.opposing_party)
 
-func damage_physical(damage) -> void:
-	if (damage - phys_defense) > 0:
-		health = health-(damage-phys_defense)
+func damage_physical(damage) -> int:
+	var change = damage - phys_defense
+	if change > 0:
+		health = health-change
+		return change
+	else:
+		health = health - 1
+		return 1
 	check_death()
 
-func direct_damage_physical(damage) -> void:
-	if (damage - phys_defense) > 0:
-		health = health-(damage-phys_defense)
+func direct_damage_physical(damage) -> int:
+	var change = damage - phys_defense
+	if change > 0:
+		health = health-change
+		return change
+	else:
+		health = health - 1
+		return 1
 	check_death()
 
-func damage_magical(damage) -> void:
-	if (damage - mag_defense) > 0:
-		health = health-(damage-mag_defense)
+func damage_magical(damage) -> int:
+	var change = damage - mag_defense
+	if change > 0:
+		health = health-change
+		return change
+	else:
+		health = health - 1
+		return 1
 	check_death()
 
-func direct_damage_magical(damage) -> void:
-	if (damage - mag_defense) > 0:
-		health = health-(damage-mag_defense)
+func direct_damage_magical(damage) -> int:
+	var change = damage - mag_defense
+	if change > 0:
+		health = health-change
+		return change
+	else:
+		health = health - 1
+		return 1
 	check_death()
 
-func damage_true(damage) -> void:
-	health = health-damage
+func damage_true(change) -> int:
+	health = health - change
 	check_death()
+	return change
 
-func direct_damage_true(damage) -> void:
-	health = health-damage
+func direct_damage_true(change) -> int:
+	health = health - change
 	check_death()
+	return change
 
 func check_death() -> void:
 	if health <= 0:
@@ -398,6 +420,30 @@ func kill() -> void:
 			elem.cards_list.erase(self)
 	await get_tree().create_timer(.125).timeout
 	self.queue_free()
+
+func action() -> void:
+	if is_instance_valid(slot):
+		slot.action()
+	for status in statuses:
+		Status.call_status(status, 1)
+	if shifted:
+		if pos == "front":
+			shifted_front_action()
+		elif pos == "center":
+			shifted_center_action()
+		elif pos == "back":
+			shifted_back_action()
+		else:
+			shifted_default_action()
+	else:
+		if pos == "front":
+			front_action()
+		elif pos == "center":
+			center_action()
+		elif pos == "back":
+			back_action()
+		else:
+			default_action()
 
 func default_action() -> void:
 	var enemy = get_target()

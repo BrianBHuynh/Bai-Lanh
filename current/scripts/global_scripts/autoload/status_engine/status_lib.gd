@@ -5,8 +5,8 @@ func call_effect(effect: StatusEffect, stage: int) -> void:
 	match effect.status:
 		"poison":
 			poison(effect, stage)
-		"sleep":
-			pass
+		"stun":
+			stun(effect, stage)
 #endregion
 
 #region Statuses list
@@ -25,10 +25,12 @@ func poison(effect: StatusEffect, stage: int) -> void:
 func stun(effect: StatusEffect, stage: int) -> void:
 	match stage:
 		0:
-			effect.card.speed = effect.card.speed - 1
+			effect.card.speed = effect.card.speed - effect.potency
+			Combat.update_initiative(effect.card)
 		1:
 			pass
 		2: 
-			effect.card.speed = effect.card.speed + 1
+			effect.card.speed = effect.card.speed + effect.potency
 			Combat.combat_board = Combat.combat_board + "is no longer stunned!\n"
+			Combat.update_initiative(effect.card)
 #endregion
