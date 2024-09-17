@@ -38,33 +38,64 @@ var RNG: RandomNumberGenerator = RandomNumberGenerator.new()
 
 var combat_board:String = ""
 var arrays: Array[Array] = [slots, player_party, opposing_party, player_front, player_center, player_back, player_tanks, player_dps, player_support, opposing_front, opposing_center, opposing_back, opposing_tanks, opposing_dps, opposing_support, initiative, agro_calc]
-
+var position_arrays: Array[Array] = [player_front, player_center, player_back, opposing_front, opposing_center, opposing_back]
 #returns next in initiative, if initiative is empty repopulates it
 func get_initiative() -> Card:
 	if initiative.is_empty():
-		pass
-	return initiative.pick_random()
+		return null
+	else:
+		var temp = initiative.pick_random()
+		if is_instance_valid(temp):
+			return temp
+		else:
+			return null
 
-func get_target(array) -> Card:
+func get_target(array: Array) -> Card:
 	agro_calc.clear()
 	agro_calc.append_array(array)
 	agro_calc.shuffle()
 	return agro_calc.pop_front()
 
-func add_initiative(card) -> void:
+func add_initiative(card: Card) -> void:
 	if not initiative.has(card):
 		for i in card.speed:
 			initiative.append(card)
 			initiative.shuffle()
 
-func remove_initiative(card) -> void:
+func add_position(card: Card) -> void:
+	if card.friendly:
+		if card.pos == "front":
+			player_front.append(card)
+		elif card.pos == "center":
+			player_center.append(card)
+		elif card.pos == "back":
+			player_back.append(card)
+	else:
+		if card.pos == "front":
+			opposing_front.append(card)
+		elif card.pos == "center":
+			opposing_center.append(card)
+		elif card.pos == "back":
+			opposing_back.append(card)
+
+func remove_initiative(card: Card) -> void:
 	while initiative.has(card):
 		initiative.erase(card)
 
-func update_initiative(card) -> void:
+func remove_position(card: Card) -> void:
+	for elem in position_arrays:
+		while elem.has(card):
+			elem.erase(card)
+
+func update(card: Card) -> void:
 	if initiative.has(card):
 		remove_initiative(card)
 		add_initiative(card)
+		remove_position(card)
+		add_position(card)
+	else:
+		add_initiative(card)
+		add_position(card)
 
 func next_turn() -> void:
 	Status.tick()

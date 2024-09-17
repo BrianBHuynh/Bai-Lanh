@@ -19,6 +19,8 @@ var max_cap = 1
 var default_color = Color(Color.RED, .7)
 var default_size = scale
 
+var summoned: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Combat.slots.append(self)
@@ -27,12 +29,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
-
-
-
-func _on_button_pressed() -> void:
-	if cards_list.size() < max_cap:
+	if not summoned:
 		var summon = CardReg.enemy_list.pick_random()
 		var instance = summon.instantiate()
 		instance.position = position
@@ -42,6 +39,7 @@ func _on_button_pressed() -> void:
 		instance.initialize()
 		Cards.place_slot_opposing(instance)
 		Cards.fix_slot(self)
+		summoned = true
 
 func action():
 	if shift:

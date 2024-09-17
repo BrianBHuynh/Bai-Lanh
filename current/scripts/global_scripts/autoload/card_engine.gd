@@ -1,7 +1,5 @@
 extends Node2D
 
-var stacking_distance = 50
-
 #region Place slot
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 func place_slot_player(card: Card) -> void:
@@ -40,12 +38,6 @@ func place_draw_pile(card: Card) -> void:
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
 	card.slot.cards_list.append(card)
-	if card.pref_pos.has(card.pos):
-		card.pos_remove()
-	card.pos = card.slot.pos
-	if card.pref_pos.has(card.pos):
-		card.pos_apply()
-	card.apply_slot_effects()
 	fix_slot(card.slot)
 	card.current_position = card.slot.position
 
@@ -95,17 +87,15 @@ func add_card(card: Card, new_card: Area2D) -> void:
 
 #Decriments the slotted variable, then returns the slot back to it's default color
 func remove_slot(card: Card, slot) -> void:
-	if card.new_slot == slot:
-		card.new_slot = null
 	slot.modulate = slot.default_color
 	slot.scale = slot.default_size
 
 #Decriments the slotted variable, then returns the card back to it's default color
 func remove_card(card: Card, slot) -> void:
-	if card.new_slot == slot:
-		card.new_slot = null
+	pass
 #endregion
 
+#region Misc mechanics
 #Moves card to front, calculates offset and initial position of card, sets dragging to be true
 func pickup(card: Card) -> void:
 	card.offset = get_global_mouse_position() - card.global_position #dubious
@@ -116,5 +106,6 @@ func fix_slot(slot: Node2D) -> void:
 	var temp = 0
 	for elem in slot.cards_list:
 		elem.move_to_front()
-		MoveLib.move(elem, slot.global_position + Vector2(0,stacking_distance)*temp)
+		MoveLib.move(elem, slot.global_position + Vector2(0,GlobalVars.stacking_distance)*temp)
 		temp = temp + 1
+#endregion

@@ -3,6 +3,7 @@ class_name Card
 
 #region Card stats
 var title: String = "Card"
+var flavor_text: String
 
 var health: float = 100.0 #Health amount of card
 var phys_attack: int = 10 #physical Attack value of the card
@@ -66,7 +67,6 @@ func initialize() -> void:
 		modulate = Color(Color.PALE_VIOLET_RED)
 		await get_tree().create_timer(.25).timeout
 		shadow_hide()
-		get_child(0).modulate = Color(Color.BLACK,0)
 		Combat.opposing_party.append(self)
 		Combat.add_initiative(self)
 #endregion
@@ -87,7 +87,7 @@ func _on_button_down() -> void:
 		inspect()
 
 func _on_button_up() -> void:
-	if Input.is_action_just_released("leftClick"):
+	if Input.is_action_just_released("leftClick") and friendly:
 		on_card_released()
 		shadow_hide()
 		await get_tree().create_timer(1).timeout
@@ -211,7 +211,8 @@ func shift() -> void:
 		speed = speed - shifted_speed
 		for i in shifted_tags.size():
 			tags.erase(shifted_tags[i])
-	Combat.update_initiative(self)
+	Combat.update(self)
+	check_death()
 
 
 func apply_slot_effects() -> void:
@@ -222,7 +223,8 @@ func apply_slot_effects() -> void:
 	mag_defense = mag_defense + slot.mag_defense 
 	speed = speed + slot.speed
 	tags.append_array(slot.tags)
-	Combat.update_initiative(self)
+	Combat.update(self)
+	check_death()
 
 func remove_slot_effects() -> void:
 	health = health - slot.health
@@ -233,7 +235,8 @@ func remove_slot_effects() -> void:
 	speed = speed - slot.speed
 	for i in slot.tags.size():
 		tags.erase(slot.tags[i])
-	Combat.update_initiative(self)
+	Combat.update(self)
+	check_death()
 
 func pos_apply() -> void:
 	health = health + pos_health
@@ -243,7 +246,8 @@ func pos_apply() -> void:
 	mag_defense = mag_defense + pos_mag_defense 
 	speed = speed + pos_speed
 	tags.append_array(pos_tags)
-	Combat.update_initiative(self)
+	Combat.update(self)
+	check_death()
 
 func pos_remove() -> void:
 	health = health - pos_health
@@ -254,7 +258,8 @@ func pos_remove() -> void:
 	speed = speed - pos_speed
 	for i in pos_tags.size():
 		tags.erase(pos_tags[i])
-	Combat.update_initiative(self)
+	Combat.update(self)
+	check_death()
 #endregion
 
 #region Combat
@@ -299,33 +304,95 @@ func get_target() -> Card:
 			else:
 				return Combat.get_target(Combat.player_party)
 
-func damage_physical(damage) -> void:
-	if (damage - phys_defense) > 0:
-		health = health-(damage-phys_defense)
-	check_death()
+func get_ally() -> Card:
+	if friendly:
+		if not shifted:
+			if pos == "front":
+				return Combat.get_target(Combat.player_party)
+			elif pos == "center":
+				return Combat.get_target(Combat.player_party)
+			elif pos == "back":
+				return Combat.get_target(Combat.player_party)
+			else:
+				return Combat.get_target(Combat.player_party)
+		else:
+			if pos == "front":
+				return Combat.get_target(Combat.player_party)
+			elif pos == "center":
+				return Combat.get_target(Combat.player_party)
+			elif pos == "back":
+				return Combat.get_target(Combat.player_party)
+			else:
+				return Combat.get_target(Combat.player_party)
+	else:
+		if not shifted:
+			if pos == "front":
+				return Combat.get_target(Combat.opposing_party)
+			elif pos == "center":
+				return Combat.get_target(Combat.opposing_party)
+			elif pos == "back":
+				return Combat.get_target(Combat.opposing_party)
+			else:
+				return Combat.get_target(Combat.opposing_party)
+		else:
+			if pos == "front":
+				return Combat.get_target(Combat.opposing_party)
+			elif pos == "center":
+				return Combat.get_target(Combat.opposing_party)
+			elif pos == "back":
+				return Combat.get_target(Combat.opposing_party)
+			else:
+				return Combat.get_target(Combat.opposing_party)
 
-func direct_damage_physical(damage) -> void:
-	if (damage - phys_defense) > 0:
-		health = health-(damage-phys_defense)
+func damage_physical(damage: int) -> int:
+	var change = damage - phys_defense
+	if change > 0:
+		health = health-change
+	else:
+		health = health - 1
+		change = 1
 	check_death()
+	return change
 
-func damage_magical(damage) -> void:
-	if (damage - mag_defense) > 0:
-		health = health-(damage-mag_defense)
+func direct_damage_physical(damage: int) -> int:
+	var change = damage - phys_defense
+	if change > 0:
+		health = health-change
+	else:
+		health = health - 1
+		change = 1
 	check_death()
+	return change
 
-func direct_damage_magical(damage) -> void:
-	if (damage - mag_defense) > 0:
-		health = health-(damage-mag_defense)
+func damage_magical(damage: int) -> int:
+	var change = damage - mag_defense
+	if change > 0:
+		health = health-change
+	else:
+		health = health - 1
+		change = 1
 	check_death()
+	return change
 
-func damage_true(damage) -> void:
-	health = health-damage
+func direct_damage_magical(damage: int) -> int:
+	var change = damage - mag_defense
+	if change > 0:
+		health = health-change
+	else:
+		health = health - 1
+		change = 1
 	check_death()
+	return change
 
-func direct_damage_true(damage) -> void:
-	health = health-damage
+func damage_true(change: int) -> int:
+	health = health - change
 	check_death()
+	return change
+
+func direct_damage_true(change: int) -> int:
+	health = health - change
+	check_death()
+	return change
 
 func check_death() -> void:
 	if health <= 0:
@@ -336,8 +403,11 @@ func check_death() -> void:
 			while array.has(self):
 				array.erase(self)
 		for elem in Combat.slots:
-			while elem.cards_list.has(self):
-				elem.cards_list.erase(self)
+			if is_instance_valid(elem):
+				while elem.cards_list.has(self):
+					elem.cards_list.erase(self)
+			else:
+				elem.queue_free()
 		await get_tree().create_timer(.125).timeout
 		self.queue_free()
 
@@ -379,7 +449,21 @@ func action() -> void:
 			default_action()
 
 func default_action() -> void:
-	pass
+	var enemy: Card = get_target()
+	var ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
+	match ability:
+		1:
+			pass
+		2:
+			pass
+		3:
+			pass
+		4: 
+			pass
+		5:
+			pass
 
 #Should normally be called when standing in the front
 func front_action() -> void:
@@ -399,14 +483,13 @@ func shifted_default_action() -> void:
 
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
-	default_action()
+	shifted_default_action()
 
 #Should normally be called when standing in the center
 func shifted_center_action() -> void:
-	default_action()
+	shifted_default_action()
 
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
-	default_action()
-
+	shifted_default_action()
 #endregion

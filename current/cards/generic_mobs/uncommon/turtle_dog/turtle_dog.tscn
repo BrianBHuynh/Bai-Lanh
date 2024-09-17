@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://htmk0dy1pev0"]
+[gd_scene load_steps=7 format=3 uid="uid://dp5o3oxau0sr2"]
 
-[ext_resource type="Script" path="res://current/default_resources/template/template_card/template.gd" id="1_pj743"]
+[ext_resource type="Script" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.gd" id="1_rb5e5"]
 [ext_resource type="Texture2D" uid="uid://lcbwrvrqghy7" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.png" id="2_d4fxa"]
-[ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_lb2m7"]
+[ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_qhrvx"]
+[ext_resource type="Script" path="res://current/scripts/common_scripts/card_name.gd" id="4_4yin4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6ow15"]
 animations = [{
@@ -19,7 +20,7 @@ animations = [{
 size = Vector2(1348, 1918)
 
 [node name="Card" type="Area2D"]
-script = ExtResource("1_pj743")
+script = ExtResource("1_rb5e5")
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.1, 0.1)
@@ -42,14 +43,24 @@ scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_6ow15")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = -68.0
-offset_top = 44.0
-offset_right = 2652.0
-offset_bottom = 1084.0
+offset_left = -55.0
+offset_top = -12.0
+offset_right = 2185.0
+offset_bottom = 1888.0
 scale = Vector2(0.05, 0.05)
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 200
-script = ExtResource("3_lb2m7")
+script = ExtResource("3_qhrvx")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -60.0
+offset_top = -96.0
+offset_right = 1140.0
+offset_bottom = 44.0
+scale = Vector2(0.1, 0.1)
+theme_override_font_sizes/font_size = 100
+text = "Title"
+script = ExtResource("4_4yin4")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
