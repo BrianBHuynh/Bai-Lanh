@@ -1,7 +1,5 @@
 extends Node2D
 
-var stacking_distance = 50
-
 #region Place slot
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 func place_slot_player(card: Card) -> void:
@@ -114,6 +112,6 @@ func fix_slot(slot: Node2D) -> void:
 	var temp = 0
 	for elem in slot.cards_list:
 		elem.move_to_front()
-		MoveLib.move(elem, slot.global_position + Vector2(0,stacking_distance)*temp)
+		MoveLib.move(elem, slot.global_position + Vector2(0,GlobalVars.stacking_distance)*temp)
 		temp = temp + 1
 #endregion

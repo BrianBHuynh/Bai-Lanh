@@ -348,41 +348,41 @@ func damage_physical(damage: int) -> int:
 	var change = damage - phys_defense
 	if change > 0:
 		health = health-change
-		return change
 	else:
 		health = health - 1
-		return 1
+		change = 1
 	check_death()
+	return change
 
 func direct_damage_physical(damage: int) -> int:
 	var change = damage - phys_defense
 	if change > 0:
 		health = health-change
-		return change
 	else:
 		health = health - 1
-		return 1
+		change = 1
 	check_death()
+	return change
 
 func damage_magical(damage: int) -> int:
 	var change = damage - mag_defense
 	if change > 0:
 		health = health-change
-		return change
 	else:
 		health = health - 1
-		return 1
+		change = 1
 	check_death()
+	return change
 
 func direct_damage_magical(damage: int) -> int:
 	var change = damage - mag_defense
 	if change > 0:
 		health = health-change
-		return change
 	else:
 		health = health - 1
-		return 1
+		change = 1
 	check_death()
+	return change
 
 func damage_true(change: int) -> int:
 	health = health - change
