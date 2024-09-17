@@ -211,7 +211,7 @@ func shift() -> void:
 		speed = speed - shifted_speed
 		for i in shifted_tags.size():
 			tags.erase(shifted_tags[i])
-	Combat.update_initiative(self)
+	Combat.update(self)
 	check_death()
 
 
@@ -223,7 +223,7 @@ func apply_slot_effects() -> void:
 	mag_defense = mag_defense + slot.mag_defense 
 	speed = speed + slot.speed
 	tags.append_array(slot.tags)
-	Combat.update_initiative(self)
+	Combat.update(self)
 	check_death()
 
 func remove_slot_effects() -> void:
@@ -235,7 +235,7 @@ func remove_slot_effects() -> void:
 	speed = speed - slot.speed
 	for i in slot.tags.size():
 		tags.erase(slot.tags[i])
-	Combat.update_initiative(self)
+	Combat.update(self)
 	check_death()
 
 func pos_apply() -> void:
@@ -246,7 +246,7 @@ func pos_apply() -> void:
 	mag_defense = mag_defense + pos_mag_defense 
 	speed = speed + pos_speed
 	tags.append_array(pos_tags)
-	Combat.update_initiative(self)
+	Combat.update(self)
 	check_death()
 
 func pos_remove() -> void:
@@ -258,7 +258,7 @@ func pos_remove() -> void:
 	speed = speed - pos_speed
 	for i in pos_tags.size():
 		tags.erase(pos_tags[i])
-	Combat.update_initiative(self)
+	Combat.update(self)
 	check_death()
 #endregion
 
@@ -403,8 +403,11 @@ func check_death() -> void:
 			while array.has(self):
 				array.erase(self)
 		for elem in Combat.slots:
-			while elem.cards_list.has(self):
-				elem.cards_list.erase(self)
+			if is_instance_valid(elem):
+				while elem.cards_list.has(self):
+					elem.cards_list.erase(self)
+			else:
+				elem.queue_free()
 		await get_tree().create_timer(.125).timeout
 		self.queue_free()
 

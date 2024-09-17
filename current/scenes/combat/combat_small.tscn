@@ -1,3 +1,20 @@
-[gd_scene format=3 uid="uid://bfxjuvsskvj4j"]
+[gd_scene load_steps=5 format=3 uid="uid://bfxjuvsskvj4j"]
+
+[ext_resource type="PackedScene" uid="uid://blk7mwnwy84ux" path="res://current/default_resources/common/next_card_preview/card_slot.tscn" id="1_r0ike"]
+[ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://current/default_resources/common/enemy_slot/card_slot.tscn" id="2_3i35k"]
+[ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://current/default_resources/common/card_deck/card_slot.tscn" id="3_pnkxf"]
+[ext_resource type="PackedScene" uid="uid://bxlnfw56v2sm4" path="res://current/default_resources/common/card_slot/card_slot.tscn" id="4_jbsg5"]
 
 [node name="CombatSmall" type="Node2D"]
+
+[node name="NextCardPreview" parent="." instance=ExtResource("1_r0ike")]
+position = Vector2(421, 659)
+
+[node name="EnemySlot" parent="." instance=ExtResource("2_3i35k")]
+position = Vector2(1063, 263)
+
+[node name="CardDeck" parent="." instance=ExtResource("3_pnkxf")]
+position = Vector2(440, 931)
+
+[node name="CardSlot" parent="." instance=ExtResource("4_jbsg5")]
+position = Vector2(1069, 844)

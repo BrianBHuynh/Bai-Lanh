@@ -4,10 +4,10 @@ extends Card
 @export var card_title: String = "Cappy"
 @export var card_flavor_text: String = "A weird capybara thing"
 
-@export var card_health: float = 100.0 #Health amount of card
+@export var card_health: float = 75.0 #Health amount of card
 @export var card_phys_attack: int = 12 #physical Attack value of the card
 @export var card_mag_attack: int = 8 #Magic attack value of the card
-@export var card_phys_defense: int = 12 #Physical defense of the card
+@export var card_phys_defense: int = 10 #Physical defense of the card
 @export var card_mag_defense: int = 8 #Magical defense of the card
 @export var card_speed: int = 6 #Speed of the card
 @export var card_tags: Array[String] = ["cute_animal", "animal", "capitalist", "streamer"]
@@ -18,7 +18,7 @@ extends Card
 @export var card_shifted_mag_attack: int = 1
 @export var card_shifted_phys_defense: int = 1
 @export var card_shifted_mag_defense: int = 1
-@export var card_shifted_speed: int = -1
+@export var card_shifted_speed: int = -2
 @export var card_shifted_tags: Array[String] = ["detective"]
 
 #Stats changed for being in the prefered positions
@@ -81,113 +81,191 @@ func default_action() -> void:
 	var ability = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
-			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
-			Combat.combat_board = Combat.combat_board + "Capytax! \n"
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack-2)
+			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
 		2:
 			CombatLib.lock_down(self, enemy)
-			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
-			Combat.combat_board = Combat.combat_board + "Investigation!\n"
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-5)
+			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 		3:
 			CombatLib.phys_attack(self, enemy, damage+phys_attack)
 		4: 
 			CombatLib.baton_pass(self, get_ally())
-			Combat.combat_board = Combat.combat_board + "Collab time!\n"
+			Combat.combat_board = Combat.combat_board + "\"Collab time!\"\n"
 		5:
 			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
-			Combat.combat_board = Combat.combat_board + "Cappy is distracted!\n"
+			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
 
 #Should normally be called when standing in the front
-#func front_action() -> void:
-#	default_action()
+func front_action() -> void:
+	var enemy = get_target()
+	var damage = (Combat.RNG.randi_range(1,10))
+	var ability = Combat.RNG.randi_range(1,7)
+	match ability:
+		1:
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack-2)
+			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
+		2,3:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-5)
+			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
+		4,5:
+			CombatLib.phys_attack(self, enemy, damage+phys_attack)
+		6: 
+			CombatLib.baton_pass(self, get_ally())
+			Combat.combat_board = Combat.combat_board + "\"Collab time!\"\n"
+		7:
+			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
+			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
 
 #Should normally be called when standing in the center
 func center_action() -> void:
 	var enemy = get_target()
 	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,6)
+	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
-			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
-			Combat.combat_board = "Capytax! \n" + Combat.combat_board
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack-2)
+			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
+		2,3,4:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-5)
+			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
+		5:
+			CombatLib.phys_attack(self, enemy, damage+phys_attack)
+		6: 
+			CombatLib.baton_pass(self, get_ally())
+			Combat.combat_board = Combat.combat_board + "\"Collab time!\"\n"
+		7:
+			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
+			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
+
+#Should normally be called when standing in the center
+func back_action() -> void:
+	var enemy = get_target()
+	var damage = (Combat.RNG.randi_range(1,10))
+	var ability = Combat.RNG.randi_range(1,7)
+	match ability:
+		1:
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack-2)
+			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
 		2:
 			CombatLib.lock_down(self, enemy)
-			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
-			Combat.combat_board = "Investigation!\n" + Combat.combat_board
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-5)
+			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 		3:
 			CombatLib.phys_attack(self, enemy, damage+phys_attack)
 		4: 
 			CombatLib.baton_pass(self, get_ally())
-			Combat.combat_board = "Collab time!\n" + Combat.combat_board
-		5:
+			Combat.combat_board = Combat.combat_board + "\"Collab time!\"\n"
+		5,6,7:
 			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
-			Combat.combat_board = "Cappy is distracted!\n" + Combat.combat_board
-		6:
-			CombatLib.lock_down(self, enemy)
-			CombatLib.mag_attack(self, enemy, damage+phys_attack)
-			Combat.combat_board = "CRIT investigation!\n" + Combat.combat_board
-
-#Should normally be called when standing in the center
-#func back_action() -> void:
-#	default_action()
+			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
 
 #Should normally never be called as long as the card is in a slot
 func shifted_default_action() -> void:
 	var enemy = get_target()
 	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,6)
+	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
-			Combat.combat_board = Combat.combat_board + "Capytax! \n"
-		2:
+			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
+		2,3:
 			CombatLib.lock_down(self, enemy)
 			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
-			Combat.combat_board = Combat.combat_board + "Investigation!\n"
-		3:
+			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
+		4:
 			CombatLib.phys_attack(self, enemy, damage+phys_attack)
-		4: 
+		5: 
 			CombatLib.baton_pass(self, get_ally())
-			Combat.combat_board = Combat.combat_board + "Collab time!\n"
-		5:
-			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
-			Combat.combat_board = Combat.combat_board + "Cappy is distracted!\n"
+			Combat.combat_board = Combat.combat_board + "\"Collab time!\"\n"
 		6:
+			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
+			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
+		7:
 			CombatLib.lock_down(self, enemy)
 			CombatLib.mag_attack(self, enemy, damage+phys_attack)
-			Combat.combat_board = Combat.combat_board + "CRIT investigation!\n"
+			Combat.combat_board = Combat.combat_board + "\"CRIT investigation!\"\n"
 
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
-	shifted_default_action()
+	var enemy = get_target()
+	var damage = (Combat.RNG.randi_range(1,10))
+	var ability = Combat.RNG.randi_range(1,7)
+	match ability:
+		1:
+			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
+		2:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
+			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
+		3,4:
+			CombatLib.phys_attack(self, enemy, damage+phys_attack)
+		5: 
+			CombatLib.baton_pass(self, get_ally())
+			Combat.combat_board = Combat.combat_board + "\"Collab time!\"\n"
+		6:
+			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
+			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
+		7:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack)
+			Combat.combat_board = Combat.combat_board + "\"CRIT investigation!\"\n"
 
 #Should normally be called when standing in the center
 func shifted_center_action() -> void:
 	var enemy = get_target()
 	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
-			Combat.combat_board = Combat.combat_board + "Capytax! \n"
+			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
 		2:
 			CombatLib.lock_down(self, enemy)
 			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
-			Combat.combat_board = Combat.combat_board + "Investigation!\n"
+			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 		3:
-			CombatLib.lock_down(self, enemy)
-			CombatLib.mag_attack(self, enemy, damage+phys_attack)
-			Combat.combat_board = Combat.combat_board + "CRIT investigation!\n"
+			CombatLib.phys_attack(self, enemy, damage+phys_attack)
 		4: 
 			CombatLib.baton_pass(self, get_ally())
-			Combat.combat_board = Combat.combat_board + "Collab time!\n"
+			Combat.combat_board = Combat.combat_board + "\"Collab time!\"\n"
 		5:
 			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
-			Combat.combat_board = Combat.combat_board + "Cappy is distracted!\n"
+			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
+		6,7:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack)
+			Combat.combat_board = Combat.combat_board + "\"CRIT investigation!\"\n"
 
 
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
-	shifted_default_action()
+	var enemy = get_target()
+	var damage = (Combat.RNG.randi_range(1,10))
+	var ability = Combat.RNG.randi_range(1,7)
+	match ability:
+		1:
+			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
+		2:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
+			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
+		3:
+			CombatLib.phys_attack(self, enemy, damage+phys_attack)
+		4: 
+			CombatLib.baton_pass(self, get_ally())
+			Combat.combat_board = Combat.combat_board + "\"Collab time!\"\n"
+		5,6:
+			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
+			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
+		7:
+			CombatLib.lock_down(self, enemy)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack)
+			Combat.combat_board = Combat.combat_board + "\"CRIT investigation!\"\n"
 #endregion
 
 #region Targeting

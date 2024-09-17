@@ -38,12 +38,6 @@ func place_draw_pile(card: Card) -> void:
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.ALICE_BLUE, .4)
 	card.slot.cards_list.append(card)
-	if card.pref_pos.has(card.pos):
-		card.pos_remove()
-	card.pos = card.slot.pos
-	if card.pref_pos.has(card.pos):
-		card.pos_apply()
-	card.apply_slot_effects()
 	fix_slot(card.slot)
 	card.current_position = card.slot.position
 
