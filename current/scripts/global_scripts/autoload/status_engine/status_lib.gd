@@ -1,16 +1,5 @@
 extends Node
 
-#region Status 'dictionary'
-func call_effect(effect: StatusEffect, stage: int) -> void:
-	match effect.status:
-		"poison":
-			poison(effect, stage)
-		"slow":
-			slow(effect, stage)
-		"phys_defense_up":
-			phys_defense_up(effect, stage)
-#endregion
-
 #region Statuses list
 func poison(effect: StatusEffect, stage: int) -> void:
 	match stage:

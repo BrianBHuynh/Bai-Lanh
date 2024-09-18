@@ -30,14 +30,13 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if not summoned:
-		var summon = CardReg.enemy_list.pick_random()
-		var instance = summon.instantiate()
-		instance.position = position
-		get_parent().add_child(instance)
-		instance.new_slot = self
-		instance.friendly = false
-		instance.initialize()
-		Cards.place_slot_opposing(instance)
+		var summon = load(CardReg.enemy_list.pick_random()).instantiate()
+		summon.position = position
+		get_parent().add_child(summon)
+		summon.new_slot = self
+		summon.friendly = false
+		summon.initialize()
+		Cards.place_slot_opposing(summon)
 		Cards.fix_slot(self)
 		summoned = true
 
