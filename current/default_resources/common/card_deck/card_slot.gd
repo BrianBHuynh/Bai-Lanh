@@ -32,7 +32,7 @@ func _process(_delta: float) -> void:
 
 func _on_button_pressed() -> void:
 	if drawn < max_cap:
-		var summon = load(CardReg.ally_list.pick_random()).instantiate()
+		var summon: Card = load(CardReg.ally_list.pick_random()).instantiate()
 		summon.position = position
 		get_parent().add_child(summon)
 		summon.new_slot = self

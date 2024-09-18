@@ -41,8 +41,8 @@ var slot #Where the current slot is stored
 var new_slot #Where a possible slot is
 
 var offset: Vector2 #Used to store the offset between where the card is held and the mouse
-var current_position #Where the card is currently resting, set at the start to where the card enters the scene tree for the first time
-var shadowed #if a shadow is being cast
+var current_position: Vector2 #Where the card is currently resting, set at the start to where the card enters the scene tree for the first time
+var shadowed: bool #if a shadow is being cast
 var shadow_scale: Vector2
 var default_color: Color = modulate #for default color
 var default_size: Vector2 = Vector2(1,1) #Default size for the card
@@ -63,8 +63,8 @@ func initialize() -> void:
 	current_position = position
 	shadow_scale = get_child(0).scale
 	if not friendly:
-		default_color = Color(Color.PALE_VIOLET_RED)
-		modulate = Color(Color.PALE_VIOLET_RED)
+		default_color = Color.PALE_VIOLET_RED
+		modulate = Color.PALE_VIOLET_RED
 		await get_tree().create_timer(.25).timeout
 		shadow_hide()
 		Combat.opposing_party.append(self)
@@ -165,11 +165,11 @@ func reject() -> void:
 
 func highlight() -> void:
 	if friendly:
-		modulate = Color(Color.PALE_GOLDENROD)
+		modulate = Color.PALE_GOLDENROD
 		if Vector2(1.2,1.2) > scale:
 			MoveLib.change_scale(self, Vector2(1.2,1.2))
 	else:
-		modulate = Color(Color.LIGHT_CORAL)
+		modulate = Color.LIGHT_CORAL
 		if Vector2(1.2,1.2) > scale:
 			MoveLib.change_scale(self, Vector2(1.2,1.2))
 
