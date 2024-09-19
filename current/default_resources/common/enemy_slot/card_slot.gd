@@ -26,7 +26,6 @@ func _ready() -> void:
 	Combat.slots.append(self)
 	modulate = Color(Color.RED, .7)
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if not summoned:

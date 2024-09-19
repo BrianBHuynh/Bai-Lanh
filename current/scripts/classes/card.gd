@@ -42,7 +42,6 @@ var new_slot #Where a possible slot is
 
 var offset: Vector2 #Used to store the offset between where the card is held and the mouse
 var current_position: Vector2 #Where the card is currently resting, set at the start to where the card enters the scene tree for the first time
-var shadowed: bool #if a shadow is being cast
 var shadow_scale: Vector2
 var default_color: Color = modulate #for default color
 var default_size: Vector2 = Vector2(1,1) #Default size for the card
@@ -62,6 +61,9 @@ func _ready() -> void:
 func initialize() -> void:
 	current_position = position
 	shadow_scale = get_child(0).scale
+	set_process(false)
+	for i in get_children():
+		i.set_process(false)
 	if not friendly:
 		default_color = Color.PALE_VIOLET_RED
 		modulate = Color.PALE_VIOLET_RED
@@ -72,17 +74,17 @@ func initialize() -> void:
 #endregion
 
 #region Input/Signals detection
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Called every frame. 'delta' is the elapsed time since the previous frame. ONLY activates while the card is being held down.
 func _process(_delta: float) -> void:
-	if held and friendly:
 		hold_card()
 		shadow()
-	elif shadowed:
-		shadow_hide()
 
 func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick"):
 		on_card_held()
+		for i in get_children():
+			i.show()
+			i.set_process(true)
 	else:
 		inspect()
 
@@ -90,9 +92,6 @@ func _on_button_up() -> void:
 	if Input.is_action_just_released("leftClick") and friendly:
 		on_card_released()
 		shadow_hide()
-		await get_tree().create_timer(1).timeout
-		shadowed = false
-
 	else:
 		uninspect()
 
@@ -117,6 +116,15 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	if not inspected and not held:
 		normalize()
+
+func _screen_entered() -> void:
+	for i in get_children():
+		i.show()
+		i.set_process(true)
+
+func _screen_exited() -> void:
+	for i in get_children():
+		i.set_process(false)
 #endregion
 
 #region Movement and other card functions
@@ -127,15 +135,15 @@ func hold_card() -> void:
 
 func on_card_held() -> void:
 	if friendly:
-		held = true
 		offset = get_global_mouse_position() - global_position
 		MoveLib.change_scale(self, Vector2(1.5,1.5))
+		set_process(true)
 
 
 func on_card_released() -> void:
-	held = false
 	release_card()
 	normalize()
+	set_process(false)
 
 func inspect() -> void:
 	MoveLib.change_scale(self, Vector2(5,5))
@@ -178,16 +186,15 @@ func normalize() -> void:
 	MoveLib.change_scale(self, default_size)
 
 func shadow() -> void:
+	get_child(0).show()
 	var distance: Vector2 = global_position - get_viewport_rect().size/2
-	
 	get_child(0).position = distance / 30
 	MoveLib.change_color(get_child(0), Color(Color.BLACK, .25-distance.length()/10000))
 	MoveLib.change_scale(get_child(0), shadow_scale+distance.abs()/50000)
-	shadowed = true
 
 func shadow_hide() -> void:
-	get_child(0).position = (global_position - get_viewport_rect().size/2) / 30
 	MoveLib.change_color(get_child(0), Color(Color.BLACK, 0))
+	get_child(0).hide()
 #endregion
 
 #region Stats update

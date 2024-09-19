@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dp5o3oxau0sr2"]
+[gd_scene load_steps=7 format=3 uid="uid://ccde8eu4jpx83"]
 
 [ext_resource type="Script" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.gd" id="1_rb5e5"]
 [ext_resource type="Texture2D" uid="uid://lcbwrvrqghy7" path="res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.png" id="2_d4fxa"]
-[ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_qhrvx"]
-[ext_resource type="Script" path="res://current/scripts/common_scripts/card_name.gd" id="4_4yin4"]
+[ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_42hip"]
+[ext_resource type="Script" path="res://current/scripts/common_scripts/card_name.gd" id="4_fsuv5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6ow15"]
 animations = [{
@@ -50,7 +50,7 @@ offset_bottom = 1888.0
 scale = Vector2(0.05, 0.05)
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 200
-script = ExtResource("3_qhrvx")
+script = ExtResource("3_42hip")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -60.0
@@ -60,7 +60,11 @@ offset_bottom = 44.0
 scale = Vector2(0.1, 0.1)
 theme_override_font_sizes/font_size = 100
 text = "Title"
-script = ExtResource("4_4yin4")
+script = ExtResource("4_fsuv5")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(5.72205e-06, 0.500001)
+scale = Vector2(6.8, 9.65)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
@@ -70,3 +74,5 @@ script = ExtResource("4_4yin4")
 [connection signal="button_up" from="Button" to="." method="_on_button_up"]
 [connection signal="mouse_entered" from="Button" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Button" to="." method="_on_mouse_exited"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_screen_exited"]
