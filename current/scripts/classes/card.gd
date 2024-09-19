@@ -81,6 +81,7 @@ func _process(_delta: float) -> void:
 
 func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick"):
+		held = true
 		on_card_held()
 		for i in get_children():
 			i.show()
@@ -90,6 +91,7 @@ func _on_button_down() -> void:
 
 func _on_button_up() -> void:
 	if Input.is_action_just_released("leftClick") and friendly:
+		held = false
 		on_card_released()
 		shadow_hide()
 	else:
