@@ -62,6 +62,8 @@ func initialize() -> void:
 	current_position = position
 	shadow_scale = get_child(0).scale
 	set_process(false)
+	for i in get_children():
+		i.set_process(false)
 	if not friendly:
 		default_color = Color.PALE_VIOLET_RED
 		modulate = Color.PALE_VIOLET_RED
@@ -80,6 +82,9 @@ func _process(_delta: float) -> void:
 func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick"):
 		on_card_held()
+		for i in get_children():
+			i.show()
+			i.set_process(true)
 	else:
 		inspect()
 
@@ -87,7 +92,6 @@ func _on_button_up() -> void:
 	if Input.is_action_just_released("leftClick") and friendly:
 		on_card_released()
 		shadow_hide()
-
 	else:
 		uninspect()
 
@@ -112,6 +116,16 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	if not inspected and not held:
 		normalize()
+
+func _screen_entered() -> void:
+	for i in get_children():
+		i.show()
+		i.set_process(true)
+
+func _screen_exited() -> void:
+	for i in get_children():
+		i.hide()
+		i.set_process(false)
 #endregion
 
 #region Movement and other card functions
@@ -173,6 +187,7 @@ func normalize() -> void:
 	MoveLib.change_scale(self, default_size)
 
 func shadow() -> void:
+	get_child(0).show()
 	var distance: Vector2 = global_position - get_viewport_rect().size/2
 	get_child(0).position = distance / 30
 	MoveLib.change_color(get_child(0), Color(Color.BLACK, .25-distance.length()/10000))
@@ -180,6 +195,7 @@ func shadow() -> void:
 
 func shadow_hide() -> void:
 	MoveLib.change_color(get_child(0), Color(Color.BLACK, 0))
+	get_child(0).hide()
 #endregion
 
 #region Stats update
