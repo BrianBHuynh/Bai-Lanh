@@ -21,27 +21,6 @@ size = Vector2(1348, 1918)
 
 [node name="Card" type="Area2D"]
 script = ExtResource("1_rb5e5")
-card_title = "Card"
-card_flavor_text = "default text"
-card_health = 100.0
-card_phys_attack = 10
-card_mag_attack = 10
-card_phys_defense = 10
-card_speed = 10
-card_tags = Array[String]([])
-card_shifted_health = 0.0
-card_shifted_phys_attack = 0
-card_shifted_mag_attack = 0
-card_shifted_phys_defense = 0
-card_shifted_mag_defense = 0
-card_shifted_speed = 0
-card_shifted_tags = Array[String]([])
-card_pos_phys_attack = 0
-card_pos_mag_attack = 0
-card_pos_phys_defense = 0
-card_pos_mag_defense = 0
-card_pos_tags = Array[String]([])
-card_pref_pos = Array[String]([])
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.1, 0.1)
