@@ -124,7 +124,6 @@ func _screen_entered() -> void:
 
 func _screen_exited() -> void:
 	for i in get_children():
-		i.hide()
 		i.set_process(false)
 #endregion
 
