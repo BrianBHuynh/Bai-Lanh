@@ -255,7 +255,8 @@ func damage_physical(damage: int) -> int:
 		health = health - 1
 		change = 1
 	check_death()
-	slot.cards_list[0].direct_damage_true(1)
+	if not slot.cards_list.is_empty():
+		slot.cards_list[0].direct_damage_true(1)
 	return change
 
 func direct_damage_physical(damage: int) -> int:
@@ -266,7 +267,8 @@ func direct_damage_physical(damage: int) -> int:
 		health = health - 1
 		change = 1
 	check_death()
-	slot.cards_list[0].direct_damage_true(1)
+	if not slot.cards_list.is_empty():
+		slot.cards_list[0].direct_damage_true(1)
 	return change
 
 func damage_magical(damage: int) -> int:
@@ -277,7 +279,8 @@ func damage_magical(damage: int) -> int:
 		health = health - 1
 		change = 1
 	check_death()
-	slot.cards_list[0].direct_damage_true(1)
+	if not slot.cards_list.is_empty():
+		slot.cards_list[0].direct_damage_true(1)
 	return change
 
 func direct_damage_magical(damage: int) -> int:
@@ -288,6 +291,7 @@ func direct_damage_magical(damage: int) -> int:
 		health = health - 1
 		change = 1
 	check_death()
-	slot.cards_list[0].direct_damage_true(1)
+	if not slot.cards_list.is_empty():
+		slot.cards_list[0].direct_damage_true(1)
 	return change
 #endregion
