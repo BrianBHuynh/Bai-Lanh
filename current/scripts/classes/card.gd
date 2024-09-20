@@ -21,6 +21,7 @@ var shifted_phys_defense: int = 0
 var shifted_mag_defense: int = 0
 var shifted_speed: int = 0
 var shifted_tags: Array[String] = []
+
 #Stats changed for being in the prefered positions
 var pos_health: float = 0.0
 var pos_phys_attack: int = 0
@@ -81,6 +82,7 @@ func _process(_delta: float) -> void:
 
 func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick"):
+		held = true
 		on_card_held()
 		for i in get_children():
 			i.show()
@@ -90,6 +92,7 @@ func _on_button_down() -> void:
 
 func _on_button_up() -> void:
 	if Input.is_action_just_released("leftClick") and friendly:
+		held = false
 		on_card_released()
 		shadow_hide()
 	else:
@@ -125,6 +128,8 @@ func _screen_entered() -> void:
 func _screen_exited() -> void:
 	for i in get_children():
 		i.set_process(false)
+		if i != get_child(get_child_count()-1):
+			i.hide
 #endregion
 
 #region Movement and other card functions

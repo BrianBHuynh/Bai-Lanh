@@ -31,10 +31,10 @@ extends Card
 @export var card_pos_tags: Array[String] = ["on_time"]
 
 #Position stats/effects should only be applied when the play button is pressed!
-@export var card_pref_pos: Array[String] = ["center"] #Prefered possitions of the car
+@export var card_pref_pos: Array[String] = ["center"] #Prefered possitions of the card
 
 @export var card_default_color: Color = modulate #for default color
-@export var card_default_size: Vector2 = Vector2(1,1) #Default size for the ca
+@export var card_default_size: Vector2 = Vector2(1,1) #Default size for the card
 
 @export var card_shifted: bool = false
 @export var card_friendly: bool = true
@@ -349,7 +349,3 @@ func shifted_back_action() -> void:
 			#else:
 				#return Combat.get_target(Combat.opposing_party)
 #endregion
-
-
-func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	pass # Replace with function body.

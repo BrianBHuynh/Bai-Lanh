@@ -62,6 +62,7 @@ func phys_defense_up(card:Card, target:Card) -> void:
 		MoveLib.change_color(target, Color.GREEN)
 		MoveLib.change_scale(target, target.default_size)
 		MoveLib.change_color(target, target.default_color)
+
 func phys_attack_up(card:Card, target:Card) -> void:
 	if is_instance_valid(target):
 		Combat.combat_board = Combat.combat_board + target.title + "'s attack rises ! \n" 
