@@ -21,6 +21,7 @@ var shifted_phys_defense: int = 0
 var shifted_mag_defense: int = 0
 var shifted_speed: int = 0
 var shifted_tags: Array[String] = []
+
 #Stats changed for being in the prefered positions
 var pos_health: float = 0.0
 var pos_phys_attack: int = 0

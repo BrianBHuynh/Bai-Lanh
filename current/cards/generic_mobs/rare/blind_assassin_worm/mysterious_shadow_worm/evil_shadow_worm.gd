@@ -1,34 +1,34 @@
 extends Card
 
 #region Card stats
-@export var card_title: String = "Turtle Dog"
-@export var card_flavor_text: String = "Is it a dog? Is it a turtle? Who knows"
+@export var card_title: String = "Evil Shadow Worm"
+@export var card_flavor_text: String = "Kinda squishy unless in defensive mode"
 
-@export var card_health: float = 120.0 #Health amount of card
-@export var card_phys_attack: int = 8 #physical Attack value of the card
-@export var card_mag_attack: int = 6 #Magic attack value of the card
-@export var card_phys_defense: int = 12 #Physical defense of the card
-@export var card_mag_defense: int = 10 #Magical defense of the card
-@export var card_speed: int = 8 #Speed of the card
-@export var card_tags: Array[String] = ["dog", "turtle", "good_boy"]
+@export var card_health: float = 5.0 #Health amount of card
+@export var card_phys_attack: int = 12 #physical Attack value of the card
+@export var card_mag_attack: int = 12 #Magic attack value of the card
+@export var card_phys_defense: int = 0 #Physical defense of the card
+@export var card_mag_defense: int = 0 #Magical defense of the card
+@export var card_speed: int = 5 #Speed of the card
+@export var card_tags: Array[String] = ["summon", "shadow", "evil"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
-@export var card_shifted_health: float = -20.0
-@export var card_shifted_phys_attack: int = 2
-@export var card_shifted_mag_attack: int = 2
-@export var card_shifted_phys_defense: int = -2
-@export var card_shifted_mag_defense: int = -2
-@export var card_shifted_speed: int = +2
-@export var card_shifted_tags: Array[String] = ["dogx2"]
+@export var card_shifted_health: float = 25.0
+@export var card_shifted_phys_attack: int = -4
+@export var card_shifted_mag_attack: int = -4
+@export var card_shifted_phys_defense: int = 10
+@export var card_shifted_mag_defense: int = 10
+@export var card_shifted_speed: int = -2
+@export var card_shifted_tags: Array[String] = ["tanky"]
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 0.0
-@export var card_pos_phys_attack: int = -2
-@export var card_pos_mag_attack: int = -2
-@export var card_pos_phys_defense: int = 2
-@export var card_pos_mag_defense: int = 2
-@export var card_pos_speed: int = 0
-@export var card_pos_tags: Array[String] = ["tanky"]
+@export var card_pos_phys_attack: int = 2
+@export var card_pos_mag_attack: int = 2
+@export var card_pos_phys_defense: int = 0
+@export var card_pos_mag_defense: int = 0
+@export var card_pos_speed: int = 2
+@export var card_pos_tags: Array[String] = []
 
 #Position stats/effects should only be applied when the play button is pressed!
 @export var card_pref_pos: Array[String] = ["front"] #Prefered possitions of the card
@@ -79,16 +79,22 @@ func default_action() -> void:
 	var enemy = get_target()
 	var ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var ability = Combat.RNG.randi_range(1,4)
 	match ability:
-		1,2,3:
-			Combat.combat_board = "Turtle Dog tries to goes in for a bite!\n"
-			CombatLib.phys_attack(self, enemy, damage+phys_attack)
-		4,5:
-			Combat.combat_board = "Turtle Dog tries to goes in for a shell tackle!\n"
-			CombatLib.phys_attack(self, enemy, damage+phys_defense)
-		6,7:
-			Combat.combat_board = "Turtle Dog hides in it's shell!\n"
+		1:
+			Combat.combat_board = Combat.combat_board + "\"Jump!\" \n"
+			CombatLib.multi_phys_attack(self, enemy, 8, 2)
+			CombatLib.lock_down(self, enemy)
+		2:
+			Combat.combat_board = Combat.combat_board + "\"Stab!\" \n"
+			CombatLib.multi_phys_attack(self, enemy, 5, 2)
+			CombatLib.lock_down(self, enemy)
+		3:
+			Combat.combat_board = Combat.combat_board + "\"Spikes!\" \n"
+			CombatLib.multi_phys_attack(self, enemy, 5, 4)
+			CombatLib.lock_down(self, enemy)
+		4: 
+			Combat.combat_board = Combat.combat_board + "\"Defy!\" \n"
 			CombatLib.phys_defense_up(self, self)
 
 #Should normally be called when standing in the front
@@ -96,88 +102,67 @@ func front_action() -> void:
 	var enemy = get_target()
 	var ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var ability = Combat.RNG.randi_range(1,5)
 	match ability:
-		1,2,3:
-			Combat.combat_board = "Turtle Dog tries to goes in for a bite!\n"
-			CombatLib.phys_attack(self, enemy, damage+phys_attack)
-		4,5,6:
-			Combat.combat_board = "Turtle Dog tries to goes in for a shell tackle!\n"
-			CombatLib.phys_attack(self, enemy, damage+phys_defense)
-		7:
-			Combat.combat_board = "Turtle Dog hides in it's shell!\n"
+		1:
+			Combat.combat_board = Combat.combat_board + "\"Jump!\" \n"
+			CombatLib.multi_phys_attack(self, enemy, 8, 2)
+			CombatLib.lock_down(self, enemy)
+		2:
+			Combat.combat_board = Combat.combat_board + "\"Stab!\" \n"
+			CombatLib.multi_phys_attack(self, enemy, 5, 2)
+			CombatLib.lock_down(self, enemy)
+		3:
+			Combat.combat_board = Combat.combat_board + "\"Spikes!\" \n"
+			CombatLib.multi_phys_attack(self, enemy, 5, 4)
+			CombatLib.lock_down(self, enemy)
+		4,5: 
+			Combat.combat_board = Combat.combat_board + "\"Defy!\" \n"
 			CombatLib.phys_defense_up(self, self)
 
 #Should normally be called when standing in the center
-func center_action() -> void:
-	default_action()
+#func center_action() -> void:
+#	default_action()
 
 #Should normally be called when standing in the center
-func back_action() -> void:
-	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
-	match ability:
-		1,2,3,4,5,6:
-			Combat.combat_board = "Turtle Dog Rest!\n"
-			CombatLib.self_heal(self, card_mag_attack/5)
-		7:
-			Combat.combat_board = "Turtle Dog sleeps in it's shell!\n"
-			CombatLib.phys_defense_up(self, self)
+#func back_action() -> void:
+#	default_action()
 
 #Should normally never be called as long as the card is in a slot
-func shifted_default_action() -> void:
-	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
-	match ability:
-		1,2,3,4:
-			Combat.combat_board = "Turtle Dog tries to goes in for a bite!\n"
-			CombatLib.phys_attack(self, enemy, damage+phys_attack)
-		5,6:
-			Combat.combat_board = "Turtle Dog tries to goes in for a shell tackle!\n"
-			CombatLib.phys_attack(self, enemy, damage+phys_defense)
-		7:
-			Combat.combat_board = "Turtle Dog bare's it's fangs!\n"
-			CombatLib.phys_attack_up(self, self)
+#func shifted_default_action() -> void:
+#	default_action()
 
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
 	var enemy = get_target()
 	var ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var ability = Combat.RNG.randi_range(1,5)
 	match ability:
-		1,2,3,4:
-			Combat.combat_board = "Turtle Dog tries to goes in for a bite!\n"
-			CombatLib.phys_attack(self, enemy, damage+phys_attack)
-		5,6:
-			Combat.combat_board = "Turtle Dog tries to goes in for a shell tackle!\n"
-			CombatLib.phys_attack(self, enemy, damage+phys_defense)
-		7:
-			Combat.combat_board = "Turtle Dog bare's it's fangs!\n"
-			CombatLib.phys_attack_up(self, self)
+		1:
+			Combat.combat_board = Combat.combat_board + "\"Jump!\" \n"
+			CombatLib.multi_phys_attack(self, enemy, 8, 2)
+			CombatLib.lock_down(self, enemy)
+		2:
+			Combat.combat_board = Combat.combat_board + "\"Stab!\" \n"
+			CombatLib.multi_phys_attack(self, enemy, 5, 2)
+			CombatLib.lock_down(self, enemy)
+		3:
+			Combat.combat_board = Combat.combat_board + "\"Spikes!\" \n"
+			CombatLib.multi_phys_attack(self, enemy, 5, 4)
+			CombatLib.lock_down(self, enemy)
+		4,5: 
+			Combat.combat_board = Combat.combat_board + "\"Defy!\" \n"
+			CombatLib.phys_defense_up(self, self)
+			CombatLib.baton_pass(self, slot.cards_list[0])
 
 #Should normally be called when standing in the center
-func shifted_center_action() -> void:
-	shifted_default_action()
+#func shifted_center_action() -> void:
+#	shifted_default_action()
 
 #Should normally be called when standing in the center
-func shifted_back_action() -> void:
-	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
-	match ability:
-		1,2,3,4,5,6:
-			Combat.combat_board = "Turtle Dog Rest! \n"
-			CombatLib.self_heal(self, card_mag_attack/5)
-		7:
-			Combat.combat_board = "Turtle Dog bare's it's fangs!\n"
-			CombatLib.phys_attack_up(self, self)
-
+#func shifted_back_action() -> void:
+#	shifted_default_action()
 #endregion
 
 #region Targeting
@@ -259,4 +244,50 @@ func shifted_back_action() -> void:
 				#return Combat.get_target(Combat.opposing_party)
 			#else:
 				#return Combat.get_target(Combat.opposing_party)
+#endregion
+
+#region Combat
+func damage_physical(damage: int) -> int:
+	var change = damage - phys_defense
+	if change > 0:
+		health = health-change
+	else:
+		health = health - 1
+		change = 1
+	check_death()
+	slot.cards_list[0].direct_damage_true(1)
+	return change
+
+func direct_damage_physical(damage: int) -> int:
+	var change = damage - phys_defense
+	if change > 0:
+		health = health-change
+	else:
+		health = health - 1
+		change = 1
+	check_death()
+	slot.cards_list[0].direct_damage_true(1)
+	return change
+
+func damage_magical(damage: int) -> int:
+	var change = damage - mag_defense
+	if change > 0:
+		health = health-change
+	else:
+		health = health - 1
+		change = 1
+	check_death()
+	slot.cards_list[0].direct_damage_true(1)
+	return change
+
+func direct_damage_magical(damage: int) -> int:
+	var change = damage - mag_defense
+	if change > 0:
+		health = health-change
+	else:
+		health = health - 1
+		change = 1
+	check_death()
+	slot.cards_list[0].direct_damage_true(1)
+	return change
 #endregion

@@ -27,7 +27,7 @@ func move_then_return(card: Card, destination: Vector2) -> void:
 		tween.tween_property(card,"position",destination,0.075).set_ease(Tween.EASE_OUT)
 		await tween.finished
 		tween = get_tree().create_tween()
-		tween.tween_property(card,"position",card.current_position,0.2).set_ease(Tween.EASE_OUT)
+		Cards.fix_slot(card.slot)
 
 func change_scale(card: Node2D, size: Vector2) -> void:
 	if is_instance_valid(card):
