@@ -127,6 +127,8 @@ func _screen_entered() -> void:
 func _screen_exited() -> void:
 	for i in get_children():
 		i.set_process(false)
+		if i != get_child(get_child_count()-1):
+			i.hide
 #endregion
 
 #region Movement and other card functions
