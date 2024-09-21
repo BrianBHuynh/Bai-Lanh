@@ -27,6 +27,7 @@ func _ready() -> void:
 	tags.append_array(slot_tags)
 	shift = slot_shift
 	card_max = slot_card_max
+	accepting = false
 	initialize()
 
 func _on_button_pressed() -> void:
@@ -36,7 +37,7 @@ func _on_button_pressed() -> void:
 		get_parent().add_child(summon)
 		summon.new_slot = self
 		Cards.place_draw_pile(summon)
-		Cards.fix_slot(self)
+		fix_slot()
 		drawn = drawn+1
 
 #func action():

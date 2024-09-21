@@ -15,8 +15,9 @@ extends Slot
 var summoned: bool = false
 
 ## Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-	#initialize()
+func _ready() -> void:
+	initialize()
+	default_color = Color.RED
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -28,7 +29,7 @@ func _process(_delta: float) -> void:
 		summon.friendly = false
 		summon.initialize()
 		Cards.place_slot_opposing(summon)
-		Cards.fix_slot(self)
+		fix_slot()
 		summoned = true
 
 #func action():

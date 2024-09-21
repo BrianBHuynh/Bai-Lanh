@@ -19,6 +19,9 @@ var accepting: bool = true
 var default_color = modulate
 var default_size = scale
 
+var highlight_color = Color.GOLD
+var highlight_size = Vector2(1.1,1.1)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initialize()
@@ -33,8 +36,25 @@ func action():
 func place_action(_card):
 	update_accepting()
 
+func normalize():
+	modulate = default_color
+	scale = default_size
+
+func highlight():
+	modulate = highlight_color
+	scale = highlight_size
+
 func update_accepting():
 	if cards_list.size() >= card_max:
 		accepting = false
 	elif cards_list.size() < card_max and accepting == false:
 		accepting = true
+
+func fix_slot() -> void:
+	var temp = 0
+	normalize()
+	for elem in cards_list:
+		elem.move_to_front()
+		MoveLib.move(elem, global_position + Vector2(0,GlobalVars.stacking_distance)*temp)
+		temp = temp + 1
+		elem.normalize()

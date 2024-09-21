@@ -81,7 +81,7 @@ func _process(_delta: float) -> void:
 		shadow()
 
 func _on_button_down() -> void:
-	if Input.is_action_pressed("leftClick"):
+	if Input.is_action_pressed("leftClick") and friendly and not inspected:
 		held = true
 		on_card_held()
 		for i in get_children():
@@ -91,7 +91,7 @@ func _on_button_down() -> void:
 		inspect()
 
 func _on_button_up() -> void:
-	if Input.is_action_just_released("leftClick") and friendly:
+	if Input.is_action_just_released("leftClick") and friendly and not inspected:
 		held = false
 		on_card_released()
 		shadow_hide()
@@ -151,20 +151,20 @@ func on_card_released() -> void:
 	set_process(false)
 
 func inspect() -> void:
+	inspected = true
 	MoveLib.change_scale(self, Vector2(5,5))
 	MoveLib.move_fast(self, get_viewport_rect().size / 2)
 	move_to_front()
-	inspected = true
 
 func uninspect() -> void:
 	reject()
-	MoveLib.change_scale(self, default_size)
 	inspected = false
+	MoveLib.change_scale(self, default_size)
 
 func release_card() -> void:
 	if is_instance_valid(new_slot) and new_slot.accepting and friendly:
 		Cards.place_slot_player(self)
-		Cards.fix_slot(slot)
+		slot.fix_slot
 	else:
 		reject()
 		new_slot = null
@@ -172,7 +172,7 @@ func release_card() -> void:
 #returns card back to old position when picking up
 func reject() -> void:
 	if is_instance_valid(slot):
-		Cards.fix_slot(slot)
+		slot.fix_slot()
 	else:
 		MoveLib.move(self, current_position)
 
