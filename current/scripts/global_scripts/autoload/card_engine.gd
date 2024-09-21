@@ -52,8 +52,7 @@ func place_slot_opposing(card: Card) -> void:
 	MoveLib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
-	card.default_color = Color(Color.PALE_VIOLET_RED)
-	card.modulate = Color(Color.PALE_VIOLET_RED)
+	card.normalize()
 	card.slot.scale = Vector2(1,1)
 	card.slot.modulate = Color(Color.RED, .4)
 	card.slot.cards_list.append(card)
@@ -82,8 +81,7 @@ func add_slot(card: Card, slot: Node2D) -> void:
 func add_card(card: Card, new_card: Area2D) -> void:
 	if is_instance_valid(new_card.slot) and new_card.slot.accepting and not new_card.held and new_card.friendly:
 		card.new_slot = new_card.slot
-		new_card.modulate = Color(Color.GOLD, 1)
-		new_card.scale = Vector2(1.1,1.1)
+		new_card.highlight()
 		new_card.slot.modulate = Color(Color.GOLD, 1)
 		new_card.slot.scale = Vector2(1.1,1.1)
 
@@ -95,8 +93,7 @@ func remove_slot(_card: Card, slot) -> void:
 #Decriments the slotted variable, then returns the card back to it's default color
 func remove_card(card: Card, _new_card) -> void:
 	if not card.held and card.friendly:
-		card.modulate = card.default_color
-		card.scale = card.default_size
+		card.normalize()
 		card.slot.scale = card.slot.default_size
 		card.slot.modulate = card.slot.default_color
 #endregion
