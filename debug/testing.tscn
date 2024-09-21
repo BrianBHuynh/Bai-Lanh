@@ -80,6 +80,7 @@ pos = "front"
 [node name="CardSlot" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1246, 617)
 pos = "front"
+card_max = 2
 
 [node name="CardSlot2" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1409, 614)

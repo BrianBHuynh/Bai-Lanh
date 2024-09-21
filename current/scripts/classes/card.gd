@@ -129,7 +129,7 @@ func _screen_exited() -> void:
 	for i in get_children():
 		i.set_process(false)
 		if i != get_child(get_child_count()-1):
-			i.hide
+			i.hide()
 #endregion
 
 #region Movement and other card functions
@@ -461,9 +461,9 @@ func action() -> void:
 			default_action()
 
 func default_action() -> void:
-	var enemy: Card = get_target()
-	var ally: Card = get_ally()
-	var damage: int = (Combat.RNG.randi_range(1,10))
+	var _enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
 	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:

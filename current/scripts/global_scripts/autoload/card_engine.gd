@@ -5,6 +5,7 @@ extends Node2D
 func place_slot_player(card: Card) -> void:
 	if is_instance_valid(card.slot):
 		card.slot.cards_list.erase(card)
+		card.slot.update_accepting()
 		fix_slot(card.slot)
 		card.remove_slot_effects()
 	MoveLib.move(card, card.new_slot.position)
@@ -25,6 +26,7 @@ func place_slot_player(card: Card) -> void:
 	fix_slot(card.slot)
 	card.current_position = card.slot.position
 	card.slot.place_action(card)
+	card.slot.update_accepting()
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 func place_draw_pile(card: Card) -> void:
@@ -78,7 +80,7 @@ func add_slot(card: Card, slot: Node2D) -> void:
 
 #Places the location of the cardBelow to the latest card it passes over if the card is a top card
 func add_card(card: Card, new_card: Area2D) -> void:
-	if is_instance_valid(new_card.slot) and new_card.slot.accepting:
+	if is_instance_valid(new_card.slot) and new_card.slot.accepting and not new_card.held and new_card.friendly:
 		card.new_slot = new_card.slot
 		new_card.modulate = Color(Color.GOLD, 1)
 		new_card.scale = Vector2(1.1,1.1)
@@ -86,13 +88,17 @@ func add_card(card: Card, new_card: Area2D) -> void:
 		new_card.slot.scale = Vector2(1.1,1.1)
 
 #Decriments the slotted variable, then returns the slot back to it's default color
-func remove_slot(card: Card, slot) -> void:
+func remove_slot(_card: Card, slot) -> void:
 	slot.modulate = slot.default_color
 	slot.scale = slot.default_size
 
 #Decriments the slotted variable, then returns the card back to it's default color
-func remove_card(card: Card, slot) -> void:
-	pass
+func remove_card(card: Card, _new_card) -> void:
+	if not card.held and card.friendly:
+		card.modulate = card.default_color
+		card.scale = card.default_size
+		card.slot.scale = card.slot.default_size
+		card.slot.modulate = card.slot.default_color
 #endregion
 
 #region Misc mechanics
@@ -104,8 +110,11 @@ func pickup(card: Card) -> void:
 
 func fix_slot(slot: Node2D) -> void:
 	var temp = 0
+	slot.modulate = slot.default_color
+	slot.scale = slot.default_size
 	for elem in slot.cards_list:
 		elem.move_to_front()
 		MoveLib.move(elem, slot.global_position + Vector2(0,GlobalVars.stacking_distance)*temp)
 		temp = temp + 1
+		elem.normalize()
 #endregion

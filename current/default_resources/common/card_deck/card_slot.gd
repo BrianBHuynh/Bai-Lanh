@@ -11,6 +11,7 @@ var filled = false
 @export var tags:Array = []
 @export var shift:bool = false
 
+var card_max = 1
 var cards_list: Array = []
 var accepting: bool = false
 
@@ -44,5 +45,11 @@ func action():
 	if shift:
 		Cards.shift(cards_list.front())
 
-func place_action(card):
+func place_action(_card):
 	pass
+
+func update_accepting():
+	if cards_list.size() >= card_max:
+		accepting = false
+	elif cards_list.size() < card_max and accepting == false:
+		accepting = true

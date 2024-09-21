@@ -43,5 +43,5 @@ func action():
 	if shift:
 		Cards.shift(cards_list.front())
 
-func place_action(card):
+func place_action(_card):
 	pass

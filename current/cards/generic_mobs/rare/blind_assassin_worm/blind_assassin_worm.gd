@@ -18,7 +18,7 @@ extends Card
 @export var card_shifted_mag_attack: int = 2
 @export var card_shifted_phys_defense: int = -2
 @export var card_shifted_mag_defense: int = -2
-@export var card_shifted_speed: int = 2
+@export var card_shifted_speed: int = 4
 @export var card_shifted_tags: Array[String] = ["undead"]
 
 #Stats changed for being in the prefered positions
@@ -91,7 +91,7 @@ func summon_shade() -> void:
 
 func default_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
@@ -121,7 +121,7 @@ func default_action() -> void:
 #Should normally be called when standing in the center
 func back_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,8)
 	match ability:
@@ -155,7 +155,7 @@ func back_action() -> void:
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,8)
 	match ability:

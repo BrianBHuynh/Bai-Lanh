@@ -77,8 +77,8 @@ func _ready() -> void:
 #region Actions
 func default_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
+	var _ally = get_ally()
+	var _damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,4)
 	match ability:
 		1:
@@ -100,8 +100,8 @@ func default_action() -> void:
 #Should normally be called when standing in the front
 func front_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
+	var _ally = get_ally()
+	var _damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
@@ -135,8 +135,8 @@ func front_action() -> void:
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
+	var _ally = get_ally()
+	var _damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:

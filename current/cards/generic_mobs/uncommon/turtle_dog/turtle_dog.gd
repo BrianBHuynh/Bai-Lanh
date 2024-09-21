@@ -77,7 +77,7 @@ func _ready() -> void:
 #region Actions
 func default_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
@@ -94,7 +94,7 @@ func default_action() -> void:
 #Should normally be called when standing in the front
 func front_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
@@ -114,14 +114,14 @@ func center_action() -> void:
 
 #Should normally be called when standing in the center
 func back_action() -> void:
-	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
+	var _enemy = get_target()
+	var _ally = get_ally()
+	var _damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
 		1,2,3,4,5,6:
 			Combat.combat_board = "Turtle Dog Rest!\n"
-			CombatLib.self_heal(self, card_mag_attack/5)
+			CombatLib.self_heal(self, card_mag_attack/5.0)
 		7:
 			Combat.combat_board = "Turtle Dog sleeps in it's shell!\n"
 			CombatLib.phys_defense_up(self, self)
@@ -129,7 +129,7 @@ func back_action() -> void:
 #Should normally never be called as long as the card is in a slot
 func shifted_default_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
@@ -146,7 +146,7 @@ func shifted_default_action() -> void:
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
@@ -166,14 +166,14 @@ func shifted_center_action() -> void:
 
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
-	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
+	var _enemy = get_target()
+	var _ally = get_ally()
+	var _damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
 		1,2,3,4,5,6:
 			Combat.combat_board = "Turtle Dog Rest! \n"
-			CombatLib.self_heal(self, card_mag_attack/5)
+			CombatLib.self_heal(self, card_mag_attack/5.0)
 		7:
 			Combat.combat_board = "Turtle Dog bare's it's fangs!\n"
 			CombatLib.phys_attack_up(self, self)
