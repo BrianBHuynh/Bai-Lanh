@@ -10,3 +10,4 @@ func _process(_delta: float) -> void:
 		text = text + "Shifted\n"
 	if get_parent().inspected:
 		text = text + str(get_parent().tags)
+	text = text + str(get_parent().pos) + str(get_parent().pref_pos) + str(get_parent().slot.pos)

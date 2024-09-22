@@ -81,13 +81,15 @@ func _ready() -> void:
 func summon_shade() -> void:
 	var instance = summon.instantiate()
 	get_parent().add_child(instance)
-	instance.friendly = false
+	instance.friendly = friendly
 	instance.new_slot = slot
 	if friendly:
 		Cards.place_slot_player(instance)
 	else:
 		Cards.place_slot_opposing(instance)
 	Combat.add_initiative(instance)
+	instance.initialize()
+	slot.fix_slot()
 
 func default_action() -> void:
 	var enemy = get_target()

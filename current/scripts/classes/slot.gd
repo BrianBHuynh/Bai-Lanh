@@ -53,8 +53,9 @@ func update_accepting():
 func fix_slot() -> void:
 	var temp = 0
 	normalize()
-	for elem in cards_list:
+	for elem: Card in cards_list:
 		elem.move_to_front()
 		MoveLib.move(elem, global_position + Vector2(0,GlobalVars.stacking_distance)*temp)
+		elem.current_position = global_position + Vector2(0,GlobalVars.stacking_distance)*temp
 		temp = temp + 1
 		elem.normalize()

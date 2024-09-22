@@ -164,7 +164,7 @@ func uninspect() -> void:
 func release_card() -> void:
 	if is_instance_valid(new_slot) and new_slot.accepting and friendly:
 		Cards.place_slot_player(self)
-		slot.fix_slot
+		slot.fix_slot()
 	else:
 		reject()
 		new_slot = null
@@ -420,6 +420,8 @@ func check_death() -> void:
 					elem.cards_list.erase(self)
 			else:
 				elem.queue_free()
+		slot.cards_list.erase(self)
+		slot.update_accepting()
 		await get_tree().create_timer(.125).timeout
 		self.queue_free()
 

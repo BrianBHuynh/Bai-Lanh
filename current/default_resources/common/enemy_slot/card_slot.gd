@@ -16,6 +16,16 @@ var summoned: bool = false
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	pos = slot_pos
+	health = slot_health
+	phys_attack = slot_phys_attack
+	mag_attack = slot_mag_attack
+	slot_phys_defense = phys_defense
+	slot_mag_defense = mag_defense
+	speed = slot_speed
+	tags.append_array(slot_tags)
+	shift = slot_shift
+	card_max = slot_card_max
 	initialize()
 	default_color = Color.RED
 
@@ -27,8 +37,8 @@ func _process(_delta: float) -> void:
 		get_parent().add_child(summon)
 		summon.new_slot = self
 		summon.friendly = false
-		summon.initialize()
 		Cards.place_slot_opposing(summon)
+		summon.initialize()
 		fix_slot()
 		summoned = true
 

@@ -55,36 +55,48 @@ position = Vector2(320, 850)
 
 [node name="EnemySlot" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1239, 128)
+slot_pos = "back"
 
 [node name="EnemySlot2" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1101, 280)
+slot_pos = "center"
 
 [node name="EnemySlot3" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1247, 377)
+slot_pos = "front"
 
 [node name="EnemySlot4" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1386, 133)
+slot_pos = "back"
 
 [node name="EnemySlot5" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1529, 275)
+slot_pos = "center"
 
 [node name="EnemySlot6" parent="." instance=ExtResource("6_8o2lf")]
 position = Vector2(1384, 375)
+slot_pos = "front"
 
 [node name="CardSlot" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1246, 617)
+slot_pos = "front"
 
 [node name="CardSlot2" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1409, 614)
+slot_pos = "front"
 
 [node name="CardSlot3" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1095, 732)
+slot_pos = "center"
 
 [node name="CardSlot4" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1552, 739)
+slot_pos = "center"
 
 [node name="CardSlot5" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1247, 902)
+slot_pos = "back"
 
 [node name="CardSlot6" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1396, 901)
+slot_pos = "back"

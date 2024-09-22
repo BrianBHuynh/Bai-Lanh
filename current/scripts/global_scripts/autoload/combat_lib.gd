@@ -57,9 +57,9 @@ func phys_defense_up(card:Card, target:Card) -> void:
 		Combat.combat_board = Combat.combat_board + target.title + "'s defense rises ! \n" 
 		var status = StatusEffect.new("phys_defense_up", 2, "on_turn", 2, target)
 		Status.apply(status)
-		MoveLib.move_then_return(card, target.current_position)
 		MoveLib.change_scale(target, Vector2(1.5,1.5))
-		MoveLib.change_color(target, Color.GREEN)
+		MoveLib.change_color(target, Color.AQUAMARINE)
+		await get_tree().create_timer(1.0).timeout
 		MoveLib.change_scale(target, target.default_size)
 		MoveLib.change_color(target, target.default_color)
 
@@ -68,8 +68,8 @@ func phys_attack_up(card:Card, target:Card) -> void:
 		Combat.combat_board = Combat.combat_board + target.title + "'s attack rises ! \n" 
 		var status = StatusEffect.new("phys_attack_up", 2, "on_turn", 2, target)
 		Status.apply(status)
-		MoveLib.move_then_return(card, target.current_position)
 		MoveLib.change_scale(target, Vector2(1.5,1.5))
-		MoveLib.change_color(target, Color.GREEN)
+		MoveLib.change_color(target, Color.PALE_VIOLET_RED)
+		await get_tree().create_timer(1.0).timeout
 		MoveLib.change_scale(target, target.default_size)
 		MoveLib.change_color(target, target.default_color)

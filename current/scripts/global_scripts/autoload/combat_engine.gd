@@ -50,7 +50,7 @@ func get_initiative() -> Card:
 		else:
 			return null
 
-func get_target(array: Array) -> Card:
+func get_target(array: Array[Card]) -> Card:
 	agro_calc.clear()
 	agro_calc.append_array(array)
 	agro_calc.shuffle()
