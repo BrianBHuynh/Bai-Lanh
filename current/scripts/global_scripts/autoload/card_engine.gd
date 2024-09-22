@@ -86,7 +86,7 @@ func remove_slot(_card: Card, slot) -> void:
 
 #Decriments the slotted variable, then returns the card back to it's default color
 func remove_card(card: Card, _new_card) -> void:
-	if not card.held and card.friendly:
+	if not card.held and card.friendly and not card.inspected:
 		card.normalize()
 		card.slot.normalize()
 #endregion
