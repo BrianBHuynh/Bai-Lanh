@@ -83,7 +83,7 @@ func summon_shade() -> void:
 	get_parent().add_child(instance)
 	instance.friendly = friendly
 	instance.new_slot = slot
-	Cards.place_slot(instance)
+	Cards.place_slot_combat(instance)
 	Combat.add_initiative(instance)
 	instance.initialize()
 	slot.fix_slot()

@@ -60,8 +60,9 @@ func phys_defense_up(card:Card, target:Card) -> void:
 		MoveLib.change_scale(target, Vector2(1.5,1.5))
 		MoveLib.change_color(target, Color.AQUAMARINE)
 		await get_tree().create_timer(1.0).timeout
-		MoveLib.change_scale(target, target.default_size)
-		MoveLib.change_color(target, target.default_color)
+		if is_instance_valid(target):
+			MoveLib.change_scale(target, target.default_size)
+			MoveLib.change_color(target, target.default_color)
 
 func phys_attack_up(card:Card, target:Card) -> void:
 	if is_instance_valid(target):
@@ -71,5 +72,6 @@ func phys_attack_up(card:Card, target:Card) -> void:
 		MoveLib.change_scale(target, Vector2(1.5,1.5))
 		MoveLib.change_color(target, Color.PALE_VIOLET_RED)
 		await get_tree().create_timer(1.0).timeout
-		MoveLib.change_scale(target, target.default_size)
-		MoveLib.change_color(target, target.default_color)
+		if is_instance_valid(target):
+			MoveLib.change_scale(target, target.default_size)
+			MoveLib.change_color(target, target.default_color)

@@ -36,7 +36,7 @@ func _on_button_pressed() -> void:
 		summon.position = position
 		get_parent().add_child(summon)
 		summon.new_slot = self
-		Cards.place_draw_pile(summon)
+		Cards.place_slot(summon)
 		fix_slot()
 		drawn = drawn+1
 

@@ -30,8 +30,9 @@ func _on_button_pressed() -> void:
 			instance.initialize()
 		instance.get_child(1).disabled = true
 		await get_tree().create_timer(5).timeout
-		instance.queue_free()
-		drawn = drawn-1
+		if is_instance_valid(instance):
+			instance.queue_free()
+			drawn = drawn-1
 
 #func action():
 	#if shift:

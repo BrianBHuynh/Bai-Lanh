@@ -2,14 +2,8 @@ extends Node2D
 
 #region Place slot
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
-func place_slot(card: Card) -> void:
-	clear_slot(card)
-	MoveLib.move(card, card.new_slot.position)
-	card.slot = card.new_slot
-	card.new_slot = null
-	card.normalize()
-	card.slot.normalize()
-	card.slot.cards_list.append(card)
+func place_slot_combat(card: Card) -> void:
+	place_slot(card)
 	if card.pref_pos.has(card.pos):
 		card.pos_remove()
 	card.pos = card.slot.pos
@@ -22,13 +16,12 @@ func place_slot(card: Card) -> void:
 	elif not card.friendly and not Combat.opposing_party.has(card):
 		Combat.opposing_party.append(card)
 		Combat.add_initiative(card)
-	card.slot.fix_slot()
 	card.slot.place_action(card)
 	card.slot.update_accepting()
 	Combat.update(card)
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
-func place_draw_pile(card: Card) -> void:
+func place_slot(card: Card) -> void:
 	clear_slot(card)
 	MoveLib.move(card, card.new_slot.position)
 	card.slot = card.new_slot

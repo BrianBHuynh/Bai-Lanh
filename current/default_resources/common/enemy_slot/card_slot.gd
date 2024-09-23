@@ -37,7 +37,7 @@ func _process(_delta: float) -> void:
 		get_parent().add_child(summon)
 		summon.new_slot = self
 		summon.friendly = false
-		Cards.place_slot(summon)
+		Cards.place_slot_combat(summon)
 		summon.initialize()
 		fix_slot()
 		summoned = true
