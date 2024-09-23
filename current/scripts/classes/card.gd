@@ -163,7 +163,7 @@ func uninspect() -> void:
 
 func release_card() -> void:
 	if is_instance_valid(new_slot) and new_slot.accepting and friendly:
-		Cards.place_slot_player(self)
+		Cards.place_slot(self)
 		slot.fix_slot()
 	else:
 		reject()

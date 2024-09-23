@@ -2,51 +2,8 @@ extends Node2D
 
 #region Place slot
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
-func place_slot_player(card: Card) -> void:
-	if is_instance_valid(card.slot):
-		card.slot.cards_list.erase(card)
-		card.slot.update_accepting()
-		card.slot.fix_slot()
-		card.remove_slot_effects()
-	MoveLib.move(card, card.new_slot.position)
-	card.slot = card.new_slot
-	card.new_slot = null
-	card.normalize()
-	card.slot.cards_list.append(card)
-	if card.pref_pos.has(card.pos):
-		card.pos_remove()
-	card.pos = card.slot.pos
-	if card.pref_pos.has(card.pos):
-		card.pos_apply()
-	card.apply_slot_effects()
-	if not Combat.player_party.has(card):
-		Combat.player_party.append(card)
-		Combat.add_initiative(card)
-	card.slot.fix_slot()
-	card.current_position = card.slot.position
-	card.slot.place_action(card)
-	card.slot.update_accepting()
-
-#Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
-func place_draw_pile(card: Card) -> void:
-	if is_instance_valid(card.slot):
-		card.slot.cards_list.erase(card)
-		card.slot.fix_slot()
-		card.remove_slot_effects()
-	MoveLib.move(card, card.new_slot.position)
-	card.slot = card.new_slot
-	card.new_slot = null
-	card.normalize()
-	card.slot.cards_list.append(card)
-	card.slot.fix_slot()
-	card.current_position = card.slot.position
-
-#Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
-func place_slot_opposing(card: Card) -> void:
-	if is_instance_valid(card.slot):
-		card.slot.cards.erase(card)
-		card.slot.fix_slot()
-		card.remove_slot_effects()
+func place_slot(card: Card) -> void:
+	clear_slot(card)
 	MoveLib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
@@ -59,11 +16,26 @@ func place_slot_opposing(card: Card) -> void:
 	if card.pref_pos.has(card.pos):
 		card.pos_apply()
 	card.apply_slot_effects()
-	Combat.add_initiative(card)
-	if not Combat.opposing_party.has(card):
+	if card.friendly and not Combat.player_party.has(card):
+		Combat.player_party.append(card)
+		Combat.add_initiative(card)
+	elif not card.friendly and not Combat.opposing_party.has(card):
 		Combat.opposing_party.append(card)
+		Combat.add_initiative(card)
 	card.slot.fix_slot()
-	card.current_position = card.slot.position
+	card.slot.place_action(card)
+	card.slot.update_accepting()
+	Combat.update(card)
+
+#Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
+func place_draw_pile(card: Card) -> void:
+	clear_slot(card)
+	MoveLib.move(card, card.new_slot.position)
+	card.slot = card.new_slot
+	card.new_slot = null
+	card.normalize()
+	card.slot.cards_list.append(card)
+	card.slot.fix_slot()
 #endregion
 
 #region Add/Remove Slot
@@ -97,4 +69,12 @@ func pickup(card: Card) -> void:
 	card.offset = get_global_mouse_position() - card.global_position #dubious
 	GlobalVars.dragging_card = true
 	card.modulate = Color(Color.LIGHT_GOLDENROD, 1.5);
+
+#removes the card from the slot and fixes it
+func clear_slot(card: Card) -> void:
+	if is_instance_valid(card.slot):
+		card.slot.cards_list.erase(card)
+		card.slot.update_accepting()
+		card.slot.fix_slot()
+		card.remove_slot_effects()
 #endregion
