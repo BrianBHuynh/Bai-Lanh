@@ -1,15 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://b77a8xugg4jk0"]
+[gd_scene load_steps=8 format=3 uid="uid://coo4t0nf0hulk"]
 
-[ext_resource type="Script" path="res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.gd" id="1_b0orx"]
-[ext_resource type="Texture2D" uid="uid://cwtk67dbnccw7" path="res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/mysterious_shadow_worm.png" id="2_gx66f"]
-[ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_7s0un"]
-[ext_resource type="Script" path="res://current/scripts/common_scripts/card_name.gd" id="4_srdjx"]
+[ext_resource type="Texture2D" uid="uid://dm7gorbshgq43" path="res://current/cards/generic_mobs/common/archer/archer.png" id="2_u8jnm"]
+[ext_resource type="Script" path="res://current/cards/generic_mobs/common/archer/archer.gd" id="3_42k0o"]
+[ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_x45ww"]
+[ext_resource type="Script" path="res://current/scripts/common_scripts/card_name.gd" id="4_fvi1w"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6ow15"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_gx66f")
+"texture": ExtResource("2_u8jnm")
 }],
 "loop": true,
 "name": &"default",
@@ -29,7 +29,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if is_on_screen():
 		for i in get_parent().get_children():
 			i.show()
@@ -42,7 +42,7 @@ func _process(_delta: float) -> void:
 "
 
 [node name="Card" type="Area2D"]
-script = ExtResource("1_b0orx")
+script = ExtResource("3_42k0o")
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.1, 0.1)
@@ -72,7 +72,7 @@ offset_bottom = 1888.0
 scale = Vector2(0.05, 0.05)
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 200
-script = ExtResource("3_7s0un")
+script = ExtResource("3_x45ww")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -60.0
@@ -82,7 +82,7 @@ offset_bottom = 44.0
 scale = Vector2(0.1, 0.1)
 theme_override_font_sizes/font_size = 100
 text = "Title"
-script = ExtResource("4_srdjx")
+script = ExtResource("4_fvi1w")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(5.72205e-06, 0.500001)

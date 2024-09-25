@@ -38,8 +38,8 @@ var perma_statuses: Array[StatusEffect] = []
 var pref_pos: Array[String] = [] #Prefered possitions of the card
 var pos: String = "None" #Current position
 
-var slot #Where the current slot is stored
-var new_slot #Where a possible slot is
+var slot: Slot #Where the current slot is stored
+var new_slot: Slot #Where a possible slot is
 
 var offset: Vector2 #Used to store the offset between where the card is held and the mouse
 var current_position: Vector2 #Where the card is currently resting, set at the start to where the card enters the scene tree for the first time
@@ -81,7 +81,7 @@ func _process(_delta: float) -> void:
 		shadow()
 
 func _on_button_down() -> void:
-	if Input.is_action_pressed("leftClick"):
+	if Input.is_action_pressed("leftClick") and friendly and not inspected:
 		held = true
 		on_card_held()
 		for i in get_children():
@@ -91,7 +91,7 @@ func _on_button_down() -> void:
 		inspect()
 
 func _on_button_up() -> void:
-	if Input.is_action_just_released("leftClick") and friendly:
+	if Input.is_action_just_released("leftClick") and friendly and not inspected:
 		held = false
 		on_card_released()
 		shadow_hide()
@@ -129,7 +129,7 @@ func _screen_exited() -> void:
 	for i in get_children():
 		i.set_process(false)
 		if i != get_child(get_child_count()-1):
-			i.hide
+			i.hide()
 #endregion
 
 #region Movement and other card functions
@@ -151,20 +151,20 @@ func on_card_released() -> void:
 	set_process(false)
 
 func inspect() -> void:
+	inspected = true
 	MoveLib.change_scale(self, Vector2(5,5))
 	MoveLib.move_fast(self, get_viewport_rect().size / 2)
 	move_to_front()
-	inspected = true
 
 func uninspect() -> void:
 	reject()
-	MoveLib.change_scale(self, default_size)
 	inspected = false
+	MoveLib.change_scale(self, default_size)
 
 func release_card() -> void:
 	if is_instance_valid(new_slot) and new_slot.accepting and friendly:
-		Cards.place_slot_player(self)
-		Cards.fix_slot(slot)
+		Cards.place_slot_combat(self)
+		slot.fix_slot()
 	else:
 		reject()
 		new_slot = null
@@ -172,7 +172,7 @@ func release_card() -> void:
 #returns card back to old position when picking up
 func reject() -> void:
 	if is_instance_valid(slot):
-		Cards.fix_slot(slot)
+		slot.fix_slot()
 	else:
 		MoveLib.move(self, current_position)
 
@@ -276,86 +276,121 @@ func pos_remove() -> void:
 
 #region Combat
 #function is formatted this way so that it is readable and customizable, keeping it in per card allows for more control
+#region Targeting
 func get_target() -> Card:
 	if friendly:
 		if not shifted:
 			if pos == "front":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			elif pos == "center":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			elif pos == "back":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			else:
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 		else:
 			if pos == "front":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			elif pos == "center":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			elif pos == "back":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			else:
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 	else:
 		if not shifted:
 			if pos == "front":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			elif pos == "center":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			elif pos == "back":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			else:
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 		else:
 			if pos == "front":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			elif pos == "center":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			elif pos == "back":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			else:
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 
 func get_ally() -> Card:
 	if friendly:
 		if not shifted:
 			if pos == "front":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			elif pos == "center":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			elif pos == "back":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			else:
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 		else:
 			if pos == "front":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			elif pos == "center":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			elif pos == "back":
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 			else:
-				return Combat.get_target(Combat.player_party)
+				Combat.target_add(Combat.player_party)
+				return Combat.target_get()
 	else:
 		if not shifted:
 			if pos == "front":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			elif pos == "center":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			elif pos == "back":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			else:
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 		else:
 			if pos == "front":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			elif pos == "center":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			elif pos == "back":
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
 			else:
-				return Combat.get_target(Combat.opposing_party)
+				Combat.target_add(Combat.opposing_party)
+				return Combat.target_get()
+#endregion
 
+#region Damage
 func damage_physical(damage: int) -> int:
 	var change = damage - phys_defense
 	if change > 0:
@@ -420,6 +455,8 @@ func check_death() -> void:
 					elem.cards_list.erase(self)
 			else:
 				elem.queue_free()
+		slot.cards_list.erase(self)
+		slot.update_accepting()
 		await get_tree().create_timer(.125).timeout
 		self.queue_free()
 
@@ -435,7 +472,9 @@ func kill() -> void:
 			elem.cards_list.erase(self)
 	await get_tree().create_timer(.125).timeout
 	self.queue_free()
+#endregion
 
+#region Actions
 func action() -> void:
 	if is_instance_valid(slot):
 		slot.action()
@@ -461,9 +500,9 @@ func action() -> void:
 			default_action()
 
 func default_action() -> void:
-	var enemy: Card = get_target()
-	var ally: Card = get_ally()
-	var damage: int = (Combat.RNG.randi_range(1,10))
+	var _enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
 	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
@@ -504,4 +543,5 @@ func shifted_center_action() -> void:
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
 	shifted_default_action()
+#endregion
 #endregion

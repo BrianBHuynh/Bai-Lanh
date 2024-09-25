@@ -18,7 +18,7 @@ extends Card
 @export var card_shifted_mag_attack: int = 2
 @export var card_shifted_phys_defense: int = -2
 @export var card_shifted_mag_defense: int = -2
-@export var card_shifted_speed: int = 2
+@export var card_shifted_speed: int = 4
 @export var card_shifted_tags: Array[String] = ["undead"]
 
 #Stats changed for being in the prefered positions
@@ -81,17 +81,16 @@ func _ready() -> void:
 func summon_shade() -> void:
 	var instance = summon.instantiate()
 	get_parent().add_child(instance)
-	instance.friendly = false
+	instance.friendly = friendly
 	instance.new_slot = slot
-	if friendly:
-		Cards.place_slot_player(instance)
-	else:
-		Cards.place_slot_opposing(instance)
+	Cards.place_slot_combat(instance)
 	Combat.add_initiative(instance)
+	instance.initialize()
+	slot.fix_slot()
 
 func default_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,7)
 	match ability:
@@ -121,7 +120,7 @@ func default_action() -> void:
 #Should normally be called when standing in the center
 func back_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,8)
 	match ability:
@@ -155,7 +154,7 @@ func back_action() -> void:
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,8)
 	match ability:
@@ -173,87 +172,6 @@ func shifted_back_action() -> void:
 				CombatLib.phys_attack(self, enemy, damage-2)
 			else:
 				summon_shade()
-#endregion
-
-#region Targeting
-#func get_target() -> void:
-#	if friendly:
-#		if not shifted:
-#			if pos == "front":
-#				return Combat.get_target(Combat.opposing_party)
-#			elif pos == "center":
-#				return Combat.get_target(Combat.opposing_party)
-#			elif pos == "back":
-#				return Combat.get_target(Combat.opposing_party)
-#			else:
-#				return Combat.get_target(Combat.opposing_party)
-#		else:
-#			if pos == "front":
-#				return Combat.get_target(Combat.opposing_party)
-#			elif pos == "center":
-#				return Combat.get_target(Combat.opposing_party)
-#			elif pos == "back":
-#				return Combat.get_target(Combat.opposing_party)
-#			else:
-#				return Combat.get_target(Combat.opposing_party)
-#	else:
-#		if not shifted:
-#			if pos == "front":
-#				return Combat.get_target(Combat.player_party)
-#			elif pos == "center":
-#				return Combat.get_target(Combat.player_party)
-#			elif pos == "back":
-#				return Combat.get_target(Combat.player_party)
-#			else:
-#				return Combat.get_target(Combat.player_party)
-#		else:
-#			if pos == "front":
-#				return Combat.get_target(Combat.player_party)
-#			elif pos == "center":
-#			elif pos == "back":
-#				return Combat.get_target(Combat.player_party)
-#			else:
-#				return Combat.get_target(Combat.player_party)
-
-#func get_ally() -> Card:
-	#if friendly:
-		#if not shifted:
-			#if pos == "front":
-				#return Combat.get_target(Combat.player_party)
-			#elif pos == "center":
-				#return Combat.get_target(Combat.player_party)
-			#elif pos == "back":
-				#return Combat.get_target(Combat.player_party)
-			#else:
-				#return Combat.get_target(Combat.player_party)
-		#else:
-			#if pos == "front":
-				#return Combat.get_target(Combat.player_party)
-			#elif pos == "center":
-				#return Combat.get_target(Combat.player_party)
-			#elif pos == "back":
-				#return Combat.get_target(Combat.player_party)
-			#else:
-				#return Combat.get_target(Combat.player_party)
-	#else:
-		#if not shifted:
-			#if pos == "front":
-				#return Combat.get_target(Combat.opposing_party)
-			#elif pos == "center":
-				#return Combat.get_target(Combat.opposing_party)
-			#elif pos == "back":
-				#return Combat.get_target(Combat.opposing_party)
-			#else:
-				#return Combat.get_target(Combat.opposing_party)
-		#else:
-			#if pos == "front":
-				#return Combat.get_target(Combat.opposing_party)
-			#elif pos == "center":
-				#return Combat.get_target(Combat.opposing_party)
-			#elif pos == "back":
-				#return Combat.get_target(Combat.opposing_party)
-			#else:
-				#return Combat.get_target(Combat.opposing_party)
 #endregion
 
 #region Combat
@@ -282,4 +200,118 @@ func damage_magical(damage: int) -> int:
 			change = 1
 		check_death()
 		return change
+#endregion
+
+#region Targeting
+#func get_target() -> Card:
+	#if friendly:
+		#if not shifted:
+			#if pos == "front":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#elif pos == "center":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#elif pos == "back":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#else:
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+		#else:
+			#if pos == "front":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#elif pos == "center":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#elif pos == "back":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#else:
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+	#else:
+		#if not shifted:
+			#if pos == "front":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#elif pos == "center":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#elif pos == "back":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#else:
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+		#else:
+			#if pos == "front":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#elif pos == "center":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#elif pos == "back":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#else:
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+#
+#func get_ally() -> Card:
+	#if friendly:
+		#if not shifted:
+			#if pos == "front":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#elif pos == "center":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#elif pos == "back":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#else:
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+		#else:
+			#if pos == "front":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#elif pos == "center":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#elif pos == "back":
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+			#else:
+				#Combat.target_add(Combat.player_party)
+				#return Combat.target_get()
+	#else:
+		#if not shifted:
+			#if pos == "front":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#elif pos == "center":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#elif pos == "back":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#else:
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+		#else:
+			#if pos == "front":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#elif pos == "center":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#elif pos == "back":
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
+			#else:
+				#Combat.target_add(Combat.opposing_party)
+				#return Combat.target_get()
 #endregion

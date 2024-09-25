@@ -1,30 +1,33 @@
-extends StaticBody2D
+extends Slot
 
-var filled = false
-@export var pos = "Default"
-@export var health: float = 0.0
-@export var phys_attack: int = 0
-@export var mag_attack: int = 0
-@export var phys_defense: int = 0
-@export var mag_defense: int = 0
-@export var speed: int = 0
-@export var tags:Array = []
-@export var shift:bool = false
+@export var slot_pos = "Default"
+@export var slot_health: float = 0.0
+@export var slot_phys_attack: int = 0
+@export var slot_mag_attack: int = 0
+@export var slot_phys_defense: int = 0
+@export var slot_mag_defense: int = 0
+@export var slot_speed: int = 0
+@export var slot_tags: Array = []
+@export var slot_shift:bool = false
 
-var cards_list: Array = []
-var accepting: bool = false
-
-var max_cap = 1
-
-var default_color = Color(Color.RED, .7)
-var default_size = scale
+@export var slot_card_max = 1
 
 var summoned: bool = false
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Combat.slots.append(self)
-	modulate = Color(Color.RED, .7)
+	pos = slot_pos
+	health = slot_health
+	phys_attack = slot_phys_attack
+	mag_attack = slot_mag_attack
+	slot_phys_defense = phys_defense
+	slot_mag_defense = mag_defense
+	speed = slot_speed
+	tags.append_array(slot_tags)
+	shift = slot_shift
+	card_max = slot_card_max
+	initialize()
+	default_color = Color.RED
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -34,14 +37,14 @@ func _process(_delta: float) -> void:
 		get_parent().add_child(summon)
 		summon.new_slot = self
 		summon.friendly = false
+		Cards.place_slot_combat(summon)
 		summon.initialize()
-		Cards.place_slot_opposing(summon)
-		Cards.fix_slot(self)
+		fix_slot()
 		summoned = true
 
-func action():
-	if shift:
-		Cards.shift(cards_list.front())
-
-func place_action(card):
-	pass
+#func action():
+	#if shift:
+		#Cards.shift(cards_list.front())
+#
+#func place_action(_card):
+	#pass

@@ -12,28 +12,50 @@ var speed: int = 0
 var tags:Array = []
 var shift:bool = false
 
+var card_max = 1
 var cards_list: Array = []
 var accepting: bool = true
 
 var default_color = modulate
 var default_size = scale
 
+var highlight_color = Color.GOLD
+var highlight_size = Vector2(1.1,1.1)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	initialize()
+
+func initialize():
 	Combat.slots.append(self)
-	modulate = Color(Color.ALICE_BLUE, .7)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if not cards_list.is_empty():
-		accepting = false
-	elif cards_list.is_empty() and accepting == false:
-		accepting = true
 
 func action():
 	if shift:
 		cards_list.front().shift()
 
-func place_action(card):
+func place_action(_card):
 	pass
+
+func normalize():
+	modulate = default_color
+	scale = default_size
+
+func highlight():
+	modulate = highlight_color
+	scale = highlight_size
+
+func update_accepting():
+	if cards_list.size() >= card_max:
+		accepting = false
+	elif cards_list.size() < card_max and accepting == false:
+		accepting = true
+
+func fix_slot() -> void:
+	var temp = 0
+	normalize()
+	for elem: Card in cards_list:
+		elem.move_to_front()
+		MoveLib.move(elem, global_position + Vector2(0,GlobalVars.stacking_distance)*temp)
+		elem.current_position = global_position + Vector2(0,GlobalVars.stacking_distance)*temp
+		temp = temp + 1
+		elem.normalize()
