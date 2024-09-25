@@ -25,7 +25,7 @@ func multi_phys_attack(card: Card, target: Card, diceMax: int, times: int) -> vo
 		for i in times:
 			var change = target.damage_physical(Combat.RNG.randi_range(1,diceMax)+card.phys_attack)
 			target.health = target.health - change
-			Combat.combat_board = target.title +  " -" + str(change) + " health\n" 
+			Combat.combat_board = Combat.combat_board + target.title +  " -" + str(change) + " health\n"
 			MoveLib.move_then_return(card, target.current_position)
 		Combat.combat_board = Combat.combat_board + "They have " + str(int(target.health)) + " health left! \n"
 

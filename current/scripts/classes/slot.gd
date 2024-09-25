@@ -34,7 +34,7 @@ func action():
 		cards_list.front().shift()
 
 func place_action(_card):
-	update_accepting()
+	pass
 
 func normalize():
 	modulate = default_color

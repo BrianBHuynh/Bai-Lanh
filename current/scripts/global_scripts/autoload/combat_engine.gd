@@ -39,6 +39,7 @@ var RNG: RandomNumberGenerator = RandomNumberGenerator.new()
 var combat_board:String = ""
 var arrays: Array[Array] = [slots, player_party, opposing_party, player_front, player_center, player_back, player_tanks, player_dps, player_support, opposing_front, opposing_center, opposing_back, opposing_tanks, opposing_dps, opposing_support, initiative, agro_calc]
 var position_arrays: Array[Array] = [player_front, player_center, player_back, opposing_front, opposing_center, opposing_back]
+
 #returns next in initiative, if initiative is empty repopulates it
 func get_initiative() -> Card:
 	if initiative.is_empty():
@@ -50,11 +51,34 @@ func get_initiative() -> Card:
 		else:
 			return null
 
-func get_target(array: Array[Card]) -> Card:
+func target_clear() -> void:
 	agro_calc.clear()
+
+func target_add(array: Array[Card]) -> void:
 	agro_calc.append_array(array)
-	agro_calc.shuffle()
-	return agro_calc.pop_front()
+
+func target_get() -> Card:
+	return agro_calc.pick_random()
+
+func add_card(card: Card) -> void:
+	if card.friendly:
+		player_party.append(card)
+		match card.pos:
+			"front":
+				player_front.append(card)
+			"center":
+				player_center.append(card)
+			"back":
+				player_back.append(card)
+	else:
+		opposing_party.append(card)
+		match card.pos:
+			"front":
+				opposing_front.append(card)
+			"center":
+				opposing_center.append(card)
+			"back":
+				opposing_back.append(card)
 
 func add_initiative(card: Card) -> void:
 	if not initiative.has(card):
@@ -98,6 +122,7 @@ func update(card: Card) -> void:
 		add_position(card)
 
 func next_turn() -> void:
+	target_clear()
 	Status.tick()
 	var curChar = get_initiative()
 	if is_instance_valid(curChar):

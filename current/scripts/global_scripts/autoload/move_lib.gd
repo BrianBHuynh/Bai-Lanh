@@ -3,16 +3,16 @@ extends Node
 var tween: Tween
 var animRunning: bool = false
 
-func move(card: Card, destination: Vector2) -> void:
+func move(node: Node2D, destination: Vector2) -> void:
 	tween = get_tree().create_tween()
 	animRunning = true
-	tween.tween_property(card,"position",destination,0.3).set_ease(Tween.EASE_OUT)
+	tween.tween_property(node,"position",destination,0.3).set_ease(Tween.EASE_OUT)
 	await tween.finished
 	animRunning = false
 
-func move_fast(card: Card, destination: Vector2) -> void:
+func move_fast(node: Node2D, destination: Vector2) -> void:
 	tween = get_tree().create_tween()
-	tween.tween_property(card,"position",destination,0.075).set_ease(Tween.EASE_OUT)
+	tween.tween_property(node,"position",destination,0.075).set_ease(Tween.EASE_OUT)
 
 func move_to_initial_pos(card: Card) -> void:
 	tween = get_tree().create_tween()

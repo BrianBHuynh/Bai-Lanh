@@ -11,10 +11,10 @@ func place_slot_combat(card: Card) -> void:
 		card.pos_apply()
 	card.apply_slot_effects()
 	if card.friendly and not Combat.player_party.has(card):
-		Combat.player_party.append(card)
+		Combat.add_card(card)
 		Combat.add_initiative(card)
 	elif not card.friendly and not Combat.opposing_party.has(card):
-		Combat.opposing_party.append(card)
+		Combat.add_card(card)
 		Combat.add_initiative(card)
 	card.slot.place_action(card)
 	card.slot.update_accepting()
