@@ -278,84 +278,10 @@ func pos_remove() -> void:
 #function is formatted this way so that it is readable and customizable, keeping it in per card allows for more control
 #region Targeting
 func get_target() -> Card:
-	if friendly:
-		if shifted:
-			if pos == "front":
-				return targeting.even("opposing")
-			elif pos == "center":
-				return targeting.even("opposing")
-			elif pos == "back":
-				return targeting.even("opposing")
-			else:
-				return targeting.even("opposing")
-		else:
-			if pos == "front":
-				return targeting.even("opposing")
-			elif pos == "center":
-				return targeting.even("opposing")
-			elif pos == "back":
-				return targeting.even("opposing")
-			else:
-				return targeting.even("opposing")
-	else:
-		if shifted:
-			if pos == "front":
-				return targeting.even("player")
-			elif pos == "center":
-				return targeting.even("player")
-			elif pos == "back":
-				return targeting.even("player")
-			else:
-				return targeting.even("player")
-		else:
-			if pos == "front":
-				return targeting.even("player")
-			elif pos == "center":
-				return targeting.even("player")
-			elif pos == "back":
-				return targeting.even("player")
-			else:
-				return targeting.even("player")
+	return Targeting.simple_targeting(self, "even")
 
 func get_ally() -> Card:
-	if friendly:
-		if shifted:
-			if pos == "front":
-				return targeting.even("player")
-			elif pos == "center":
-				return targeting.even("player")
-			elif pos == "back":
-				return targeting.even("player")
-			else:
-				return targeting.even("player")
-		else:
-			if pos == "front":
-				return targeting.even("player")
-			elif pos == "center":
-				return targeting.even("player")
-			elif pos == "back":
-				return targeting.even("player")
-			else:
-				return targeting.even("player")
-	else:
-		if shifted:
-			if pos == "front":
-				return targeting.even("opposing")
-			elif pos == "center":
-				return targeting.even("opposing")
-			elif pos == "back":
-				return targeting.even("opposing")
-			else:
-				return targeting.even("opposing")
-		else:
-			if pos == "front":
-				return targeting.even("opposing")
-			elif pos == "center":
-				return targeting.even("opposing")
-			elif pos == "back":
-				return targeting.even("opposing")
-			else:
-				return targeting.even("opposing")
+	return Targeting.simple_ally(self, "even")
 #endregion
 
 #region Damage
@@ -422,7 +348,7 @@ func check_death() -> void:
 				while elem.cards_list.has(self):
 					elem.cards_list.erase(self)
 			else:
-				elem.queue_free()
+				Combat.slots.erase(elem)
 		slot.cards_list.erase(self)
 		slot.update_accepting()
 		await get_tree().create_timer(.125).timeout

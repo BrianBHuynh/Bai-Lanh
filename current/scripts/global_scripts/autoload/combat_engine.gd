@@ -1,5 +1,6 @@
 extends Node
 
+var targeting: Targeting = Targeting.new()
 #All slots are initialized here at the start of the scene
 var slots: Array = [] 
 

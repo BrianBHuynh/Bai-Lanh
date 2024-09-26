@@ -116,83 +116,92 @@ func default_action() -> void:
 #endregion
 
 #region Targeting
+#region Simple
 func get_target() -> Card:
-	if friendly:
-		if shifted:
-			if pos == "front":
-				return targeting.specific_pos("opposing", "front")
-			elif pos == "center":
-				return targeting.specific_pos("opposing", "center")
-			elif pos == "back":
-				return targeting.specific_pos("opposing", "back")
-			else:
-				return targeting.even("opposing")
-		else:
-			if pos == "front":
-				return targeting.specific_pos("opposing", "front")
-			elif pos == "center":
-				return targeting.specific_pos("opposing", "center")
-			elif pos == "back":
-				return targeting.specific_pos("opposing", "back")
-			else:
-				return targeting.even("opposing")
-	else:
-		if shifted:
-			if pos == "front":
-				return targeting.specific_pos("player", "front")
-			elif pos == "center":
-				return targeting.specific_pos("player", "center")
-			elif pos == "back":
-				return targeting.specific_pos("player", "back")
-			else:
-				return targeting.even("player")
-		else:
-			if pos == "front":
-				return targeting.specific_pos("player", "front")
-			elif pos == "center":
-				return targeting.specific_pos("player", "center")
-			elif pos == "back":
-				return targeting.specific_pos("player", "back")
-			else:
-				return targeting.even("player")
+	return Targeting.simple_targeting(self, "same_pos")
+#
+#func get_ally() -> Card:
+	#return Targeting.simple_ally(self, "even")
+#endregion
+#region Complex
+#func get_target() -> Card:
+	#if friendly:
+		#if shifted:
+			#if pos == "front":
+				#return Targeting.even(self, "opposing")
+			#elif pos == "center":
+				#return Targeting.even(self, "opposing")
+			#elif pos == "back":
+				#return Targeting.even(self, "opposing")
+			#else:
+				#return Targeting.even(self, "opposing")
+		#else:
+			#if pos == "front":
+				#return Targeting.even(self, "opposing")
+			#elif pos == "center":
+				#return Targeting.even(self, "opposing")
+			#elif pos == "back":
+				#return Targeting.even(self, "opposing")
+			#else:
+				#return Targeting.even(self, "opposing")
+	#else:
+		#if shifted:
+			#if pos == "front":
+				#return Targeting.even(self, "player")
+			#elif pos == "center":
+				#return Targeting.even(self, "player")
+			#elif pos == "back":
+				#return Targeting.even(self, "player")
+			#else:
+				#return Targeting.even(self, "player")
+		#else:
+			#if pos == "front":
+				#return Targeting.even(self, "player")
+			#elif pos == "center":
+				#return Targeting.even(self, "player")
+			#elif pos == "back":
+				#return Targeting.even(self, "player")
+			#else:
+				#return Targeting.even(self, "player")
 #
 #func get_ally() -> Card:
 	#if friendly:
 		#if shifted:
 			#if pos == "front":
-				#return targeting.even("player")
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#return targeting.even("player")
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#return targeting.even("player")
+				#return Targeting.even(self, "player")
 			#else:
-				#return targeting.even("player")
+				#return Targeting.even(self, "player")
 		#else:
 			#if pos == "front":
-				#return targeting.even("player")
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#return targeting.even("player")
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#return targeting.even("player")
+				#return Targeting.even(self, "player")
 			#else:
-				#return targeting.even("player")
+				#return Targeting.even(self, "player")
 	#else:
 		#if shifted:
 			#if pos == "front":
-				#return targeting.even("opposing")
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#return targeting.even("opposing")
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#return targeting.even("opposing")
+				#return Targeting.even(self, "opposing")
 			#else:
-				#return targeting.even("opposing")
+				#return Targeting.even(self, "opposing")
 		#else:
 			#if pos == "front":
-				#return targeting.even("opposing")
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#return targeting.even("opposing")
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#return targeting.even("opposing")
+				#return Targeting.even(self, "opposing")
 			#else:
-				#return targeting.even("opposing")
+				#return Targeting.even(self, "opposing")
+#endregion
 #endregion
