@@ -170,7 +170,7 @@ func shifted_default_action() -> void:
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
-			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
 		2,3:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
@@ -196,7 +196,7 @@ func shifted_front_action() -> void:
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
-			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
 		2:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
@@ -223,7 +223,7 @@ func shifted_center_action() -> void:
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
-			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
 		2:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
@@ -250,7 +250,7 @@ func shifted_back_action() -> void:
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
-			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
 		2:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)

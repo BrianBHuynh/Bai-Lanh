@@ -19,13 +19,9 @@ config/icon="res://icon.svg"
 
 GlobalVars="*res://current/scripts/global_scripts/autoload/global_vars.gd"
 Combat="*res://current/scripts/global_scripts/autoload/combat_engine.gd"
-MoveLib="*res://current/scripts/global_scripts/autoload/move_lib.gd"
-Cards="*res://current/scripts/global_scripts/autoload/card_engine.gd"
-CombatLib="*res://current/scripts/global_scripts/autoload/combat_lib.gd"
 CardReg="*res://current/scripts/global_scripts/autoload/card_registry.gd"
 Controls="*res://current/scripts/global_scripts/autoload/controls.gd"
 Status="*res://current/scripts/global_scripts/autoload/status_engine/status_engine.gd"
-StatusLib="*res://current/scripts/global_scripts/autoload/status_engine/status_lib.gd"
 
 [display]
 
