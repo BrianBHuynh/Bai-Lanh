@@ -262,7 +262,7 @@ func shifted_back_action() -> void:
 			CombatLib.baton_pass(self, get_ally())
 		5,6:
 			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
-			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
+			CombatLib.self_heal(self, 1+damage+mag_attack/2.0)
 		7:
 			Combat.combat_board = Combat.combat_board + "\"CRIT investigation!\"\n"
 			CombatLib.lock_down(self, enemy)

@@ -121,7 +121,7 @@ func back_action() -> void:
 	match ability:
 		1,2,3,4,5,6:
 			Combat.combat_board = "Turtle Dog Rest!\n"
-			CombatLib.self_heal(self, card_mag_attack/5.0)
+			CombatLib.self_heal(self, card_mag_attack/2.0)
 		7:
 			Combat.combat_board = "Turtle Dog sleeps in it's shell!\n"
 			CombatLib.phys_defense_up(self, self)
@@ -173,7 +173,7 @@ func shifted_back_action() -> void:
 	match ability:
 		1,2,3,4,5,6:
 			Combat.combat_board = "Turtle Dog Rest! \n"
-			CombatLib.self_heal(self, card_mag_attack/5.0)
+			CombatLib.self_heal(self, card_mag_attack/2.0)
 		7:
 			Combat.combat_board = "Turtle Dog bare's it's fangs!\n"
 			CombatLib.phys_attack_up(self, self)
