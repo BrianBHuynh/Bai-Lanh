@@ -215,115 +215,113 @@ func direct_damage_magical(damage: int) -> int:
 #endregion
 
 #region Targeting
+#region Simple
+#func get_target() -> Card:
+	#return Targeting.simple_targeting(self, "even")
+#
+#func get_ally() -> Card:
+	#return Targeting.simple_ally(self, "even")
+#endregion
+#region Complex
 #func get_target() -> Card:
 	#if friendly:
-		#if not shifted:
+		#if shifted:
 			#if pos == "front":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#else:
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 		#else:
 			#if pos == "front":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#else:
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 	#else:
-		#if not shifted:
+		#if shifted:
 			#if pos == "front":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#else:
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 		#else:
 			#if pos == "front":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#else:
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 #
 #func get_ally() -> Card:
 	#if friendly:
-		#if not shifted:
+		#if shifted:
 			#if pos == "front":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#else:
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 		#else:
 			#if pos == "front":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#else:
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 	#else:
-		#if not shifted:
+		#if shifted:
 			#if pos == "front":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#else:
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 		#else:
 			#if pos == "front":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#else:
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 #endregion
+#endregion
+
+func check_death() -> void:
+	if health <= 0:
+		if is_instance_valid(slot.cards_list[0]) and not slot.cards_list[0].tags.has("summon"):
+			slot.cards_list[0].direct_damage_true(abs(health))
+		for status in statuses:
+			status.queue_free()
+		statuses.clear()
+		for array in Combat.arrays:
+			while array.has(self):
+				array.erase(self)
+		for elem in Combat.slots:
+			if is_instance_valid(elem):
+				while elem.cards_list.has(self):
+					elem.cards_list.erase(self)
+			else:
+				Combat.slots.erase(elem)
+		slot.cards_list.erase(self)
+		slot.update_accepting()
+		await get_tree().create_timer(.125).timeout
+		self.queue_free()

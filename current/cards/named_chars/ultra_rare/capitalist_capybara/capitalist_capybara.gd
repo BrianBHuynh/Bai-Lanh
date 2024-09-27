@@ -170,7 +170,7 @@ func shifted_default_action() -> void:
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
-			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
 		2,3:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
@@ -196,7 +196,7 @@ func shifted_front_action() -> void:
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
-			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
 		2:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
@@ -223,7 +223,7 @@ func shifted_center_action() -> void:
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
-			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
 		2:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
@@ -250,7 +250,7 @@ func shifted_back_action() -> void:
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
-			CombatLib.life_steal_lesser(self, enemy, damage+mag_attack)
+			CombatLib.mag_life_steal_lesser(self, enemy, damage+mag_attack)
 		2:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
@@ -262,7 +262,7 @@ func shifted_back_action() -> void:
 			CombatLib.baton_pass(self, get_ally())
 		5,6:
 			Combat.combat_board = Combat.combat_board + "\"Cappy is distracted!\"\n"
-			CombatLib.self_heal(self, 1+damage+mag_attack/3.0)
+			CombatLib.self_heal(self, 1+damage+mag_attack/2.0)
 		7:
 			Combat.combat_board = Combat.combat_board + "\"CRIT investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
@@ -270,115 +270,92 @@ func shifted_back_action() -> void:
 #endregion
 
 #region Targeting
+#region Simple
+#func get_target() -> Card:
+	#return Targeting.simple_targeting(self, "even")
+#
+#func get_ally() -> Card:
+	#return Targeting.simple_ally(self, "even")
+#endregion
+#region Complex
 #func get_target() -> Card:
 	#if friendly:
-		#if not shifted:
+		#if shifted:
 			#if pos == "front":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#else:
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 		#else:
 			#if pos == "front":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#else:
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 	#else:
-		#if not shifted:
+		#if shifted:
 			#if pos == "front":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#else:
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 		#else:
 			#if pos == "front":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#else:
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 #
 #func get_ally() -> Card:
 	#if friendly:
-		#if not shifted:
+		#if shifted:
 			#if pos == "front":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#else:
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 		#else:
 			#if pos == "front":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "center":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#elif pos == "back":
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 			#else:
-				#Combat.target_add(Combat.player_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "player")
 	#else:
-		#if not shifted:
+		#if shifted:
 			#if pos == "front":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#else:
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 		#else:
 			#if pos == "front":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "center":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#elif pos == "back":
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
 			#else:
-				#Combat.target_add(Combat.opposing_party)
-				#return Combat.target_get()
+				#return Targeting.even(self, "opposing")
+#endregion
 #endregion

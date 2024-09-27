@@ -278,116 +278,10 @@ func pos_remove() -> void:
 #function is formatted this way so that it is readable and customizable, keeping it in per card allows for more control
 #region Targeting
 func get_target() -> Card:
-	if friendly:
-		if not shifted:
-			if pos == "front":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			elif pos == "center":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			elif pos == "back":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			else:
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-		else:
-			if pos == "front":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			elif pos == "center":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			elif pos == "back":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			else:
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-	else:
-		if not shifted:
-			if pos == "front":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			elif pos == "center":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			elif pos == "back":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			else:
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-		else:
-			if pos == "front":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			elif pos == "center":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			elif pos == "back":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			else:
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
+	return Targeting.simple_targeting(self, "even")
 
 func get_ally() -> Card:
-	if friendly:
-		if not shifted:
-			if pos == "front":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			elif pos == "center":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			elif pos == "back":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			else:
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-		else:
-			if pos == "front":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			elif pos == "center":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			elif pos == "back":
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-			else:
-				Combat.target_add(Combat.player_party)
-				return Combat.target_get()
-	else:
-		if not shifted:
-			if pos == "front":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			elif pos == "center":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			elif pos == "back":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			else:
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-		else:
-			if pos == "front":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			elif pos == "center":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			elif pos == "back":
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
-			else:
-				Combat.target_add(Combat.opposing_party)
-				return Combat.target_get()
+	return Targeting.simple_ally(self, "even")
 #endregion
 
 #region Damage
@@ -454,7 +348,7 @@ func check_death() -> void:
 				while elem.cards_list.has(self):
 					elem.cards_list.erase(self)
 			else:
-				elem.queue_free()
+				Combat.slots.erase(elem)
 		slot.cards_list.erase(self)
 		slot.update_accepting()
 		await get_tree().create_timer(.125).timeout

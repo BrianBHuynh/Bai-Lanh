@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://2y0r6julkrvt"]
 
-[ext_resource type="Script" path="res://current/cards/generic_mobs/ultra_rare/capitalist_capybara/capitalist_capybara.gd" id="1_g0ene"]
-[ext_resource type="Texture2D" uid="uid://cqo4g7ev4bweo" path="res://current/cards/generic_mobs/ultra_rare/capitalist_capybara/capitalist_capybara.png" id="2_j4yfi"]
+[ext_resource type="Script" path="res://current/cards/named_chars/ultra_rare/capitalist_capybara/capitalist_capybara.gd" id="1_g0ene"]
+[ext_resource type="Texture2D" uid="uid://cqo4g7ev4bweo" path="res://current/cards/named_chars/ultra_rare/capitalist_capybara/capitalist_capybara.png" id="2_j4yfi"]
 [ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_4jlyo"]
 [ext_resource type="Script" path="res://current/scripts/common_scripts/card_name.gd" id="4_2lvkw"]
 
