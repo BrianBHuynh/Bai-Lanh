@@ -53,7 +53,7 @@ static func self_heal(card:Card, health) -> void:
 		card.health = card.health + health
 		Combat.combat_board = Combat.combat_board + card.title + " healed " + str(health) + " health! \n" 
 
-static func phys_defense_up(card:Card, target:Card) -> void:
+static func phys_defense_up(_card:Card, target:Card) -> void:
 	if is_instance_valid(target):
 		Combat.combat_board = Combat.combat_board + target.title + "'s defense rises ! \n" 
 		var status = StatusEffect.new("phys_defense_up", 3, "on_turn", 3, target)
@@ -65,7 +65,7 @@ static func phys_defense_up(card:Card, target:Card) -> void:
 			MoveLib.change_scale(target, target.default_size)
 			MoveLib.change_color(target, target.default_color)
 
-static func phys_attack_up(card:Card, target:Card) -> void:
+static func phys_attack_up(_card:Card, target:Card) -> void:
 	if is_instance_valid(target):
 		Combat.combat_board = Combat.combat_board + target.title + "'s attack rises ! \n" 
 		var status = StatusEffect.new("phys_attack_up", 3, "on_turn", 3, target)
