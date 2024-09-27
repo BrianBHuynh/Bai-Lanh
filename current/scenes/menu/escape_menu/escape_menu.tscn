@@ -25,7 +25,7 @@ offset_left = 527.0
 offset_top = 206.0
 offset_right = 1017.0
 offset_bottom = 358.0
-text = "fast forwards 10 turns"
+text = "fast forwards 1000 turns"
 
 [node name="Button3" type="Button" parent="ColorRect"]
 layout_mode = 0

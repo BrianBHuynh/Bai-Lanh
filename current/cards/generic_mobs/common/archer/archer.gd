@@ -77,7 +77,7 @@ func _ready() -> void:
 #region Actions
 func default_action() -> void:
 	var enemy = get_target()
-	var ally = get_ally()
+	var _ally = get_ally()
 	var damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,2)
 	match ability:
