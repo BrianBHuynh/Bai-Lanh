@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l5bugjhnh6k"
-path="res://.godot/imported/slot.png-2c313829013014535ad728f0aea55812.ctex"
+uid="uid://cbx87q3wlx5x4"
+path="res://.godot/imported/default_card.png-30349fe11de843cd6bcb8208e8865d33.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://current/default_resources/common/card_slot/slot.png"
-dest_files=["res://.godot/imported/slot.png-2c313829013014535ad728f0aea55812.ctex"]
+source_file="res://current/resources/images/default_card.png"
+dest_files=["res://.godot/imported/default_card.png-30349fe11de843cd6bcb8208e8865d33.ctex"]
 
 [params]
 

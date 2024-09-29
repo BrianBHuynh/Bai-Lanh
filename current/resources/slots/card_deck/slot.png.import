@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnkasc186sepo"
-path="res://.godot/imported/slot.png-8049618faec73e467c66887863363efe.ctex"
+uid="uid://caxl83uqkk67k"
+path="res://.godot/imported/slot.png-581224275a3bbd4b38317e8c45dc2b6b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://current/default_resources/common/enemy_slot/slot.png"
-dest_files=["res://.godot/imported/slot.png-8049618faec73e467c66887863363efe.ctex"]
+source_file="res://current/resources/slots/card_deck/slot.png"
+dest_files=["res://.godot/imported/slot.png-581224275a3bbd4b38317e8c45dc2b6b.ctex"]
 
 [params]
 

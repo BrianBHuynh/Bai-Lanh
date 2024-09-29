@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dqvhwwol74rqn"]
 
-[ext_resource type="Script" path="res://current/default_resources/common/enemy_slot/card_slot.gd" id="1_pk124"]
-[ext_resource type="Texture2D" uid="uid://l5bugjhnh6k" path="res://current/default_resources/common/card_slot/slot.png" id="2_qh60c"]
+[ext_resource type="Script" path="res://current/resources/slots/enemy_slot/card_slot.gd" id="1_pk124"]
+[ext_resource type="Texture2D" uid="uid://l5bugjhnh6k" path="res://current/resources/slots/card_slot/slot.png" id="2_qh60c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t0xfq"]
 
