@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://coo4t0nf0hulk"]
 
 [ext_resource type="Texture2D" uid="uid://dm7gorbshgq43" path="res://current/cards/generic_mobs/common/archer/archer.png" id="2_u8jnm"]
-[ext_resource type="Shader" uid="uid://ogqs1m2lmstx" path="res://current/resources/shaders/archer.tres" id="3_5g5bj"]
 [ext_resource type="Script" path="res://current/cards/generic_mobs/common/archer/archer.gd" id="3_42k0o"]
+[ext_resource type="Shader" path="res://current/resources/test shader.gdshader" id="3_shgpj"]
 [ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_x45ww"]
 [ext_resource type="Script" path="res://current/scripts/common_scripts/card_name.gd" id="4_fvi1w"]
 
@@ -20,8 +20,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dhksn"]
 size = Vector2(1348, 1918)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7b0es"]
-shader = ExtResource("3_5g5bj")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l0vt5"]
+shader = ExtResource("3_shgpj")
+shader_parameter/start_time = 0.0
+shader_parameter/direction = Vector2(5, 5)
 
 [sub_resource type="GDScript" id="GDScript_g2vuv"]
 script/source = "extends VisibleOnScreenNotifier2D
@@ -59,13 +61,14 @@ offset_top = -96.0
 offset_right = 68.0
 offset_bottom = 96.0
 button_mask = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.1, 0.1)
 shape = SubResource("RectangleShape2D_dhksn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_7b0es")
+material = SubResource("ShaderMaterial_l0vt5")
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_6ow15")
 
@@ -78,6 +81,7 @@ scale = Vector2(0.05, 0.05)
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 200
 script = ExtResource("3_x45ww")
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="."]
 offset_left = -60.0
@@ -88,6 +92,7 @@ scale = Vector2(0.1, 0.1)
 theme_override_font_sizes/font_size = 100
 text = "Title"
 script = ExtResource("4_fvi1w")
+metadata/_edit_use_anchors_ = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(5.72205e-06, 0.500001)
