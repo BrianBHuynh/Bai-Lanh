@@ -6,6 +6,7 @@ static func phys_attack(card: Card, target: Card, damage: int) -> void:
 		var change = target.damage_physical(damage+card.phys_attack)
 		Combat.combat_board = Combat.combat_board + card.title + " dealt " + str(change) + " damage to " + target.title + " They have " + str(int(target.health)) + " health left! \n" 
 		MoveLib.move_then_return(card, target.current_position)
+		ShadersLib.damage_normal(card, target)
 
 static func mag_attack(card: Card, target: Card, damage: int) -> void:
 	if is_instance_valid(target):

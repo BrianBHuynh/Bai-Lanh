@@ -52,6 +52,9 @@ var inspected: bool = false
 
 var shifted: bool = false
 var friendly: bool = true
+
+var animate = false
+var processtemp = false
 #endregion
 
 #region Initialization
@@ -62,7 +65,7 @@ func _ready() -> void:
 func initialize() -> void:
 	current_position = position
 	shadow_scale = get_child(0).scale
-	set_process(false)
+	processtemp = false
 	for i in get_children():
 		i.set_process(false)
 	if not friendly:
@@ -77,8 +80,17 @@ func initialize() -> void:
 #region Input/Signals detection
 # Called every frame. 'delta' is the elapsed time since the previous frame. ONLY activates while the card is being held down.
 func _process(_delta: float) -> void:
+	if processtemp:
 		hold_card()
 		shadow()
+	if animate and is_instance_valid(get_child(3).material):
+		if get_child(3).material.get_shader_parameter("started") == false:
+			print("LMAO")
+			get_child(3).material.set_shader_parameter("started", true)
+			get_child(3).material.set_shader_parameter("start_time", Time.get_unix_time_from_system())
+		else:
+			print(str(get_child(3).material.get_shader_parameter("cur_time") - get_child(3).material.get_shader_parameter("start_time")))
+			get_child(3).material.set_shader_parameter("cur_time", Time.get_unix_time_from_system())
 
 func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick") and friendly and not inspected:
@@ -142,13 +154,13 @@ func on_card_held() -> void:
 	if friendly:
 		offset = get_global_mouse_position() - global_position
 		MoveLib.change_scale(self, Vector2(1.5,1.5))
-		set_process(true)
+		processtemp = true
 
 
 func on_card_released() -> void:
 	release_card()
 	normalize()
-	set_process(false)
+	processtemp = false
 
 func inspect() -> void:
 	inspected = true
