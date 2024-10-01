@@ -55,6 +55,7 @@ var friendly: bool = true
 
 var animate = false
 var processtemp = false
+var temptimer = 0.0
 #endregion
 
 #region Initialization
@@ -85,12 +86,11 @@ func _process(_delta: float) -> void:
 		shadow()
 	if animate and is_instance_valid(get_child(3).material):
 		if get_child(3).material.get_shader_parameter("started") == false:
-			print("LMAO")
 			get_child(3).material.set_shader_parameter("started", true)
-			get_child(3).material.set_shader_parameter("start_time", Time.get_unix_time_from_system())
+			temptimer = Time.get_unix_time_from_system()
+			get_child(3).material.set_shader_parameter("cur_time", Time.get_unix_time_from_system() - temptimer)
 		else:
-			print(str(get_child(3).material.get_shader_parameter("cur_time") - get_child(3).material.get_shader_parameter("start_time")))
-			get_child(3).material.set_shader_parameter("cur_time", Time.get_unix_time_from_system())
+			get_child(3).material.set_shader_parameter("cur_time", Time.get_unix_time_from_system() - temptimer)
 
 func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick") and friendly and not inspected:

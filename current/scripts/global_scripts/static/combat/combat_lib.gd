@@ -13,6 +13,7 @@ static func mag_attack(card: Card, target: Card, damage: int) -> void:
 		var change = target.damage_magical(damage+card.mag_attack)
 		Combat.combat_board = Combat.combat_board + card.title + " dealt " + str(change) + " damage to " + target.title + " They have " + str(int(target.health)) + " health left! \n" 
 		MoveLib.move_then_return(card, target.current_position)
+		ShadersLib.damage_normal(card, target)
 
 static func mag_life_steal_lesser(card: Card, target: Card, damage: int) -> void:
 	if is_instance_valid(target):
@@ -20,6 +21,7 @@ static func mag_life_steal_lesser(card: Card, target: Card, damage: int) -> void
 		Combat.combat_board = Combat.combat_board + card.title + " dealt " + str(change) + " damage to " + target.title + " They have " + str(int(target.health)) + " health left! \n" + card.title + " healed for " + str(change/4.0) + " health! \n" 
 		card.health = card.health+(change/4.0)
 		MoveLib.move_then_return(card, target.current_position)
+		ShadersLib.damage_normal(card, target)
 
 static func multi_phys_attack(card: Card, target: Card, diceMax: int, times: int) -> void:
 	if is_instance_valid(target):
@@ -28,6 +30,7 @@ static func multi_phys_attack(card: Card, target: Card, diceMax: int, times: int
 			var change = target.damage_physical(Combat.RNG.randi_range(1,diceMax)+card.phys_attack)
 			Combat.combat_board = Combat.combat_board + target.title +  " -" + str(change) + " health\n"
 			MoveLib.move_then_return(card, target.current_position)
+			ShadersLib.damage_normal(card, target)
 		Combat.combat_board = Combat.combat_board + "They have " + str(int(target.health)) + " health left! \n"
 
 static func baton_pass(card: Card, target:Card) -> void:
@@ -41,6 +44,7 @@ static func poison(card:Card, target:Card, damage:int, duration:int) -> void:
 		var status = StatusEffect.new("poison", duration, "every_turn", damage, target)
 		Status.apply(status)
 		MoveLib.move_then_return(card, target.current_position)
+		ShadersLib.damage_normal(card, target)
 
 static func lock_down(card:Card, target:Card) -> void:
 	if is_instance_valid(target):
@@ -48,6 +52,7 @@ static func lock_down(card:Card, target:Card) -> void:
 		var status = StatusEffect.new("slow", 2, "every_turn", target.speed, target)
 		Status.apply(status)
 		MoveLib.move_then_return(card, target.current_position)
+		ShadersLib.damage_normal(card, target)
 
 static func self_heal(card:Card, health) -> void:
 	if is_instance_valid(card):
