@@ -46,6 +46,7 @@ var current_position: Vector2 #Where the card is currently resting, set at the s
 var shadow_scale: Vector2
 var default_color: Color = modulate #for default color
 var default_size: Vector2 = Vector2(1,1) #Default size for the card
+var default_material: ShaderMaterial = null
 
 var held: bool = false
 var inspected: bool = false
@@ -53,9 +54,9 @@ var inspected: bool = false
 var shifted: bool = false
 var friendly: bool = true
 
-var animate = false
-var processtemp = false
-var temptimer = 0.0
+var hold = false
+var start_time = 0.0
+var shader_length = 0.0
 #endregion
 
 #region Initialization
@@ -66,7 +67,7 @@ func _ready() -> void:
 func initialize() -> void:
 	current_position = position
 	shadow_scale = get_child(0).scale
-	processtemp = false
+	hold = false
 	for i in get_children():
 		i.set_process(false)
 	if not friendly:
@@ -81,16 +82,11 @@ func initialize() -> void:
 #region Input/Signals detection
 # Called every frame. 'delta' is the elapsed time since the previous frame. ONLY activates while the card is being held down.
 func _process(_delta: float) -> void:
-	if processtemp:
+	if hold:
 		hold_card()
 		shadow()
-	if animate and is_instance_valid(get_child(3).material):
-		if get_child(3).material.get_shader_parameter("started") == false:
-			get_child(3).material.set_shader_parameter("started", true)
-			temptimer = Time.get_unix_time_from_system()
-			get_child(3).material.set_shader_parameter("cur_time", Time.get_unix_time_from_system() - temptimer)
-		else:
-			get_child(3).material.set_shader_parameter("cur_time", Time.get_unix_time_from_system() - temptimer)
+	if is_instance_valid(material):
+		shader_process()
 
 func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick") and friendly and not inspected:
@@ -154,13 +150,13 @@ func on_card_held() -> void:
 	if friendly:
 		offset = get_global_mouse_position() - global_position
 		MoveLib.change_scale(self, Vector2(1.5,1.5))
-		processtemp = true
+		hold = true
 
 
 func on_card_released() -> void:
 	release_card()
 	normalize()
-	processtemp = false
+	hold = false
 
 func inspect() -> void:
 	inspected = true
@@ -212,6 +208,19 @@ func shadow() -> void:
 func shadow_hide() -> void:
 	MoveLib.change_color(get_child(0), Color(Color.BLACK, 0))
 	get_child(0).hide()
+	
+func shader_process() -> void:
+	if material.get_shader_parameter("started") == false:
+			material.set_shader_parameter("started", true)
+			start_time = Time.get_unix_time_from_system()
+			shader_length = material.get_shader_parameter("length")
+			material.set_shader_parameter("cur_time", Time.get_unix_time_from_system() - start_time)
+	else:
+		var timer: float = Time.get_unix_time_from_system() - start_time
+		material.set_shader_parameter("cur_time", timer)
+		if timer >= shader_length:
+			material = default_material
+			start_time = 0.0
 #endregion
 
 #region Stats update
