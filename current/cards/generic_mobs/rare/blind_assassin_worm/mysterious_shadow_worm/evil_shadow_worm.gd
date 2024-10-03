@@ -307,7 +307,7 @@ func direct_damage_magical(damage: int) -> int:
 
 func check_death() -> void:
 	if health <= 0:
-		if is_instance_valid(slot.cards_list[0]) and not slot.cards_list[0].tags.has("summon"):
+		if not slot.cards_list.is_empty() and not slot.cards_list[0].tags.has("summon"):
 			slot.cards_list[0].direct_damage_true(abs(health))
 		for status in statuses:
 			status.queue_free()

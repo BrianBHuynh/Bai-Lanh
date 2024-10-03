@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cm7foqlvxogdq"]
+
+[ext_resource type="Shader" path="res://current/resources/shaders/damage/damage.gdshader" id="1_ch3fc"]
+
+[resource]
+shader = ExtResource("1_ch3fc")
+shader_parameter/started = false
+shader_parameter/start_time = 0.0
+shader_parameter/cur_time = 0.0
+shader_parameter/direction = Vector2(5, 5)
