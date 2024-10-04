@@ -20,6 +20,8 @@ static func place_slot_combat(card: Card) -> void:
 	card.slot.place_action(card)
 	card.slot.update_accepting()
 	Combat.update(card)
+	Combat.combat_board = card.title + "Just exploded! \n Be careful of moving cards around at low health! + \n"
+	card.check_death()
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 static func place_slot(card: Card) -> void:

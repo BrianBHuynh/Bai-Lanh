@@ -212,8 +212,9 @@ func shadow_hide() -> void:
 func shader_process() -> void:
 	if material.get_shader_parameter("started") == false:
 			material.set_shader_parameter("started", true)
+			material.set_shader_parameter("modulate", modulate)
 			start_time = Time.get_unix_time_from_system()
-			shader_length = material.get_shader_parameter("length")
+			shader_length = material.get_shader_parameter("shader_length")
 			material.set_shader_parameter("cur_time", Time.get_unix_time_from_system() - start_time)
 	else:
 		var timer: float = Time.get_unix_time_from_system() - start_time
