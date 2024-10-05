@@ -5,7 +5,7 @@ var status_effects: Array[StatusEffect] = []
 #region Primary status functions
 func call_status(effect: StatusEffect, stage: int) -> void:
 	if is_instance_valid(effect.card):
-		Callable(StatusLib, effect.status).call(effect, stage)
+		StatusLib.new.call(effect.status, effect, stage)
 	else:
 		Status.status_effects.erase(effect)
 		effect.queue_free()
