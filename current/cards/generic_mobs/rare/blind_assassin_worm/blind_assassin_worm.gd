@@ -5,28 +5,28 @@ extends Card
 @export var card_flavor_text: String = "He sacrificed his eyesight for power but was betrayed in the end"
 
 @export var card_health: float = 35.0 #Health amount of card
-@export var card_phys_attack: int = 8 #physical Attack value of the card
-@export var card_mag_attack: int = 12 #Magic attack value of the card
-@export var card_phys_defense: int = 8 #Physical defense of the card
-@export var card_mag_defense: int = 8 #Magical defense of the card
+@export var card_phys_attack: float = 8 #physical Attack value of the card
+@export var card_mag_attack: float = 12 #Magic attack value of the card
+@export var card_phys_defense: float = 8 #Physical defense of the card
+@export var card_mag_defense: float = 8 #Magical defense of the card
 @export var card_speed: int = 4 #Speed of the card
 @export var card_tags: Array[String] = ["assasin", "blind", "summoner", "shadow"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = -25.0
-@export var card_shifted_phys_attack: int = 2
-@export var card_shifted_mag_attack: int = 2
-@export var card_shifted_phys_defense: int = -2
-@export var card_shifted_mag_defense: int = -2
+@export var card_shifted_phys_attack: float = 2
+@export var card_shifted_mag_attack: float = 2
+@export var card_shifted_phys_defense: float = -2
+@export var card_shifted_mag_defense: float = -2
 @export var card_shifted_speed: int = 4
 @export var card_shifted_tags: Array[String] = ["undead"]
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = -10.0
-@export var card_pos_phys_attack: int = 1
-@export var card_pos_mag_attack: int = 1
-@export var card_pos_phys_defense: int = -1
-@export var card_pos_mag_defense: int = -1
+@export var card_pos_phys_attack: float = 1
+@export var card_pos_mag_attack: float = 1
+@export var card_pos_phys_defense: float = -1
+@export var card_pos_mag_defense: float = -1
 @export var card_pos_speed: int = 2
 @export var card_pos_tags: Array[String] = ["combo"]
 
@@ -97,15 +97,15 @@ func default_action() -> void:
 		1,2:
 			CombatLib.multi_phys_attack(self, enemy, 5, 4)
 		3:
-			CombatLib.phys_attack(self, enemy, damage-2)
+			CombatLib.phys_attack(self, enemy, damage-2.0)
 		4:
-			CombatLib.phys_attack(self, enemy, damage-3)
+			CombatLib.phys_attack(self, enemy, damage-3.0)
 		5: 
-			CombatLib.phys_attack(self, enemy, damage-5)
+			CombatLib.phys_attack(self, enemy, damage-5.0)
 		6,7:
 			if slot.cards_list.size() > 1:
 				CombatLib.baton_pass(self, slot.cards_list[1])
-				CombatLib.phys_attack(self, enemy, damage-2)
+				CombatLib.phys_attack(self, enemy, damage-2.0)
 			else:
 				summon_shade()
 
@@ -127,15 +127,15 @@ func back_action() -> void:
 		1,2:
 			CombatLib.multi_phys_attack(self, enemy, 5, 4)
 		3:
-			CombatLib.phys_attack(self, enemy, damage-2)
+			CombatLib.phys_attack(self, enemy, damage-2.0)
 		4:
-			CombatLib.phys_attack(self, enemy, damage-3)
+			CombatLib.phys_attack(self, enemy, damage-3.0)
 		5: 
-			CombatLib.phys_attack(self, enemy, damage-5)
+			CombatLib.phys_attack(self, enemy, damage-5.0)
 		6,7,8:
 			if slot.cards_list.size() > 1:
 				CombatLib.baton_pass(self, slot.cards_list[1])
-				CombatLib.phys_attack(self, enemy, damage-2)
+				CombatLib.phys_attack(self, enemy, damage-2.0)
 			else:
 				summon_shade()
 
@@ -175,7 +175,7 @@ func shifted_back_action() -> void:
 #endregion
 
 #region Combat
-func damage_physical(damage: int) -> int:
+func damage_physical(damage: float) -> float:
 	if slot.cards_list.size() > 1:
 		return slot.cards_list[slot.cards_list.size()-1].damage_physical(damage)
 	else:
@@ -183,12 +183,12 @@ func damage_physical(damage: int) -> int:
 		if change > 0:
 			health = health-change
 		else:
-			health = health - 1
-			change = 1
+			health = health - 1.0
+			change = 1.0
 		check_death()
 		return change
 
-func damage_magical(damage: int) -> int:
+func damage_magical(damage: float) -> float:
 	if slot.cards_list.size() > 1:
 		return slot.cards_list[slot.cards_list.size()-1].damage_magical(damage)
 	else:
@@ -196,8 +196,8 @@ func damage_magical(damage: int) -> int:
 		if change > 0:
 			health = health-change
 		else:
-			health = health - 1
-			change = 1
+			health = health - 1.0
+			change = 1.0
 		check_death()
 		return change
 #endregion

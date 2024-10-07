@@ -5,28 +5,28 @@ extends Card
 @export var card_flavor_text: String = "Lost in the woods she looks for a way out"
 
 @export var card_health: float = 65.0 #Health amount of card
-@export var card_phys_attack: int = 8 #physical Attack value of the card
-@export var card_mag_attack: int = 12 #Magic attack value of the card
-@export var card_phys_defense: int = 8 #Physical defense of the card
-@export var card_mag_defense: int = 8 #Magical defense of the card
+@export var card_phys_attack: float = 8 #physical Attack value of the card
+@export var card_mag_attack: float = 12 #Magic attack value of the card
+@export var card_phys_defense: float = 8 #Physical defense of the card
+@export var card_mag_defense: float = 8 #Magical defense of the card
 @export var card_speed: int = 10 #Speed of the card
 @export var card_tags: Array[String] = ["Lost", "Sleepy", "Tired", "Sad"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = 10.0
-@export var card_shifted_phys_attack: int = 2
-@export var card_shifted_mag_attack: int = 2
-@export var card_shifted_phys_defense: int = 2
-@export var card_shifted_mag_defense: int = 2
+@export var card_shifted_phys_attack: float = 2
+@export var card_shifted_mag_attack: float = 2
+@export var card_shifted_phys_defense: float = 2
+@export var card_shifted_mag_defense: float = 2
 @export var card_shifted_speed: int = -3
 @export var card_shifted_tags: Array[String] = ["Writing", "Recovering"]
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 10.0
-@export var card_pos_phys_attack: int = 0
-@export var card_pos_mag_attack: int = 0
-@export var card_pos_phys_defense: int = 1
-@export var card_pos_mag_defense: int = 1
+@export var card_pos_phys_attack: float = 0
+@export var card_pos_mag_attack: float = 0
+@export var card_pos_phys_defense: float = 1
+@export var card_pos_mag_defense: float = 1
 @export var card_pos_speed: int = 0
 @export var card_pos_tags: Array[String] = ["Recovering", "Safe"]
 
@@ -84,14 +84,14 @@ func default_action() -> void:
 		1:
 			if friendly:
 				for card in Combat.player_back:
-					CombatLib.heal(self, card, mag_attack/4)
+					CombatLib.heal(self, card, mag_attack/4.0)
 			else:
 				for card in Combat.opposing_back:
-					CombatLib.heal(self, card, mag_attack/4)
+					CombatLib.heal(self, card, mag_attack/4.0)
 		2:
-			CombatLib.self_heal(self, mag_attack/2)
+			CombatLib.self_heal(self, mag_attack/2.0)
 		3,4:
-			CombatLib.baton_pass(self, get_ally())
+			CombatLib.baton_pass(self, ally)
 		5:
 			CombatLib.mag_attack(self, enemy, damage+mag_attack)
 

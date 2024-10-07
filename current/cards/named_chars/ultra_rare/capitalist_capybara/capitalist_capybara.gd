@@ -5,28 +5,28 @@ extends Card
 @export var card_flavor_text: String = "A weird capybara thing"
 
 @export var card_health: float = 75.0 #Health amount of card
-@export var card_phys_attack: int = 12 #physical Attack value of the card
-@export var card_mag_attack: int = 8 #Magic attack value of the card
-@export var card_phys_defense: int = 10 #Physical defense of the card
-@export var card_mag_defense: int = 8 #Magical defense of the card
+@export var card_phys_attack: float = 12 #physical Attack value of the card
+@export var card_mag_attack: float = 8 #Magic attack value of the card
+@export var card_phys_defense: float = 10 #Physical defense of the card
+@export var card_mag_defense: float = 8 #Magical defense of the card
 @export var card_speed: int = 6 #Speed of the card
 @export var card_tags: Array[String] = ["cute_animal", "animal", "capitalist", "streamer"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = 0.0
-@export var card_shifted_phys_attack: int = 1
-@export var card_shifted_mag_attack: int = 1
-@export var card_shifted_phys_defense: int = 1
-@export var card_shifted_mag_defense: int = 1
+@export var card_shifted_phys_attack: float = 1
+@export var card_shifted_mag_attack: float = 1
+@export var card_shifted_phys_defense: float = 1
+@export var card_shifted_mag_defense: float = 1
 @export var card_shifted_speed: int = -2
 @export var card_shifted_tags: Array[String] = ["detective"]
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 0.0
-@export var card_pos_phys_attack: int = 2
-@export var card_pos_mag_attack: int = 2
-@export var card_pos_phys_defense: int = -1
-@export var card_pos_mag_defense: int = -1
+@export var card_pos_phys_attack: float = 2
+@export var card_pos_mag_attack: float = 2
+@export var card_pos_phys_defense: float = -1
+@export var card_pos_mag_defense: float = -1
 @export var card_pos_speed: int = 3
 @export var card_pos_tags: Array[String] = ["on_time"]
 
@@ -254,7 +254,7 @@ func shifted_back_action() -> void:
 		2:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
-			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-3.0)
 		3:
 			CombatLib.phys_attack(self, enemy, damage+phys_attack)
 		4: 

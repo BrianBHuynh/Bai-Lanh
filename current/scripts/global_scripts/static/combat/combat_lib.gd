@@ -1,21 +1,21 @@
 extends Node
 class_name CombatLib
 
-static func phys_attack(card: Card, target: Card, damage: int) -> void:
+static func phys_attack(card: Card, target: Card, damage: float) -> void:
 	if is_instance_valid(target):
 		var change = target.damage_physical(damage+card.phys_attack)
 		Combat.combat_board = Combat.combat_board + card.title + " dealt " + str(change) + " damage to " + target.title + " They have " + str(int(target.health)) + " health left! \n" 
 		MoveLib.move_then_return(card, target.current_position)
 		ShadersLib.apply_shader(card, target, ShadersLib.get_shader("Damage"))
 
-static func mag_attack(card: Card, target: Card, damage: int) -> void:
+static func mag_attack(card: Card, target: Card, damage: float) -> void:
 	if is_instance_valid(target):
 		var change = target.damage_magical(damage+card.mag_attack)
 		Combat.combat_board = Combat.combat_board + card.title + " dealt " + str(change) + " damage to " + target.title + " They have " + str(int(target.health)) + " health left! \n" 
 		MoveLib.move_then_return(card, target.current_position)
 		ShadersLib.apply_shader(card, target, ShadersLib.get_shader("Damage"))
 
-static func mag_life_steal_lesser(card: Card, target: Card, damage: int) -> void:
+static func mag_life_steal_lesser(card: Card, target: Card, damage: float) -> void:
 	if is_instance_valid(target):
 		var change = target.damage_magical(damage+card.mag_attack)
 		Combat.combat_board = Combat.combat_board + card.title + " dealt " + str(change) + " damage to " + target.title + " They have " + str(int(target.health)) + " health left! \n" + card.title + " healed for " + str(change/4.0) + " health! \n" 
@@ -39,7 +39,7 @@ static func baton_pass(card: Card, target:Card) -> void:
 		Combat.target_clear()
 		target.action()
 
-static func poison(card:Card, target:Card, damage:int, duration:int) -> void:
+static func poison(card:Card, target:Card, damage:float, duration:int) -> void:
 	if is_instance_valid(target):
 		Combat.combat_board = Combat.combat_board + "Poison applied to" + target.title + "\n" + "They will take " + str(damage) + " damage every turn for " + str(duration) + " turns \n" 
 		var status = StatusEffect.new("poison", duration, "every_turn", damage, target)
@@ -55,12 +55,12 @@ static func lock_down(card:Card, target:Card) -> void:
 		MoveLib.move_then_return(card, target.current_position)
 		ShadersLib.apply_shader(card, target, ShadersLib.get_shader("Damage"))
 
-static func self_heal(card:Card, health) -> void:
+static func self_heal(card:Card, health: float) -> void:
 	if is_instance_valid(card):
 		card.health = card.health + health
 		Combat.combat_board = Combat.combat_board + card.title + " healed " + str(health) + " health! \n" 
 
-static func heal(card:Card, target:Card, health) -> void:
+static func heal(card:Card, target:Card, health: float) -> void:
 	if is_instance_valid(target):
 		card.health = card.health + health
 		Combat.combat_board = Combat.combat_board + card.title + " healed " + target.title + " for " + str(health) + " health! \n" 

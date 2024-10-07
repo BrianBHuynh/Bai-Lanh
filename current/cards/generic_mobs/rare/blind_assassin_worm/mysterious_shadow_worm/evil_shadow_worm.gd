@@ -5,28 +5,28 @@ extends Card
 @export var card_flavor_text: String = "Kinda squishy unless in defensive mode"
 
 @export var card_health: float = 5.0 #Health amount of card
-@export var card_phys_attack: int = 12 #physical Attack value of the card
-@export var card_mag_attack: int = 12 #Magic attack value of the card
-@export var card_phys_defense: int = 0 #Physical defense of the card
-@export var card_mag_defense: int = 0 #Magical defense of the card
+@export var card_phys_attack: float = 12 #physical Attack value of the card
+@export var card_mag_attack: float = 12 #Magic attack value of the card
+@export var card_phys_defense: float = 0 #Physical defense of the card
+@export var card_mag_defense: float = 0 #Magical defense of the card
 @export var card_speed: int = 5 #Speed of the card
 @export var card_tags: Array[String] = ["summon", "shadow", "evil"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = 25.0
-@export var card_shifted_phys_attack: int = -4
-@export var card_shifted_mag_attack: int = -4
-@export var card_shifted_phys_defense: int = 10
-@export var card_shifted_mag_defense: int = 10
+@export var card_shifted_phys_attack: float = -4
+@export var card_shifted_mag_attack: float = -4
+@export var card_shifted_phys_defense: float = 10
+@export var card_shifted_mag_defense: float = 10
 @export var card_shifted_speed: int = -2
 @export var card_shifted_tags: Array[String] = ["tanky"]
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 0.0
-@export var card_pos_phys_attack: int = 2
-@export var card_pos_mag_attack: int = 2
-@export var card_pos_phys_defense: int = 0
-@export var card_pos_mag_defense: int = 0
+@export var card_pos_phys_attack: float = 2
+@export var card_pos_mag_attack: float = 2
+@export var card_pos_phys_defense: float = 0
+@export var card_pos_mag_defense: float = 0
 @export var card_pos_speed: int = 2
 @export var card_pos_tags: Array[String] = []
 
@@ -165,49 +165,49 @@ func shifted_front_action() -> void:
 #endregion
 
 #region Combat
-func damage_physical(damage: int) -> int:
+func damage_physical(damage: float) -> float:
 	var change = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
-		health = health - 1
-		change = 1
+		health = health - 1.0
+		change = 1.0
 	check_death()
 	if not slot.cards_list.is_empty():
 		slot.cards_list[0].direct_damage_true(1)
 	return change
 
-func direct_damage_physical(damage: int) -> int:
+func direct_damage_physical(damage: float) -> float:
 	var change = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
-		health = health - 1
-		change = 1
+		health = health - 1.0
+		change = 1.0
 	check_death()
 	if not slot.cards_list.is_empty():
 		slot.cards_list[0].direct_damage_true(1)
 	return change
 
-func damage_magical(damage: int) -> int:
+func damage_magical(damage: float) -> float:
 	var change = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
-		health = health - 1
-		change = 1
+		health = health - 1.0
+		change = 1.0
 	check_death()
 	if not slot.cards_list.is_empty():
 		slot.cards_list[0].direct_damage_true(1)
 	return change
 
-func direct_damage_magical(damage: int) -> int:
+func direct_damage_magical(damage: float) -> float:
 	var change = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
-		health = health - 1
-		change = 1
+		health = health - 1.0
+		change = 1.0
 	check_death()
 	if not slot.cards_list.is_empty():
 		slot.cards_list[0].direct_damage_true(1)

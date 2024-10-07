@@ -4,10 +4,10 @@ class_name Slot
 var filled = false
 var pos = "Default"
 var health: float = 0.0
-var phys_attack: int = 0
-var mag_attack: int = 0
-var phys_defense: int = 0
-var mag_defense: int = 0
+var phys_attack: float = 0
+var mag_attack: float = 0
+var phys_defense: float = 0
+var mag_defense: float = 0
 var speed: int = 0
 var tags:Array = []
 var shift:bool = false

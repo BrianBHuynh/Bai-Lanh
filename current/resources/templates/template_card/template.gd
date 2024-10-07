@@ -5,28 +5,28 @@ extends Card
 @export var card_flavor_text: String = "default text"
 
 @export var card_health: float = 100.0 #Health amount of card
-@export var card_phys_attack: int = 10 #physical Attack value of the card
-@export var card_mag_attack: int = 10 #Magic attack value of the card
-@export var card_phys_defense: int = 10 #Physical defense of the card
-@export var card_mag_defense: int = 10 #Magical defense of the card
+@export var card_phys_attack: float = 10 #physical Attack value of the card
+@export var card_mag_attack: float = 10 #Magic attack value of the card
+@export var card_phys_defense: float = 10 #Physical defense of the card
+@export var card_mag_defense: float = 10 #Magical defense of the card
 @export var card_speed: int = 10 #Speed of the card
 @export var card_tags: Array[String] = []
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = 0.0
-@export var card_shifted_phys_attack: int = 0
-@export var card_shifted_mag_attack: int = 0
-@export var card_shifted_phys_defense: int = 0
-@export var card_shifted_mag_defense: int = 0
+@export var card_shifted_phys_attack: float = 0
+@export var card_shifted_mag_attack: float = 0
+@export var card_shifted_phys_defense: float = 0
+@export var card_shifted_mag_defense: float = 0
 @export var card_shifted_speed: int = 0
 @export var card_shifted_tags: Array[String] = []
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 0.0
-@export var card_pos_phys_attack: int = 0
-@export var card_pos_mag_attack: int = 0
-@export var card_pos_phys_defense: int = 0
-@export var card_pos_mag_defense: int = 0
+@export var card_pos_phys_attack: float = 0
+@export var card_pos_mag_attack: float = 0
+@export var card_pos_phys_defense: float = 0
+@export var card_pos_mag_defense: float = 0
 @export var card_pos_speed: int = 0
 @export var card_pos_tags: Array[String] = []
 

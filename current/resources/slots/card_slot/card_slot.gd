@@ -2,10 +2,10 @@ extends Slot
 
 @export var slot_pos = "Default"
 @export var slot_health: float = 0.0
-@export var slot_phys_attack: int = 0
-@export var slot_mag_attack: int = 0
-@export var slot_phys_defense: int = 0
-@export var slot_mag_defense: int = 0
+@export var slot_phys_attack: float = 0
+@export var slot_mag_attack: float = 0
+@export var slot_phys_defense: float = 0
+@export var slot_mag_defense: float = 0
 @export var slot_speed: int = 0
 @export var slot_tags: Array = []
 @export var slot_shift:bool = false

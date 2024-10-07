@@ -6,28 +6,28 @@ var title: String = "Card"
 var flavor_text: String
 
 var health: float = 100.0 #Health amount of card
-var phys_attack: int = 10 #physical Attack value of the card
-var mag_attack: int = 10 #Magic attack value of the card
-var phys_defense: int = 10 #Physical defense of the card
-var mag_defense: int = 10 #Magical defense of the card
+var phys_attack: float = 10 #physical Attack value of the card
+var mag_attack: float = 10 #Magic attack value of the card
+var phys_defense: float = 10 #Physical defense of the card
+var mag_defense: float = 10 #Magical defense of the card
 var speed: int = 10 #Speed of the card
 var tags: Array[String] = []
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 var shifted_health: float = 0.0
-var shifted_phys_attack: int = 0
-var shifted_mag_attack: int = 0
-var shifted_phys_defense: int = 0
-var shifted_mag_defense: int = 0
+var shifted_phys_attack: float = 0
+var shifted_mag_attack: float = 0
+var shifted_phys_defense: float = 0
+var shifted_mag_defense: float = 0
 var shifted_speed: int = 0
 var shifted_tags: Array[String] = []
 
 #Stats changed for being in the prefered positions
 var pos_health: float = 0.0
-var pos_phys_attack: int = 0
-var pos_mag_attack: int = 0
-var pos_phys_defense: int = 0
-var pos_mag_defense: int = 0
+var pos_phys_attack: float = 0
+var pos_mag_attack: float = 0
+var pos_phys_defense: float = 0
+var pos_mag_defense: float = 0
 var pos_speed: int = 0
 var pos_tags: Array[String] = []
 
@@ -307,7 +307,7 @@ func get_ally() -> Card:
 #endregion
 
 #region Damage
-func damage_physical(damage: int) -> int:
+func damage_physical(damage: float) -> float:
 	var change = damage - phys_defense
 	if change > 0:
 		health = health-change
@@ -317,7 +317,7 @@ func damage_physical(damage: int) -> int:
 	check_death()
 	return change
 
-func direct_damage_physical(damage: int) -> int:
+func direct_damage_physical(damage: float) -> float:
 	var change = damage - phys_defense
 	if change > 0:
 		health = health-change
@@ -327,7 +327,7 @@ func direct_damage_physical(damage: int) -> int:
 	check_death()
 	return change
 
-func damage_magical(damage: int) -> int:
+func damage_magical(damage: float) -> float:
 	var change = damage - mag_defense
 	if change > 0:
 		health = health-change
@@ -337,7 +337,7 @@ func damage_magical(damage: int) -> int:
 	check_death()
 	return change
 
-func direct_damage_magical(damage: int) -> int:
+func direct_damage_magical(damage: float) -> float:
 	var change = damage - mag_defense
 	if change > 0:
 		health = health-change
