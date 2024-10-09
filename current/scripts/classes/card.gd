@@ -57,6 +57,8 @@ var friendly: bool = true
 var hold = false
 var start_time = 0.0
 var shader_length = 0.0
+var shader_mouse_start = Vector2(0,0)
+var shader_mouse_pos = Vector2(0,0)
 #endregion
 
 #region Initialization
@@ -92,6 +94,7 @@ func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick") and friendly and not inspected:
 		held = true
 		on_card_held()
+		print("HELLO")
 		for i in get_children():
 			i.show()
 			i.set_process(true)
@@ -101,6 +104,7 @@ func _on_button_down() -> void:
 func _on_button_up() -> void:
 	if Input.is_action_just_released("leftClick") and friendly and not inspected:
 		held = false
+		start_time = 0.0
 		on_card_released()
 		shadow_hide()
 	else:
@@ -122,9 +126,11 @@ func _on_area_exited(area: Area2D) -> void:
 	Cards.remove_card(self, area)
 
 func _on_mouse_entered() -> void:
+	ShadersLib.apply_shader(self, self, ShadersLib.get_shader("pickup"))
 	highlight()
 
 func _on_mouse_exited() -> void:
+	material = default_material
 	if not inspected and not held:
 		normalize()
 
@@ -208,7 +214,7 @@ func shadow() -> void:
 func shadow_hide() -> void:
 	MoveLib.change_color(get_child(0), Color(Color.BLACK, 0))
 	get_child(0).hide()
-	
+
 func shader_process() -> void:
 	if material.get_shader_parameter("started") == false:
 			material.set_shader_parameter("started", true)
@@ -217,9 +223,11 @@ func shader_process() -> void:
 			shader_length = material.get_shader_parameter("shader_length")
 			material.set_shader_parameter("cur_time", Time.get_unix_time_from_system() - start_time)
 	else:
+		#Sets the movement as the difference between the mouse and the card, assuming offset. When not moving mouse, offset = (0.0, 0.0)
 		var timer: float = Time.get_unix_time_from_system() - start_time
 		material.set_shader_parameter("cur_time", timer)
-		if timer >= shader_length:
+		material.set_shader_parameter("offset", get_global_mouse_position() - global_position)
+		if timer >= shader_length and not shader_length < 0.0:
 			material = default_material
 			start_time = 0.0
 #endregion

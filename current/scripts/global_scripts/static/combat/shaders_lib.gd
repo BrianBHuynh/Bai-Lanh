@@ -9,5 +9,7 @@ static func get_shader(shader_name: String) -> String:
 	match shader_name:
 		"Damage": 
 			return "res://current/resources/shaders/damage/damage.tres"
+		"pickup":
+			return "res://current/resources/shaders/pickup/pickup.tres"
 		_: 
 			return "res://current/resources/shaders/blank/blank.tres"
