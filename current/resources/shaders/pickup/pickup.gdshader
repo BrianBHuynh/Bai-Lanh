@@ -6,10 +6,13 @@ uniform float strength = 0.0;
 uniform float shader_length = -1.0;
 uniform vec2 offset = vec2(0.0, 0.0);
 uniform vec4 modulate = vec4(0.0, 0.0, 0.0, 0.0);
+uniform float Scale = 500.0;
+uniform float threshold = 5.0;
+
 
 void vertex() {
 	vec2 difference = VERTEX-offset;
-	VERTEX = abs(difference) * VERTEX / sqrt(pow(VERTEX, vec2(2.0, 2.0))) + VERTEX;
+	VERTEX = normalize(abs(difference))*vec2(Scale,Scale)*normalize(VERTEX) + VERTEX;
 }
 
 void fragment() {

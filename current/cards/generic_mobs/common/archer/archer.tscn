@@ -68,7 +68,6 @@ scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_6ow15")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-use_parent_material = true
 offset_left = -55.0
 offset_top = -12.0
 offset_right = 2185.0
@@ -80,7 +79,6 @@ script = ExtResource("3_x45ww")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="."]
-use_parent_material = true
 offset_left = -60.0
 offset_top = -96.0
 offset_right = 1140.0

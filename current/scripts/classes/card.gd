@@ -59,6 +59,8 @@ var start_time = 0.0
 var shader_length = 0.0
 var shader_mouse_start = Vector2(0,0)
 var shader_mouse_pos = Vector2(0,0)
+
+var button_size = Vector2(136, 192)
 #endregion
 
 #region Initialization
@@ -131,6 +133,7 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	material = default_material
+	$Button.size = button_size
 	if not inspected and not held:
 		normalize()
 
@@ -191,14 +194,12 @@ func reject() -> void:
 		MoveLib.move(self, current_position)
 
 func highlight() -> void:
+	$Button.size = $Button.size * Vector2(1.175,1.175)
+	$Button.position = -$Button.size/Vector2(2.0,2.0)  
 	if friendly:
 		modulate = Color.PALE_GOLDENROD
-		if Vector2(1.2,1.2) > scale:
-			MoveLib.change_scale(self, Vector2(1.2,1.2))
 	else:
 		modulate = Color.LIGHT_CORAL
-		if Vector2(1.2,1.2) > scale:
-			MoveLib.change_scale(self, Vector2(1.2,1.2))
 
 func normalize() -> void:
 	modulate = default_color
