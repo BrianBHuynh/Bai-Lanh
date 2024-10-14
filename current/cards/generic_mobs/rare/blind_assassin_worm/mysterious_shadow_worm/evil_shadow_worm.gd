@@ -3,6 +3,7 @@ extends Card
 #region Card stats
 @export var card_title: String = "Evil Shadow Worm"
 @export var card_flavor_text: String = "Kinda squishy unless in defensive mode"
+@export var card_image_link: String = "res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.tres"
 
 @export var card_health: float = 5.0 #Health amount of card
 @export var card_phys_attack: float = 12 #physical Attack value of the card
@@ -41,7 +42,7 @@ extends Card
 #endregion
 
 #region Card initialization
-func _ready() -> void:
+func initialize() -> void:
 	title = card_title
 	flavor_text = card_flavor_text
 	health = card_health
@@ -68,9 +69,11 @@ func _ready() -> void:
 	pref_pos = card_pref_pos
 	default_color = card_default_color
 	default_size = card_default_size
+	image_link = card_image_link
 	if card_shifted:
 		shift()
 	friendly = card_friendly
+	super()
 #endregion
 
 #region Actions

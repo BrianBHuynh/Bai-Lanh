@@ -61,6 +61,8 @@ var shader_mouse_start = Vector2(0,0)
 var shader_mouse_pos = Vector2(0,0)
 
 var button_size = Vector2(136, 192)
+
+var image_link = "res://current/resources/templates/template_card/template.tres"
 #endregion
 
 #region Initialization
@@ -70,17 +72,30 @@ func _ready() -> void:
 
 func initialize() -> void:
 	current_position = position
-	shadow_scale = get_child(0).scale
+	shadow_scale = $Shadow.scale
 	hold = false
 	for i in get_children():
 		i.set_process(false)
-	if not friendly:
+	update_side()
+
+#dubious
+func update_side():
+	while Combat.initiative.has(self):
+		Combat.initiative.erase(self)
+	if friendly:
+		pass
+	else:
 		default_color = Color.PALE_VIOLET_RED
 		modulate = Color.PALE_VIOLET_RED
 		await get_tree().create_timer(.25).timeout
 		shadow_hide()
+		Combat.player_party.erase(self)
 		Combat.opposing_party.append(self)
 		Combat.add_initiative(self)
+
+func update_image():
+	$CardImage.set_sprite_frames(load(image_link))
+	$CardImage.play("default")
 #endregion
 
 #region Input/Signals detection
@@ -96,7 +111,6 @@ func _on_button_down() -> void:
 	if Input.is_action_pressed("leftClick") and friendly and not inspected:
 		held = true
 		on_card_held()
-		print("HELLO")
 		for i in get_children():
 			i.show()
 			i.set_process(true)
@@ -206,15 +220,15 @@ func normalize() -> void:
 	MoveLib.change_scale(self, default_size)
 
 func shadow() -> void:
-	get_child(0).show()
+	$Shadow.show()
 	var distance: Vector2 = global_position - get_viewport_rect().size/2
-	get_child(0).position = distance / 30
-	MoveLib.change_color(get_child(0), Color(Color.BLACK, .25-distance.length()/10000))
-	MoveLib.change_scale(get_child(0), shadow_scale+distance.abs()/50000)
+	$Shadow.position = distance / 30
+	MoveLib.change_color($Shadow, Color(Color.BLACK, .25-distance.length()/10000))
+	MoveLib.change_scale($Shadow, shadow_scale+distance.abs()/50000)
 
 func shadow_hide() -> void:
-	MoveLib.change_color(get_child(0), Color(Color.BLACK, 0))
-	get_child(0).hide()
+	MoveLib.change_color($Shadow, Color(Color.BLACK, 0))
+	$Shadow.hide()
 
 func shader_process() -> void:
 	if material.get_shader_parameter("started") == false:

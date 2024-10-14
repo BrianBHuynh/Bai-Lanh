@@ -3,6 +3,7 @@ extends Card
 #region Card stats
 @export var card_title: String = "Blind Assassin Worm"
 @export var card_flavor_text: String = "He sacrificed his eyesight for power but was betrayed in the end"
+@export var card_image_link: String = "res://current/cards/generic_mobs/rare/blind_assassin_worm/blind_assassin_worm.tres"
 
 @export var card_health: float = 35.0 #Health amount of card
 @export var card_phys_attack: float = 8 #physical Attack value of the card
@@ -39,12 +40,12 @@ extends Card
 @export var card_shifted: bool = false
 @export var card_friendly: bool = true
 
-var summon = load("res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.tscn")
+var summon_script = "res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.gd"
 
 #endregion
 
 #region Card initialization
-func _ready() -> void:
+func initialize() -> void:
 	title = card_title
 	flavor_text = card_flavor_text
 	health = card_health
@@ -71,21 +72,22 @@ func _ready() -> void:
 	pref_pos = card_pref_pos
 	default_color = card_default_color
 	default_size = card_default_size
+	image_link = card_image_link
 	if card_shifted:
 		shift()
 	friendly = card_friendly
-	initialize()
+	super()
 #endregion
 
 #region Actions
 func summon_shade() -> void:
-	var instance = summon.instantiate()
-	get_parent().add_child(instance)
-	instance.friendly = friendly
-	instance.new_slot = slot
-	Cards.place_slot_combat(instance)
-	Combat.add_initiative(instance)
-	instance.initialize()
+	var summon = CardReg.get_card(summon_script)
+	get_parent().add_child(summon)
+	summon.friendly = friendly
+	summon.update_side()
+	summon.new_slot = slot
+	Cards.place_slot_combat(summon)
+	Combat.add_initiative(summon)
 	slot.fix_slot()
 
 func default_action() -> void:

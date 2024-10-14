@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://b8fw1yedlgsdl"]
+
+[ext_resource type="Texture2D" uid="uid://2dbliqmgmj6t" path="res://current/cards/named_chars/ultra_rare/lost_herbalist/lost_herbalist.png" id="1_oggou"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_oggou")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

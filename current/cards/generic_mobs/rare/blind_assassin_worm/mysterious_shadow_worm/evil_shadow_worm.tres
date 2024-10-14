@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://byjece7onomoc"]
+
+[ext_resource type="Texture2D" uid="uid://cwtk67dbnccw7" path="res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.png" id="1_cu02m"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_cu02m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

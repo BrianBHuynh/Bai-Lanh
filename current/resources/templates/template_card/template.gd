@@ -38,6 +38,7 @@ extends Card
 
 @export var card_shifted: bool = false
 @export var card_friendly: bool = true
+@export var card_image_link: String = "res://current/resources/templates/template_card/template.tres"
 #endregion
 
 #region Card initialization
@@ -68,6 +69,7 @@ func _ready() -> void:
 	pref_pos = card_pref_pos
 	default_color = card_default_color
 	default_size = card_default_size
+	image_link = card_image_link
 	if card_shifted:
 		shift()
 	friendly = card_friendly
@@ -76,9 +78,9 @@ func _ready() -> void:
 
 #region Actions
 func default_action() -> void:
-	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
+	var _enemy = get_target()
+	var _ally = get_ally()
+	var _damage = (Combat.RNG.randi_range(1,10))
 	var ability = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:

@@ -28,7 +28,6 @@ func _on_button_pressed() -> void:
 		if not Combat.initiative.front().friendly:
 			instance.friendly = false
 			instance.initialize()
-		instance.get_child(1).disabled = true
 		await get_tree().create_timer(5).timeout
 		if is_instance_valid(instance):
 			instance.queue_free()

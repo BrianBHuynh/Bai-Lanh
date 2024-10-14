@@ -3,6 +3,7 @@ extends Card
 #region Card stats
 @export var card_title: String = "Cappy"
 @export var card_flavor_text: String = "A weird capybara thing"
+@export var card_image_link: String = "res://current/cards/named_chars/ultra_rare/capitalist_capybara/capitalist_capybara.tres"
 
 @export var card_health: float = 75.0 #Health amount of card
 @export var card_phys_attack: float = 12 #physical Attack value of the card
@@ -41,7 +42,7 @@ extends Card
 #endregion
 
 #region Card initialization
-func _ready() -> void:
+func initialize() -> void:
 	title = card_title
 	flavor_text = card_flavor_text
 	health = card_health
@@ -68,10 +69,11 @@ func _ready() -> void:
 	pref_pos = card_pref_pos
 	default_color = card_default_color
 	default_size = card_default_size
+	image_link = card_image_link
 	if card_shifted:
 		shift()
 	friendly = card_friendly
-	initialize()
+	super()
 #endregion
 
 #region Actions
