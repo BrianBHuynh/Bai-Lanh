@@ -78,20 +78,19 @@ func initialize() -> void:
 		i.set_process(false)
 	update_side()
 
-#dubious
 func update_side():
 	while Combat.initiative.has(self):
 		Combat.initiative.erase(self)
 	if friendly:
-		pass
+		$CardImage.modulate = modulate
+		default_color = modulate
+		shadow_show()
 	else:
 		default_color = Color.PALE_VIOLET_RED
-		modulate = Color.PALE_VIOLET_RED
+		$CardImage.modulate = Color.PALE_VIOLET_RED
 		await get_tree().create_timer(.25).timeout
 		shadow_hide()
-		Combat.player_party.erase(self)
-		Combat.opposing_party.append(self)
-		Combat.add_initiative(self)
+	Combat.refresh(self)
 
 func update_image():
 	$CardImage.set_sprite_frames(load(image_link))
@@ -211,12 +210,12 @@ func highlight() -> void:
 	$Button.size = $Button.size * Vector2(1.175,1.175)
 	$Button.position = -$Button.size/Vector2(2.0,2.0)  
 	if friendly:
-		modulate = Color.PALE_GOLDENROD
+		$CardImage.modulate = Color.PALE_GOLDENROD
 	else:
-		modulate = Color.LIGHT_CORAL
+		$CardImage.modulate = Color.LIGHT_CORAL
 
 func normalize() -> void:
-	modulate = default_color
+	$CardImage.modulate = default_color
 	MoveLib.change_scale(self, default_size)
 
 func shadow() -> void:
@@ -230,10 +229,14 @@ func shadow_hide() -> void:
 	MoveLib.change_color($Shadow, Color(Color.BLACK, 0))
 	$Shadow.hide()
 
+func shadow_show() -> void:
+	MoveLib.change_color($Shadow, Color(Color.BLACK, 1))
+	$Shadow.show()
+
 func shader_process() -> void:
 	if material.get_shader_parameter("started") == false:
 			material.set_shader_parameter("started", true)
-			material.set_shader_parameter("modulate", modulate)
+			material.set_shader_parameter("modulate", $CardImage.modulate)
 			start_time = Time.get_unix_time_from_system()
 			shader_length = material.get_shader_parameter("shader_length")
 			material.set_shader_parameter("cur_time", Time.get_unix_time_from_system() - start_time)

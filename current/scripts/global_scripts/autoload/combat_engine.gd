@@ -112,6 +112,12 @@ func remove_position(card: Card) -> void:
 		while elem.has(card):
 			elem.erase(card)
 
+func refresh(card: Card) -> void:
+	remove_position(card)
+	remove_initiative(card)
+	add_position(card)
+	add_initiative(card)
+
 func update(card: Card) -> void:
 	if initiative.has(card):
 		remove_initiative(card)

@@ -65,7 +65,7 @@ static func remove_card(card: Card, _new_card) -> void:
 static func pickup(card: Card) -> void:
 	card.offset = card.get_global_mouse_position() - card.global_position
 	GlobalVars.dragging_card = true
-	card.modulate = Color(Color.LIGHT_GOLDENROD, 1.5);
+	card.get_node("CardImage").modulate = Color(Color.LIGHT_GOLDENROD, 1.5);
 
 #removes the card from the slot and fixes it
 static func clear_slot(card: Card) -> void:
