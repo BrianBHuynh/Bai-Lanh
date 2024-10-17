@@ -10,9 +10,10 @@ func get_card(card_link: String):
 	card.update_image()
 	return card
 
-func get_card_script(card_script: Script):
+func card_from_dat(card_dat: Dictionary):
 	var card = load("res://current/scenes/card/card.tscn").instantiate()
-	card.set_script(card_script)
+	card.set_script(load(card_dat.get("script_link")))
+	card.load_data(card_dat)
 	card.initialize()
 	card.update_image()
 	return card

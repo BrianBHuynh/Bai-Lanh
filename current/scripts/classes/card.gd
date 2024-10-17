@@ -63,6 +63,7 @@ var shader_mouse_pos = Vector2(0,0)
 var button_size = Vector2(136, 192)
 
 var image_link = "res://current/resources/templates/template_card/template.tres"
+var script_link = "res://current/scripts/classes/card.gd"
 #endregion
 
 #region Initialization
@@ -486,4 +487,51 @@ func shifted_center_action() -> void:
 func shifted_back_action() -> void:
 	shifted_default_action()
 #endregion
+#endregion
+
+#region Serialization
+func serialize() -> Dictionary:
+	var card_dat:Dictionary = {
+		"title" : title,
+		"flavor_text" : flavor_text,
+		"health" : health,
+		"phys_attack" : phys_attack,
+		"mag_attack" : mag_attack,
+		"phys_defense" : phys_defense,
+		"mag_defense" : mag_defense,
+		"speed" : speed,
+		"tags" : tags,
+		
+		"shifted_health" : shifted_health,
+		"shifted_phys_attack" : shifted_phys_attack,
+		"shifted_mag_attack" : shifted_mag_attack,
+		"shifted_phys_defense" : shifted_phys_defense,
+		"shifted_mag_defense" : shifted_mag_defense,
+		"shifted_speed" : shifted_speed,
+		"shifted_tags" : shifted_tags,
+		
+		"pos_health" : pos_health,
+		"pos_phys_attack" : pos_phys_attack,
+		"pos_mag_attack" : pos_mag_attack,
+		"pos_phys_defense" : pos_phys_defense,
+		"pos_mag_defense" : pos_mag_defense,
+		"pos_speed" : pos_speed,
+		"pos_tags" : pos_tags,
+		
+		"statuses" : statuses,
+		"perma_statuses" : perma_statuses,
+		
+		"pref_pos" : pref_pos,
+		
+		"shifted" : shifted,
+		"friendly" : friendly,
+		
+		"image_link" : image_link,
+		"script_link" : script_link
+		}
+	return card_dat
+
+func load_data(card_dat: Dictionary):
+	for key in card_dat.keys():
+		set(key, card_dat.get(key, key))
 #endregion

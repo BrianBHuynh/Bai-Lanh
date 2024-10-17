@@ -30,8 +30,8 @@ func _ready() -> void:
 func _on_button_pressed() -> void:
 	var inventory_save:Array = Saves.load_file("inventory_save")
 	print(inventory_save)
-	for script: Script in inventory_save:
-		var card = CardReg.get_card_script(script)
+	for card_dat: Dictionary in inventory_save:
+		var card = CardReg.card_from_dat(card_dat)
 		get_parent().add_child(card)
 		card.position = position
 		card.new_slot = self
@@ -46,6 +46,6 @@ func place_action(_card):
 	fix_slot()
 	var temp_cards_list: Array = []
 	for card:Card in cards_list:
-		temp_cards_list.append(card.get_script())
+		temp_cards_list.append(card.serialize())
 	print(temp_cards_list)
 	Saves.save_file(temp_cards_list, "inventory_save")
