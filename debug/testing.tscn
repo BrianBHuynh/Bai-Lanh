@@ -104,3 +104,6 @@ slot_pos = "back"
 
 [node name="CardDeck" parent="." instance=ExtResource("9_rnpw3")]
 position = Vector2(829, 725)
+
+[node name="CardDeck3" parent="." instance=ExtResource("9_rnpw3")]
+position = Vector2(656, 458)

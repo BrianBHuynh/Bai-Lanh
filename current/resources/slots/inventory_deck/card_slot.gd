@@ -29,9 +29,11 @@ func _ready() -> void:
 
 func _on_button_pressed() -> void:
 	var inventory_save:Array = Saves.load_file("inventory_save")
-	for card in inventory_save:
-		card.position = position
+	print(inventory_save)
+	for card: Card in inventory_save:
+		print(card.get_children())
 		get_parent().add_child(card)
+		card.position = position
 		card.new_slot = self
 		Cards.place_slot(card)
 		fix_slot()
@@ -41,4 +43,9 @@ func _on_button_pressed() -> void:
 		#Cards.shift(cards_list.front())
 
 func place_action(_card):
-	Saves.save_file(cards_list, "inventory_save")
+	fix_slot()
+	var temp_cards_list: Array = []
+	for card in cards_list:
+		temp_cards_list.append(card)
+	print(temp_cards_list)
+	Saves.save_file(temp_cards_list, "inventory_save")
