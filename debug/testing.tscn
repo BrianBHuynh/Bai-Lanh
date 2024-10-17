@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c665w5bwl7uxl"]
+[gd_scene load_steps=10 format=3 uid="uid://c665w5bwl7uxl"]
 
 [ext_resource type="Script" path="res://debug/testing.gd" id="1_qugj8"]
 [ext_resource type="Script" path="res://debug/game_state_checker.gd" id="2_yv8qg"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dqvhwwol74rqn" path="res://current/resources/slots/enemy_slot/card_slot.tscn" id="6_8o2lf"]
 [ext_resource type="PackedScene" uid="uid://bo01w6f6xkwfh" path="res://current/resources/slots/card_deck/card_slot.tscn" id="7_o657w"]
 [ext_resource type="PackedScene" uid="uid://blk7mwnwy84ux" path="res://current/resources/slots/next_card_preview/card_slot.tscn" id="8_prltj"]
+[ext_resource type="PackedScene" uid="uid://dstkw1o0djwf1" path="res://current/resources/slots/inventory_deck/card_slot.tscn" id="9_rnpw3"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qugj8")
@@ -100,3 +101,6 @@ slot_pos = "back"
 [node name="CardSlot6" parent="." instance=ExtResource("3_we5mw")]
 position = Vector2(1396, 901)
 slot_pos = "back"
+
+[node name="CardDeck" parent="." instance=ExtResource("9_rnpw3")]
+position = Vector2(829, 725)
