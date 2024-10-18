@@ -29,7 +29,6 @@ func _ready() -> void:
 
 func _on_button_pressed() -> void:
 	var inventory_save:Array = Saves.load_file("inventory_save")
-	print(inventory_save)
 	for card_dat: Dictionary in inventory_save:
 		var card = CardReg.card_from_dat(card_dat)
 		get_parent().add_child(card)
@@ -47,5 +46,4 @@ func place_action(_card):
 	var temp_cards_list: Array = []
 	for card:Card in cards_list:
 		temp_cards_list.append(card.serialize())
-	print(temp_cards_list)
 	Saves.save_file(temp_cards_list, "inventory_save")
