@@ -32,10 +32,13 @@ func _on_button_pressed() -> void:
 	if typeof(inventory_save) == TYPE_ARRAY:
 		for card_dat: Dictionary in inventory_save:
 			var card = CardReg.card_from_dat(card_dat)
+			get_parent().add_child(card)
+			card.load_data(card_dat)
 			card.position = position
 			card.new_slot = self
 			Cards.place_slot(card)
 			fix_slot()
+			await get_tree().create_timer(1).timeout
 
 #func action():
 	#if shift:
