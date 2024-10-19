@@ -526,9 +526,20 @@ func serialize() -> Dictionary:
 		"shifted" : shifted,
 		"friendly" : friendly,
 		
-		"image_link" : image_link,
-		"script_link" : script_link
+		"image_link" : image_link
 		}
+	var reference = CardReg.get_card(script_link)
+	var redundancies = []
+	for key in card_dat:
+		print(card_dat.get(key, key))
+		print("vs")
+		print(reference.get(key))
+		if card_dat.get(key, key) == reference.get(key):
+			redundancies.append(key)
+	for key in redundancies:
+		card_dat.erase(key)
+	card_dat["script_link"] = script_link
+	print(card_dat)
 	return card_dat
 
 func load_data(card_dat: Dictionary):

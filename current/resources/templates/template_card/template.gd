@@ -73,6 +73,7 @@ func _ready() -> void:
 	if card_shifted:
 		shift()
 	friendly = card_friendly
+	script_link = "res://current/resources/templates/template_card/template.gd"
 	initialize()
 #endregion
 

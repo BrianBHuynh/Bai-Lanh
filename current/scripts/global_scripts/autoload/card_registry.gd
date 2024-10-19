@@ -12,8 +12,9 @@ func get_card(card_link: String):
 
 func card_from_dat(card_dat: Dictionary):
 	var card = load("res://current/scenes/card/card.tscn").instantiate()
+	get_parent().add_child(card)
 	card.set_script(load(card_dat.get("script_link")))
-	card.load_data(card_dat)
 	card.initialize()
 	card.update_image()
+	card.load_data(card_dat)
 	return card

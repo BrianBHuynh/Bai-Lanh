@@ -73,6 +73,7 @@ func initialize() -> void:
 	if card_shifted:
 		shift()
 	friendly = card_friendly
+	script_link = "res://current/cards/named_chars/ultra_rare/lost_herbalist/lost_herbalist.gd"
 	super()
 #endregion
 

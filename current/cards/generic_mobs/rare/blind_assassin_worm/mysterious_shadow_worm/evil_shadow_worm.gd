@@ -73,6 +73,7 @@ func initialize() -> void:
 	if card_shifted:
 		shift()
 	friendly = card_friendly
+	script_link = "res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.gd"
 	super()
 #endregion
 

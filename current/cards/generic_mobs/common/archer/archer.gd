@@ -73,6 +73,7 @@ func initialize() -> void:
 	if card_shifted:
 		shift()
 	friendly = card_friendly
+	script_link = "res://current/cards/generic_mobs/common/archer/archer.gd"
 	super()
 #endregion
 
