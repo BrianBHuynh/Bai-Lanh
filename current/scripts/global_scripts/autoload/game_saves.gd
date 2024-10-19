@@ -10,23 +10,27 @@ func _ready() -> void:
 
 func save_file(content, location: String):
 	var content_json = JSON.stringify(content)
-	OpenWrite("user://saves/" + location + ".lanhfile").store_var(content_json, false)
-	OpenWrite("user://saves/" + location + ".checksum").store_var(FileAccess.get_sha256("user://saves/" + location + ".lanhshard"), false)
-	OpenWrite("user://backup/" + location + ".lanhshard").store_var(content_json, false)
-	OpenWrite("user://backup/" + location + ".checksum").store_var(FileAccess.get_sha256("user://backup/" + location + ".lanhshard"), false)
-	OpenWrite("user://fallback/" + location + ".lanhshard").store_var(content_json, false)
-	OpenWrite("user://fallback/" + location + ".checksum").store_var(FileAccess.get_sha256("user://fallback/" + location + ".lanhshard"), false)
+	OpenWrite("user://saves/" + location + ".lanhPACK").store_var(content_json, false)
+	OpenWrite("user://saves/" + location + ".lanhCERT").store_var(FileAccess.get_sha256("user://saves/" + location + ".lanhPACK"), false)
+	OpenWrite("user://backup/" + location + ".lanhPACK").store_var(content_json, false)
+	OpenWrite("user://backup/" + location + ".lanhCERT").store_var(FileAccess.get_sha256("user://backup/" + location + ".lanhPACK"), false)
+	OpenWrite("user://fallback/" + location + ".lanhPACK").store_var(content_json, false)
+	OpenWrite("user://fallback/" + location + ".lanhCERT").store_var(FileAccess.get_sha256("user://fallback/" + location + ".lanhPACK"), false)
 
 func load_file(location):
-	var file = FileAccess.open_encrypted_with_pass("user://saves/" + location + ".lanhshard", FileAccess.READ, OS.get_unique_id())
-	print("test here")
-	print(FileAccess.get_sha256("user://saves/" + location + ".lanhshard"))
-	print(FileAccess.open_encrypted_with_pass("user://saves/" + location + ".checksum", FileAccess.READ, OS.get_unique_id()).get_var())
-	if is_instance_valid(file) and FileAccess.get_sha256("user://saves/" + location + ".lanhshard") == FileAccess.open_encrypted_with_pass("user://saves/" + location + ".checksum", FileAccess.READ, OS.get_unique_id()).get_var():
-		print("Checksum 1 passed")
-		var content = JSON.new()
-		content.parse(file.get_var(true), false)
+	var content = JSON.new()
+	if FileAccess.file_exists("user://saves/" + location + ".lanhPACK") and FileAccess.get_sha256("user://saves/" + location + ".lanhPACK") == FileAccess.open_encrypted_with_pass("user://saves/" + location + ".lanhCERT", FileAccess.READ, OS.get_unique_id()).get_var() and content.parse(FileAccess.open_encrypted_with_pass("user://saves/" + location + ".lanhPACK", FileAccess.READ, OS.get_unique_id()).get_var(false), false) == OK:
+		print("File 1 passed all checks")
 		return content.data
+	elif FileAccess.file_exists("user://backup/" + location + ".lanhPACK") and FileAccess.get_sha256("user://backup/" + location + ".lanhPACK") == FileAccess.open_encrypted_with_pass("user://backup/" + location + ".lanhCERT", FileAccess.READ, OS.get_unique_id()).get_var() and content.parse(FileAccess.open_encrypted_with_pass("user://backup/" + location + ".lanhPACK", FileAccess.READ, OS.get_unique_id()).get_var(false), false) == OK:
+		print("File 1 has failed it's checks, file 2 passed all checks")
+		return content.data
+	elif FileAccess.file_exists("user://fallback/" + location + ".lanhPACK") and FileAccess.get_sha256("user://fallback/" + location + ".lanhPACK") == FileAccess.open_encrypted_with_pass("user://fallback/" + location + ".lanhCERT", FileAccess.READ, OS.get_unique_id()).get_var() and content.parse(FileAccess.open_encrypted_with_pass("user://fallback/" + location + ".lanhPACK", FileAccess.READ, OS.get_unique_id()).get_var(false), false) == OK:
+		print("File 1 and 2 have failed their checks, file 3 passed all checks")
+		return content.data
+	else:
+		push_warning("File damaged beyond repair!")
+		return null
 
 func save_game():
 	pass

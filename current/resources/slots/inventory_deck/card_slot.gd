@@ -28,14 +28,15 @@ func _ready() -> void:
 	initialize()
 
 func _on_button_pressed() -> void:
-	var inventory_save:Array = Saves.load_file("inventory_save")
-	for card_dat: Dictionary in inventory_save:
-		var card = CardReg.card_from_dat(card_dat)
-		get_parent().add_child(card)
-		card.position = position
-		card.new_slot = self
-		Cards.place_slot(card)
-		fix_slot()
+	var inventory_save: Variant = Saves.load_file("inventory_save")
+	if typeof(inventory_save) == TYPE_ARRAY:
+		for card_dat: Dictionary in inventory_save:
+			var card = CardReg.card_from_dat(card_dat)
+			get_parent().add_child(card)
+			card.position = position
+			card.new_slot = self
+			Cards.place_slot(card)
+			fix_slot()
 
 #func action():
 	#if shift:
