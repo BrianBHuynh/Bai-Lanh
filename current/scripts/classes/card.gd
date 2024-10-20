@@ -80,6 +80,7 @@ func initialize() -> void:
 	update_side()
 
 func update_side():
+	var in_battle = Combat.initiative.has(self)
 	while Combat.initiative.has(self):
 		Combat.initiative.erase(self)
 	if friendly:
@@ -91,7 +92,8 @@ func update_side():
 		$CardImage.modulate = Color.PALE_VIOLET_RED
 		await get_tree().create_timer(.25).timeout
 		shadow_hide()
-	Combat.refresh(self)
+	if in_battle:
+		Combat.refresh(self)
 
 func update_image():
 	$CardImage.set_sprite_frames(load(image_link))
