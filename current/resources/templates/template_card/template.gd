@@ -79,10 +79,10 @@ func _ready() -> void:
 
 #region Actions
 func default_action() -> void:
-	var _enemy = get_target()
-	var _ally = get_ally()
-	var _damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var _enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			pass

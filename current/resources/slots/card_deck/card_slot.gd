@@ -1,6 +1,6 @@
 extends Slot
 
-@export var slot_pos = "Default"
+@export var slot_pos: String = "Default"
 @export var slot_health: float = 0.0
 @export var slot_phys_attack: float = 0
 @export var slot_mag_attack: float = 0
@@ -10,10 +10,10 @@ extends Slot
 @export var slot_tags: Array = []
 @export var slot_shift:bool = false
 
-@export var slot_card_max = 1
+@export var slot_card_max: int = 1
 
-var max_cap = 10
-var drawn = 0
+var max_cap: int = 10
+var drawn: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

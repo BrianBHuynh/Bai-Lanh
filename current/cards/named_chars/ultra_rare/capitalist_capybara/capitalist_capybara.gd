@@ -79,9 +79,9 @@ func initialize() -> void:
 
 #region Actions
 func default_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -101,9 +101,9 @@ func default_action() -> void:
 
 #Should normally be called when standing in the front
 func front_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -123,9 +123,9 @@ func front_action() -> void:
 
 #Should normally be called when standing in the center
 func center_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -145,9 +145,9 @@ func center_action() -> void:
 
 #Should normally be called when standing in the center
 func back_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -167,9 +167,9 @@ func back_action() -> void:
 
 #Should normally never be called as long as the card is in a slot
 func shifted_default_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -193,9 +193,9 @@ func shifted_default_action() -> void:
 
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -220,9 +220,9 @@ func shifted_front_action() -> void:
 
 #Should normally be called when standing in the center
 func shifted_center_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: float = (Combat.RNG.randi_range(1,10))
+	var ability: float = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -247,9 +247,9 @@ func shifted_center_action() -> void:
 
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: float = (Combat.RNG.randi_range(1,10))
+	var ability: float = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"

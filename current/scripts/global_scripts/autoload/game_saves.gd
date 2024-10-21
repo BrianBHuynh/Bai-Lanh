@@ -8,8 +8,8 @@ func _ready() -> void:
 	if not DirAccess.dir_exists_absolute("user://fallback"):
 		DirAccess.make_dir_absolute("user://fallback")
 
-func save_file(content, location: String):
-	var content_json = JSON.stringify(content)
+func save_file(content: Variant, location: String) -> void:
+	var content_json: String = JSON.stringify(content)
 	OpenWrite("user://saves/" + location + ".lanhPACK").store_var(content_json, false)
 	OpenWrite("user://saves/" + location + ".lanhCERT").store_var(FileAccess.get_sha256("user://saves/" + location + ".lanhPACK"), false)
 	OpenWrite("user://backup/" + location + ".lanhPACK").store_var(content_json, false)
@@ -17,8 +17,8 @@ func save_file(content, location: String):
 	OpenWrite("user://fallback/" + location + ".lanhPACK").store_var(content_json, false)
 	OpenWrite("user://fallback/" + location + ".lanhCERT").store_var(FileAccess.get_sha256("user://fallback/" + location + ".lanhPACK"), false)
 
-func load_file(location):
-	var content = JSON.new()
+func load_file(location: String) -> Variant:
+	var content: JSON = JSON.new()
 	if FileAccess.file_exists("user://saves/" + location + ".lanhPACK") and FileAccess.get_sha256("user://saves/" + location + ".lanhPACK") == FileAccess.open_encrypted_with_pass("user://saves/" + location + ".lanhCERT", FileAccess.READ, OS.get_unique_id()).get_var() and content.parse(FileAccess.open_encrypted_with_pass("user://saves/" + location + ".lanhPACK", FileAccess.READ, OS.get_unique_id()).get_var(false), false) == OK:
 		print("File 1 passed all checks")
 		return content.data
@@ -32,7 +32,7 @@ func load_file(location):
 		push_warning("File damaged beyond repair!")
 		return null
 
-func save_game():
+func save_game() -> void:
 	pass
 
 func OpenWrite(path: String) -> FileAccess:

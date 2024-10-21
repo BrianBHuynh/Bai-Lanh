@@ -44,7 +44,7 @@ func cleanse_all(card: Card) -> void:
 			status_effects.erase(status)
 
 func cleanse_once(card: Card) -> void:
-	var cleared = false
+	var cleared: bool = false
 	if is_instance_valid(card):
 		for status in card.perma_statuses:
 			call_status(status, 2)
@@ -63,7 +63,7 @@ func cleanse_once(card: Card) -> void:
 				call_status(status, 2)
 				status_effects.erase(status)
 
-func cleanse(status: StatusEffect):
+func cleanse(status: StatusEffect) -> void:
 	call_status(status, 2)
 	if status.card.perma_statuses.has(status):
 		status.card.perma_statuses.erase(status)

@@ -40,7 +40,7 @@ extends Card
 @export var card_shifted: bool = false
 @export var card_friendly: bool = true
 
-var summon_script = "res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.gd"
+var summon_script: String = "res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.gd"
 
 #endregion
 
@@ -82,20 +82,20 @@ func initialize() -> void:
 
 #region Actions
 func summon_shade() -> void:
-	var summon = CardReg.get_card(summon_script)
+	var summon: Card = CardReg.get_card(summon_script)
 	get_parent().add_child(summon)
 	summon.friendly = friendly
 	summon.update_side()
 	summon.new_slot = slot
-	Cards.place_slot_combat(summon)
+	Cards.place_slot(summon)
 	Combat.add_initiative(summon)
 	slot.fix_slot()
 
 func default_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1,2:
 			CombatLib.multi_phys_attack(self, enemy, 5, 4)
@@ -122,10 +122,10 @@ func default_action() -> void:
 
 #Should normally be called when standing in the center
 func back_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,8)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,8)
 	match ability:
 		1,2:
 			CombatLib.multi_phys_attack(self, enemy, 5, 4)
@@ -156,10 +156,10 @@ func back_action() -> void:
 
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,8)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,8)
 	match ability:
 		1,2:
 			CombatLib.multi_phys_attack(self, enemy, 5, 4)
@@ -182,7 +182,7 @@ func damage_physical(damage: float) -> float:
 	if slot.cards_list.size() > 1:
 		return slot.cards_list[slot.cards_list.size()-1].damage_physical(damage)
 	else:
-		var change = damage - phys_defense
+		var change: float = damage - phys_defense
 		if change > 0:
 			health = health-change
 		else:
@@ -195,7 +195,7 @@ func damage_magical(damage: float) -> float:
 	if slot.cards_list.size() > 1:
 		return slot.cards_list[slot.cards_list.size()-1].damage_magical(damage)
 	else:
-		var change = damage - mag_defense
+		var change: float = damage - mag_defense
 		if change > 0:
 			health = health-change
 		else:

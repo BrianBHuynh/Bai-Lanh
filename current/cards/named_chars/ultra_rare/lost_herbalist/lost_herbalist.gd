@@ -79,10 +79,10 @@ func initialize() -> void:
 
 #region Actions
 func default_action() -> void:
-	var enemy = get_target()
-	var ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var enemy: Card = get_target()
+	var ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			if friendly:

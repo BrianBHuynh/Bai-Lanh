@@ -26,6 +26,10 @@ Controls="*res://current/scripts/global_scripts/autoload/controls.gd"
 Status="*res://current/scripts/global_scripts/autoload/status_engine.gd"
 Saves="*res://current/scripts/global_scripts/autoload/game_saves.gd"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/size/viewport_width=1920

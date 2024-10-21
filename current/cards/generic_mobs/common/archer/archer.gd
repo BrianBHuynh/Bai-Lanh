@@ -79,10 +79,10 @@ func initialize() -> void:
 
 #region Actions
 func default_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,2)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,2)
 	match ability:
 		1:
 			CombatLib.phys_attack(self, enemy, damage)
@@ -122,7 +122,7 @@ func default_action() -> void:
 #region Simple
 func get_target() -> Card:
 	return Targeting.simple_targeting(self, "same_pos")
-#
+
 #func get_ally() -> Card:
 	#return Targeting.simple_ally(self, "even")
 #endregion

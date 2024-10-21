@@ -1,6 +1,6 @@
 extends Slot
 
-@export var slot_pos = "Default"
+@export var slot_pos: String = "Default"
 @export var slot_health: float = 0.0
 @export var slot_phys_attack: float = 0
 @export var slot_mag_attack: float = 0
@@ -10,7 +10,7 @@ extends Slot
 @export var slot_tags: Array = []
 @export var slot_shift:bool = false
 
-@export var slot_card_max = 1
+@export var slot_card_max: int = 1
 
 var summoned: bool = false
 
@@ -38,6 +38,7 @@ func _process(_delta: float) -> void:
 		summon.new_slot = self
 		summon.friendly = false
 		summon.update_side()
+		Cards.place_slot(summon)
 		Cards.place_slot_combat(summon)
 		fix_slot()
 		summoned = true

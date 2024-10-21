@@ -1,8 +1,8 @@
 extends Control
 var fast_forward_turns: int = 1000
 var current_turns: int = 0
-var even = true
-var ticking = false
+var even: bool = true
+var ticking: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

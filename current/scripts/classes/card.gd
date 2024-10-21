@@ -56,14 +56,14 @@ var highlighted: bool = false
 var shifted: bool = false
 var friendly: bool = true
 
-var hold = false
-var start_time = 0.0
-var shader_length = 0.0
-var shader_mouse_start = Vector2(0,0)
-var shader_mouse_pos = Vector2(0,0)
+var hold: bool = false
+var start_time: float = 0.0
+var shader_length: float = 0.0
+var shader_mouse_start: Vector2 = Vector2(0,0)
+var shader_mouse_pos: Vector2 = Vector2(0,0)
 
-var image_link = "res://current/resources/templates/template_card/template.tres"
-var script_link = "res://current/scripts/classes/card.gd"
+var image_link: String = "res://current/resources/templates/template_card/template.tres"
+var script_link: String = "res://current/scripts/classes/card.gd"
 #endregion
 
 #region Initialization
@@ -80,8 +80,8 @@ func initialize() -> void:
 		i.set_process(false)
 	update_side()
 
-func update_side():
-	var in_battle = Combat.initiative.has(self)
+func update_side() -> void:
+	var in_battle: bool = Combat.initiative.has(self)
 	while Combat.initiative.has(self):
 		Combat.initiative.erase(self)
 	if friendly:
@@ -96,7 +96,7 @@ func update_side():
 	if in_battle:
 		Combat.refresh(self)
 
-func update_image():
+func update_image() -> void:
 	$CardImage.set_sprite_frames(load(image_link))
 	$CardImage.play("default")
 #endregion
@@ -197,7 +197,7 @@ func uninspect() -> void:
 
 func release_card() -> void:
 	if is_instance_valid(new_slot) and new_slot.accepting and friendly:
-		Cards.place_slot_combat(self)
+		Cards.place_slot(self)
 		slot.fix_slot()
 	else:
 		reject()
@@ -348,7 +348,7 @@ func get_ally() -> Card:
 
 #region Damage
 func damage_physical(damage: float) -> float:
-	var change = damage - phys_defense
+	var change: float = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -358,7 +358,7 @@ func damage_physical(damage: float) -> float:
 	return change
 
 func direct_damage_physical(damage: float) -> float:
-	var change = damage - phys_defense
+	var change: float = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -368,7 +368,7 @@ func direct_damage_physical(damage: float) -> float:
 	return change
 
 func damage_magical(damage: float) -> float:
-	var change = damage - mag_defense
+	var change: float = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -378,7 +378,7 @@ func damage_magical(damage: float) -> float:
 	return change
 
 func direct_damage_magical(damage: float) -> float:
-	var change = damage - mag_defense
+	var change: float = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -405,7 +405,7 @@ func check_death() -> void:
 		for array in Combat.arrays:
 			while array.has(self):
 				array.erase(self)
-		for elem in Combat.slots:
+		for elem:Slot in Combat.slots:
 			if is_instance_valid(elem):
 				while elem.cards_list.has(self):
 					elem.cards_list.erase(self)
@@ -417,13 +417,13 @@ func check_death() -> void:
 		self.queue_free()
 
 func kill() -> void:
-	for status in statuses:
+	for status:StatusEffect in statuses:
 		status.queue_free()
 	statuses.clear()
-	for array in Combat.arrays:
+	for array: Array in Combat.arrays:
 		while array.has(self):
 			array.erase(self)
-	for elem in Combat.slots:
+	for elem: Slot in Combat.slots:
 		while elem.cards_list.has(self):
 			elem.cards_list.erase(self)
 	await get_tree().create_timer(.125).timeout
@@ -541,17 +541,17 @@ func serialize() -> Dictionary:
 		
 		"image_link" : image_link
 		}
-	var reference = CardReg.get_card(script_link)
-	var redundancies = []
-	for key in card_dat:
+	var reference: Card = CardReg.get_card(script_link)
+	var redundancies: Array = []
+	for key: String in card_dat:
 		if card_dat.get(key, key) == reference.get(key):
 			redundancies.append(key)
-	for key in redundancies:
+	for key: String in redundancies:
 		card_dat.erase(key)
 	card_dat["script_link"] = script_link
 	return card_dat
 
-func load_data(card_dat: Dictionary):
-	for key in card_dat.keys():
+func load_data(card_dat: Dictionary) -> void:
+	for key: String in card_dat.keys():
 		set(key, card_dat.get(key, key))
 #endregion
