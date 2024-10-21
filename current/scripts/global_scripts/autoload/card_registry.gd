@@ -9,10 +9,3 @@ func get_card(card_link: String):
 	card.initialize()
 	card.update_image()
 	return card
-
-func card_from_dat(card_dat: Dictionary):
-	var card = load("res://current/scenes/card/card.tscn").duplicate().instantiate()
-	card.set_script(load(card_dat.get("script_link")).duplicate())
-	card.initialize()
-	card.update_image()
-	return card

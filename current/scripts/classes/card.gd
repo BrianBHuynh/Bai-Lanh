@@ -47,9 +47,11 @@ var shadow_scale: Vector2
 var default_color: Color = modulate #for default color
 var default_size: Vector2 = Vector2(1,1) #Default size for the card
 var default_material: ShaderMaterial = null
+var button_default_size: Vector2
 
 var held: bool = false
 var inspected: bool = false
+var highlighted: bool = false
 
 var shifted: bool = false
 var friendly: bool = true
@@ -59,8 +61,6 @@ var start_time = 0.0
 var shader_length = 0.0
 var shader_mouse_start = Vector2(0,0)
 var shader_mouse_pos = Vector2(0,0)
-
-var button_size = Vector2(136, 192)
 
 var image_link = "res://current/resources/templates/template_card/template.tres"
 var script_link = "res://current/scripts/classes/card.gd"
@@ -75,6 +75,7 @@ func initialize() -> void:
 	current_position = position
 	shadow_scale = $Shadow.scale
 	hold = false
+	button_default_size = $Button.size
 	for i in get_children():
 		i.set_process(false)
 	update_side()
@@ -149,7 +150,7 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	material = default_material
-	$Button.size = button_size
+	$Button.size = button_default_size
 	if not inspected and not held:
 		normalize()
 
@@ -161,7 +162,7 @@ func _screen_entered() -> void:
 func _screen_exited() -> void:
 	for i in get_children():
 		i.set_process(false)
-		if i != get_child(get_child_count()-1):
+		if $OnScreenNotifier:
 			i.hide()
 #endregion
 
@@ -210,16 +211,26 @@ func reject() -> void:
 		MoveLib.move(self, current_position)
 
 func highlight() -> void:
-	$Button.size = $Button.size * Vector2(1.175,1.175)
-	$Button.position = -$Button.size/Vector2(2.0,2.0)  
+	if not highlighted:
+		$Button.size = button_default_size * Vector2(1.175,1.175)
+		$Button.position = -$Button.size/Vector2(2.0,2.0)  
+		if friendly:
+			$CardImage.modulate = Color.PALE_GOLDENROD
+		else:
+			$CardImage.modulate = Color.LIGHT_CORAL
+		highlighted = true
+
+func card_highlight() -> void:
 	if friendly:
 		$CardImage.modulate = Color.PALE_GOLDENROD
 	else:
 		$CardImage.modulate = Color.LIGHT_CORAL
-
 func normalize() -> void:
+	$Button.size = button_default_size
+	$Button.position = -$Button.size/Vector2(2.0,2.0)  
 	$CardImage.modulate = default_color
 	MoveLib.change_scale(self, default_size)
+	highlighted = false
 
 func shadow() -> void:
 	$Shadow.show()

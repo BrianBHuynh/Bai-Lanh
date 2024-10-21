@@ -46,7 +46,7 @@ static func add_slot(card: Card, slot: Node2D) -> void:
 static func add_card(card: Card, new_card: Area2D) -> void:
 	if is_instance_valid(new_card.slot) and new_card.slot.accepting and not new_card.held and new_card.friendly:
 		card.new_slot = new_card.slot
-		new_card.highlight()
+		new_card.card_highlight()
 		new_card.slot.highlight()
 
 #Decriments the slotted variable, then returns the slot back to it's default color
