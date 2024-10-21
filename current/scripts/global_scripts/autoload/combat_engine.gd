@@ -118,6 +118,11 @@ func refresh(card: Card) -> void:
 	add_position(card)
 	add_initiative(card)
 
+func remove_combat(card: Card) -> void:
+	for array in arrays:
+		while array.has(card):
+			array.erase(card)
+
 func update(card: Card) -> void:
 	if initiative.has(card):
 		remove_initiative(card)

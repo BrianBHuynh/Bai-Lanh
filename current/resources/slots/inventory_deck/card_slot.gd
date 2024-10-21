@@ -43,9 +43,10 @@ func _on_button_pressed() -> void:
 	#if shift:
 		#Cards.shift(cards_list.front())
 
-func place_action(_card: Card) -> void:
+func place_action(card: Card) -> void:
 	fix_slot()
 	var temp_cards_list: Array = []
-	for card:Card in cards_list:
-		temp_cards_list.append(card.serialize())
+	for cards:Card in cards_list:
+		temp_cards_list.append(cards.serialize())
 	Saves.save_file(temp_cards_list, "inventory_save")
+	Combat.remove_combat(card)
