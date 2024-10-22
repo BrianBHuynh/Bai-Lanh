@@ -504,51 +504,18 @@ func shifted_back_action() -> void:
 
 #region Serialization
 func serialize() -> Dictionary:
-	var card_dat:Dictionary = {
-		"title" : title,
-		"flavor_text" : flavor_text,
-		"health" : health,
-		"phys_attack" : phys_attack,
-		"mag_attack" : mag_attack,
-		"phys_defense" : phys_defense,
-		"mag_defense" : mag_defense,
-		"speed" : speed,
-		"tags" : tags,
-		
-		"shifted_health" : shifted_health,
-		"shifted_phys_attack" : shifted_phys_attack,
-		"shifted_mag_attack" : shifted_mag_attack,
-		"shifted_phys_defense" : shifted_phys_defense,
-		"shifted_mag_defense" : shifted_mag_defense,
-		"shifted_speed" : shifted_speed,
-		"shifted_tags" : shifted_tags,
-		
-		"pos_health" : pos_health,
-		"pos_phys_attack" : pos_phys_attack,
-		"pos_mag_attack" : pos_mag_attack,
-		"pos_phys_defense" : pos_phys_defense,
-		"pos_mag_defense" : pos_mag_defense,
-		"pos_speed" : pos_speed,
-		"pos_tags" : pos_tags,
-		
-		"statuses" : statuses,
-		"perma_statuses" : perma_statuses,
-		
-		"pref_pos" : pref_pos,
-		
-		"shifted" : shifted,
-		"friendly" : friendly,
-		
-		"image_link" : image_link
-		}
+	var card_dat:Dictionary = {	
+		"script_link" : script_link
+	}
 	var reference: Card = CardReg.get_card(script_link)
-	var redundancies: Array = []
-	for key: String in card_dat:
-		if card_dat.get(key, key) == reference.get(key):
-			redundancies.append(key)
-	for key: String in redundancies:
-		card_dat.erase(key)
-	card_dat["script_link"] = script_link
+	var keys: Array = ["title", "flavor_text", "health", "phys_attack", "mag_attack", "phys_defense", "mag_defense", "speed", "tags", "shifted_health", "shifted_phys_attack", "shifted_mag_attack", "shifted_phys_defense", "shifted_mag_defense", "shifted_speed", "shifted_tags", "pos_health", "pos_phys_attack", "pos_mag_attack", "pos_phys_defense", "pos_speed", "pos_tags", "statuses", "perma_statuses", "pref_pos", "shifted", "friendly", "image_link"]
+	var keys_temp: Array = keys.duplicate(false)
+	for key: String in keys_temp:
+		if get(key) == reference.get(key):
+			keys.erase(key)
+	for key: String in keys:
+		card_dat[key] = get(key)
+	print(card_dat)
 	return card_dat
 
 func load_data(card_dat: Dictionary) -> void:
