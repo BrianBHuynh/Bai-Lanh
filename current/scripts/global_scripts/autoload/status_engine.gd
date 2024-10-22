@@ -5,7 +5,7 @@ var status_effects: Array[StatusEffect] = []
 #region Primary status functions
 func call_status(effect: StatusEffect, stage: int) -> void:
 	if is_instance_valid(effect.card):
-		Callable(StatusLib, effect.status).call(effect, stage)
+		StatusLib.new.call(effect.status, effect, stage)
 	else:
 		Status.status_effects.erase(effect)
 		effect.queue_free()
@@ -44,7 +44,7 @@ func cleanse_all(card: Card) -> void:
 			status_effects.erase(status)
 
 func cleanse_once(card: Card) -> void:
-	var cleared = false
+	var cleared: bool = false
 	if is_instance_valid(card):
 		for status in card.perma_statuses:
 			call_status(status, 2)
@@ -63,7 +63,7 @@ func cleanse_once(card: Card) -> void:
 				call_status(status, 2)
 				status_effects.erase(status)
 
-func cleanse(status: StatusEffect):
+func cleanse(status: StatusEffect) -> void:
 	call_status(status, 2)
 	if status.card.perma_statuses.has(status):
 		status.card.perma_statuses.erase(status)

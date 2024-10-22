@@ -1,7 +1,7 @@
 extends Node
 
 var menu: Node
-var menu_open = false
+var menu_open: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

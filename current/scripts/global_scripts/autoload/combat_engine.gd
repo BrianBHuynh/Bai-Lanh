@@ -1,6 +1,7 @@
 extends Node
 
 var targeting: Targeting = Targeting.new()
+
 #All slots are initialized here at the start of the scene
 var slots: Array = [] 
 
@@ -46,7 +47,7 @@ func get_initiative() -> Card:
 	if initiative.is_empty():
 		return null
 	else:
-		var temp = initiative.pick_random()
+		var temp: Card = initiative.pick_random()
 		if is_instance_valid(temp):
 			return temp
 		else:
@@ -112,6 +113,17 @@ func remove_position(card: Card) -> void:
 		while elem.has(card):
 			elem.erase(card)
 
+func refresh(card: Card) -> void:
+	remove_position(card)
+	remove_initiative(card)
+	add_position(card)
+	add_initiative(card)
+
+func remove_combat(card: Card) -> void:
+	for array in arrays:
+		while array.has(card):
+			array.erase(card)
+
 func update(card: Card) -> void:
 	if initiative.has(card):
 		remove_initiative(card)
@@ -125,21 +137,21 @@ func update(card: Card) -> void:
 func next_turn() -> void:
 	target_clear()
 	Status.tick()
-	var curChar = get_initiative()
+	var curChar: Card = get_initiative()
 	if is_instance_valid(curChar):
 		combat_board = ""
 		if not opposing_party.is_empty() and not player_party.is_empty():
 			curChar.action()
 
 #Applies slot stats and effects
-func slot_apply(card) -> void:
+func slot_apply(card: Card) -> void:
 	card.health = card.health + card.cur_slot.slot_health
 	card.attack = card.attack + card.cur_slot.slot_attack
 	card.defense = card.defense + card.cur_slot.slot_defense
 	card.speed = card.speed + card.cur_slot.slot_speed
 	card.cur_slot.activate()
 
-func pos_apply(card) -> void:
+func pos_apply(card: Card) -> void:
 	if card.pref_pos.has(card.cur_slot.pos):
 		card.health = card.health + card.pos_health
 		card.attack = card.attack + card.pos_attack

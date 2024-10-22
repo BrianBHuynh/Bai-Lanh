@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://cxqqs7eg3ohc6"]
+
+[ext_resource type="Texture2D" uid="uid://bcgjhduxbr2l8" path="res://current/cards/generic_mobs/rare/blind_assassin_worm/blind_assassin_worm.png" id="1_gqaf3"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gqaf3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

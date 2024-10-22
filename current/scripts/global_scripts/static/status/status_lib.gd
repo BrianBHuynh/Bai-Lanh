@@ -18,12 +18,12 @@ static func poison(effect: StatusEffect, stage: int) -> void:
 static func slow(effect: StatusEffect, stage: int) -> void:
 	match stage:
 		0:
-			effect.card.speed = effect.card.speed - effect.potency
+			effect.card.speed = effect.card.speed - int(effect.potency)
 			Combat.update(effect.card)
 		1:
 			effect.duration_pass()
 		2: 
-			effect.card.speed = effect.card.speed + effect.potency
+			effect.card.speed = effect.card.speed + int(effect.potency)
 			Combat.combat_board = Combat.combat_board + "is no longer stunned!\n"
 			Combat.update(effect.card)
 

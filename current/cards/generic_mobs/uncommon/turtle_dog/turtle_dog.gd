@@ -3,30 +3,31 @@ extends Card
 #region Card stats
 @export var card_title: String = "Turtle Dog"
 @export var card_flavor_text: String = "Is it a dog? Is it a turtle? Who knows"
+@export var card_image_link: String = "res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.tres"
 
 @export var card_health: float = 120.0 #Health amount of card
-@export var card_phys_attack: int = 8 #physical Attack value of the card
-@export var card_mag_attack: int = 6 #Magic attack value of the card
-@export var card_phys_defense: int = 12 #Physical defense of the card
-@export var card_mag_defense: int = 10 #Magical defense of the card
+@export var card_phys_attack: float = 8 #physical Attack value of the card
+@export var card_mag_attack: float = 6 #Magic attack value of the card
+@export var card_phys_defense: float = 12 #Physical defense of the card
+@export var card_mag_defense: float = 10 #Magical defense of the card
 @export var card_speed: int = 8 #Speed of the card
 @export var card_tags: Array[String] = ["dog", "turtle", "good_boy"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = -20.0
-@export var card_shifted_phys_attack: int = 2
-@export var card_shifted_mag_attack: int = 2
-@export var card_shifted_phys_defense: int = -2
-@export var card_shifted_mag_defense: int = -2
+@export var card_shifted_phys_attack: float = 2
+@export var card_shifted_mag_attack: float = 2
+@export var card_shifted_phys_defense: float = -2
+@export var card_shifted_mag_defense: float = -2
 @export var card_shifted_speed: int = +2
 @export var card_shifted_tags: Array[String] = ["dogx2"]
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 0.0
-@export var card_pos_phys_attack: int = -2
-@export var card_pos_mag_attack: int = -2
-@export var card_pos_phys_defense: int = 2
-@export var card_pos_mag_defense: int = 2
+@export var card_pos_phys_attack: float = -2
+@export var card_pos_mag_attack: float = -2
+@export var card_pos_phys_defense: float = 2
+@export var card_pos_mag_defense: float = 2
 @export var card_pos_speed: int = 0
 @export var card_pos_tags: Array[String] = ["tanky"]
 
@@ -41,7 +42,7 @@ extends Card
 #endregion
 
 #region Card initialization
-func _ready() -> void:
+func initialize() -> void:
 	title = card_title
 	flavor_text = card_flavor_text
 	health = card_health
@@ -68,18 +69,20 @@ func _ready() -> void:
 	pref_pos = card_pref_pos
 	default_color = card_default_color
 	default_size = card_default_size
+	image_link = card_image_link
 	if card_shifted:
 		shift()
 	friendly = card_friendly
-	initialize()
+	script_link = "res://current/cards/generic_mobs/uncommon/turtle_dog/turtle_dog.gd"
+	super()
 #endregion
 
 #region Actions
 func default_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var damage: float = (Combat.RNG.randi_range(1,10))
+	var ability: float = Combat.RNG.randi_range(1,7)
 	match ability:
 		1,2,3:
 			Combat.combat_board = "Turtle Dog tries to goes in for a bite!\n"
@@ -93,10 +96,10 @@ func default_action() -> void:
 
 #Should normally be called when standing in the front
 func front_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1,2,3:
 			Combat.combat_board = "Turtle Dog tries to goes in for a bite!\n"
@@ -114,10 +117,10 @@ func center_action() -> void:
 
 #Should normally be called when standing in the center
 func back_action() -> void:
-	var _enemy = get_target()
-	var _ally = get_ally()
-	var _damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var _enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1,2,3,4,5,6:
 			Combat.combat_board = "Turtle Dog Rest!\n"
@@ -128,10 +131,10 @@ func back_action() -> void:
 
 #Should normally never be called as long as the card is in a slot
 func shifted_default_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1,2,3,4:
 			Combat.combat_board = "Turtle Dog tries to goes in for a bite!\n"
@@ -145,10 +148,10 @@ func shifted_default_action() -> void:
 
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1,2,3,4:
 			Combat.combat_board = "Turtle Dog tries to goes in for a bite!\n"
@@ -166,10 +169,10 @@ func shifted_center_action() -> void:
 
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
-	var _enemy = get_target()
-	var _ally = get_ally()
-	var _damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var _enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1,2,3,4,5,6:
 			Combat.combat_board = "Turtle Dog Rest! \n"

@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b5qk07lrxqlc2"]
+
+[ext_resource type="Shader" path="res://current/resources/shaders/pickup/pickup.gdshader" id="1_y25bk"]
+
+[resource]
+shader = ExtResource("1_y25bk")
+shader_parameter/started = false
+shader_parameter/cur_time = 0.0
+shader_parameter/direction = Vector2(0, 0)
+shader_parameter/strength = 0.0
+shader_parameter/shader_length = -1.0
+shader_parameter/mouse_pos = Vector2(0, 0)
+shader_parameter/starting_mouse_pos = Vector2(0, 0)
+shader_parameter/modulate = Vector4(0, 0, 0, 0)

@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://vljlcpflmo6o"]
+
+[ext_resource type="Texture2D" uid="uid://dm7gorbshgq43" path="res://current/cards/generic_mobs/common/archer/archer.png" id="1_jp20h"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jp20h")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

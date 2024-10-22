@@ -1,15 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://b77a8xugg4jk0"]
+[gd_scene load_steps=8 format=3 uid="uid://b2lgr4sea5yus"]
 
-[ext_resource type="Script" path="res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.gd" id="1_b0orx"]
-[ext_resource type="Texture2D" uid="uid://cwtk67dbnccw7" path="res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/mysterious_shadow_worm.png" id="2_gx66f"]
-[ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_7s0un"]
-[ext_resource type="Script" path="res://current/scripts/common_scripts/card_name.gd" id="4_srdjx"]
+[ext_resource type="Script" path="res://current/resources/templates/template_card/template.gd" id="1_0ha8n"]
+[ext_resource type="Texture2D" uid="uid://tfwrvq65j4fx" path="res://current/resources/templates/template_card/template.png" id="2_c6q37"]
+[ext_resource type="Script" path="res://current/scripts/common_scripts/player_data.gd" id="3_f66ue"]
+[ext_resource type="Script" path="res://current/scripts/common_scripts/card_name.gd" id="4_wne61"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6ow15"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_gx66f")
+"texture": ExtResource("2_c6q37")
 }],
 "loop": true,
 "name": &"default",
@@ -42,9 +42,11 @@ func _process(_delta: float) -> void:
 "
 
 [node name="Card" type="Area2D"]
-script = ExtResource("1_b0orx")
+script = ExtResource("1_0ha8n")
+card_default_color = Color(0, 0, 0, 1)
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+[node name="Shadow" type="AnimatedSprite2D" parent="."]
+use_parent_material = true
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_6ow15")
 
@@ -60,12 +62,13 @@ button_mask = 3
 scale = Vector2(0.1, 0.1)
 shape = SubResource("RectangleShape2D_dhksn")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="CardImage" type="AnimatedSprite2D" parent="."]
 use_parent_material = true
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_6ow15")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Description" type="RichTextLabel" parent="."]
+use_parent_material = true
 offset_left = -55.0
 offset_top = -12.0
 offset_right = 2185.0
@@ -73,9 +76,10 @@ offset_bottom = 1888.0
 scale = Vector2(0.05, 0.05)
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 200
-script = ExtResource("3_7s0un")
+script = ExtResource("3_f66ue")
 
-[node name="Label" type="Label" parent="."]
+[node name="Name" type="Label" parent="."]
+use_parent_material = true
 offset_left = -60.0
 offset_top = -96.0
 offset_right = 1140.0
@@ -83,9 +87,9 @@ offset_bottom = 44.0
 scale = Vector2(0.1, 0.1)
 theme_override_font_sizes/font_size = 100
 text = "Title"
-script = ExtResource("4_srdjx")
+script = ExtResource("4_wne61")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="OnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(5.72205e-06, 0.500001)
 scale = Vector2(6.8, 9.65)
 script = SubResource("GDScript_g2vuv")
@@ -98,5 +102,5 @@ script = SubResource("GDScript_g2vuv")
 [connection signal="button_up" from="Button" to="." method="_on_button_up"]
 [connection signal="mouse_entered" from="Button" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Button" to="." method="_on_mouse_exited"]
-[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_screen_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_screen_exited"]
+[connection signal="screen_entered" from="OnScreenNotifier" to="." method="_screen_entered"]
+[connection signal="screen_exited" from="OnScreenNotifier" to="." method="_screen_exited"]

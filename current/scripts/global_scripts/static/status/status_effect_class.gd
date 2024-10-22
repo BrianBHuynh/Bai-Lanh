@@ -5,12 +5,12 @@ class_name StatusEffect
 var status: String
 var turns: int
 var activation: String
-var potency: int
+var potency: float
 var card: Card
 #endregion
 
 #region Initialization
-func _init(init_status: String, init_turns: int, init_activation: String, init_potency: int, init_card: Card) -> void:
+func _init(init_status: String, init_turns: int, init_activation: String, init_potency: float, init_card: Card) -> void:
 	status = init_status
 	turns = init_turns
 	activation = init_activation

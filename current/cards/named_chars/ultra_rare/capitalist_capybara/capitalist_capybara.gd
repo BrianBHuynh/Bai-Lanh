@@ -3,30 +3,31 @@ extends Card
 #region Card stats
 @export var card_title: String = "Cappy"
 @export var card_flavor_text: String = "A weird capybara thing"
+@export var card_image_link: String = "res://current/cards/named_chars/ultra_rare/capitalist_capybara/capitalist_capybara.tres"
 
 @export var card_health: float = 75.0 #Health amount of card
-@export var card_phys_attack: int = 12 #physical Attack value of the card
-@export var card_mag_attack: int = 8 #Magic attack value of the card
-@export var card_phys_defense: int = 10 #Physical defense of the card
-@export var card_mag_defense: int = 8 #Magical defense of the card
+@export var card_phys_attack: float = 12 #physical Attack value of the card
+@export var card_mag_attack: float = 8 #Magic attack value of the card
+@export var card_phys_defense: float = 10 #Physical defense of the card
+@export var card_mag_defense: float = 8 #Magical defense of the card
 @export var card_speed: int = 6 #Speed of the card
 @export var card_tags: Array[String] = ["cute_animal", "animal", "capitalist", "streamer"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = 0.0
-@export var card_shifted_phys_attack: int = 1
-@export var card_shifted_mag_attack: int = 1
-@export var card_shifted_phys_defense: int = 1
-@export var card_shifted_mag_defense: int = 1
+@export var card_shifted_phys_attack: float = 1
+@export var card_shifted_mag_attack: float = 1
+@export var card_shifted_phys_defense: float = 1
+@export var card_shifted_mag_defense: float = 1
 @export var card_shifted_speed: int = -2
 @export var card_shifted_tags: Array[String] = ["detective"]
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 0.0
-@export var card_pos_phys_attack: int = 2
-@export var card_pos_mag_attack: int = 2
-@export var card_pos_phys_defense: int = -1
-@export var card_pos_mag_defense: int = -1
+@export var card_pos_phys_attack: float = 2
+@export var card_pos_mag_attack: float = 2
+@export var card_pos_phys_defense: float = -1
+@export var card_pos_mag_defense: float = -1
 @export var card_pos_speed: int = 3
 @export var card_pos_tags: Array[String] = ["on_time"]
 
@@ -41,7 +42,7 @@ extends Card
 #endregion
 
 #region Card initialization
-func _ready() -> void:
+func initialize() -> void:
 	title = card_title
 	flavor_text = card_flavor_text
 	health = card_health
@@ -68,17 +69,19 @@ func _ready() -> void:
 	pref_pos = card_pref_pos
 	default_color = card_default_color
 	default_size = card_default_size
+	image_link = card_image_link
 	if card_shifted:
 		shift()
 	friendly = card_friendly
-	initialize()
+	script_link = "res://current/cards/named_chars/ultra_rare/capitalist_capybara/capitalist_capybara.gd"
+	super()
 #endregion
 
 #region Actions
 func default_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -98,9 +101,9 @@ func default_action() -> void:
 
 #Should normally be called when standing in the front
 func front_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -120,9 +123,9 @@ func front_action() -> void:
 
 #Should normally be called when standing in the center
 func center_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -142,9 +145,9 @@ func center_action() -> void:
 
 #Should normally be called when standing in the center
 func back_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -164,9 +167,9 @@ func back_action() -> void:
 
 #Should normally never be called as long as the card is in a slot
 func shifted_default_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -190,9 +193,9 @@ func shifted_default_action() -> void:
 
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -217,9 +220,9 @@ func shifted_front_action() -> void:
 
 #Should normally be called when standing in the center
 func shifted_center_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: float = (Combat.RNG.randi_range(1,10))
+	var ability: float = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -244,9 +247,9 @@ func shifted_center_action() -> void:
 
 #Should normally be called when standing in the center
 func shifted_back_action() -> void:
-	var enemy = get_target()
-	var damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,7)
+	var enemy: Card = get_target()
+	var damage: float = (Combat.RNG.randi_range(1,10))
+	var ability: float = Combat.RNG.randi_range(1,7)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Capytax!\" \n"
@@ -254,7 +257,7 @@ func shifted_back_action() -> void:
 		2:
 			Combat.combat_board = Combat.combat_board + "\"Investigation!\"\n"
 			CombatLib.lock_down(self, enemy)
-			CombatLib.mag_attack(self, enemy, damage+phys_attack-3)
+			CombatLib.mag_attack(self, enemy, damage+phys_attack-3.0)
 		3:
 			CombatLib.phys_attack(self, enemy, damage+phys_attack)
 		4: 

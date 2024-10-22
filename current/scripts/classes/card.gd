@@ -6,28 +6,28 @@ var title: String = "Card"
 var flavor_text: String
 
 var health: float = 100.0 #Health amount of card
-var phys_attack: int = 10 #physical Attack value of the card
-var mag_attack: int = 10 #Magic attack value of the card
-var phys_defense: int = 10 #Physical defense of the card
-var mag_defense: int = 10 #Magical defense of the card
+var phys_attack: float = 10 #physical Attack value of the card
+var mag_attack: float = 10 #Magic attack value of the card
+var phys_defense: float = 10 #Physical defense of the card
+var mag_defense: float = 10 #Magical defense of the card
 var speed: int = 10 #Speed of the card
 var tags: Array[String] = []
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 var shifted_health: float = 0.0
-var shifted_phys_attack: int = 0
-var shifted_mag_attack: int = 0
-var shifted_phys_defense: int = 0
-var shifted_mag_defense: int = 0
+var shifted_phys_attack: float = 0
+var shifted_mag_attack: float = 0
+var shifted_phys_defense: float = 0
+var shifted_mag_defense: float = 0
 var shifted_speed: int = 0
 var shifted_tags: Array[String] = []
 
 #Stats changed for being in the prefered positions
 var pos_health: float = 0.0
-var pos_phys_attack: int = 0
-var pos_mag_attack: int = 0
-var pos_phys_defense: int = 0
-var pos_mag_defense: int = 0
+var pos_phys_attack: float = 0
+var pos_mag_attack: float = 0
+var pos_phys_defense: float = 0
+var pos_mag_defense: float = 0
 var pos_speed: int = 0
 var pos_tags: Array[String] = []
 
@@ -47,16 +47,23 @@ var shadow_scale: Vector2
 var default_color: Color = modulate #for default color
 var default_size: Vector2 = Vector2(1,1) #Default size for the card
 var default_material: ShaderMaterial = null
+var button_default_size: Vector2
 
 var held: bool = false
 var inspected: bool = false
+var highlighted: bool = false
 
 var shifted: bool = false
 var friendly: bool = true
 
-var hold = false
-var start_time = 0.0
-var shader_length = 0.0
+var hold: bool = false
+var start_time: float = 0.0
+var shader_length: float = 0.0
+var shader_mouse_start: Vector2 = Vector2(0,0)
+var shader_mouse_pos: Vector2 = Vector2(0,0)
+
+var image_link: String = "res://current/resources/templates/template_card/template.tres"
+var script_link: String = "res://current/scripts/classes/card.gd"
 #endregion
 
 #region Initialization
@@ -66,17 +73,32 @@ func _ready() -> void:
 
 func initialize() -> void:
 	current_position = position
-	shadow_scale = get_child(0).scale
+	shadow_scale = $Shadow.scale
 	hold = false
+	button_default_size = $Button.size
 	for i in get_children():
 		i.set_process(false)
-	if not friendly:
+	update_side()
+
+func update_side() -> void:
+	var in_battle: bool = Combat.initiative.has(self)
+	while Combat.initiative.has(self):
+		Combat.initiative.erase(self)
+	if friendly:
+		$CardImage.modulate = modulate
+		default_color = modulate
+		shadow_show()
+	else:
 		default_color = Color.PALE_VIOLET_RED
-		modulate = Color.PALE_VIOLET_RED
+		$CardImage.modulate = Color.PALE_VIOLET_RED
 		await get_tree().create_timer(.25).timeout
 		shadow_hide()
-		Combat.opposing_party.append(self)
-		Combat.add_initiative(self)
+	if in_battle:
+		Combat.refresh(self)
+
+func update_image() -> void:
+	$CardImage.set_sprite_frames(load(image_link))
+	$CardImage.play("default")
 #endregion
 
 #region Input/Signals detection
@@ -101,6 +123,7 @@ func _on_button_down() -> void:
 func _on_button_up() -> void:
 	if Input.is_action_just_released("leftClick") and friendly and not inspected:
 		held = false
+		start_time = 0.0
 		on_card_released()
 		shadow_hide()
 	else:
@@ -122,22 +145,25 @@ func _on_area_exited(area: Area2D) -> void:
 	Cards.remove_card(self, area)
 
 func _on_mouse_entered() -> void:
+	ShadersLib.apply_shader(self, self, ShadersLib.get_shader("pickup"))
 	highlight()
 
 func _on_mouse_exited() -> void:
+	material = default_material
+	$Button.size = button_default_size
 	if not inspected and not held:
 		normalize()
 
-func _screen_entered() -> void:
-	for i in get_children():
-		i.show()
-		i.set_process(true)
-
-func _screen_exited() -> void:
-	for i in get_children():
-		i.set_process(false)
-		if i != get_child(get_child_count()-1):
-			i.hide()
+#func _screen_entered() -> void:
+	#for i in get_children():
+		#i.show()
+		#i.set_process(true)
+#
+#func _screen_exited() -> void:
+	#for i in get_children():
+		#i.set_process(false)
+		#if $OnScreenNotifier:
+			#i.hide()
 #endregion
 
 #region Movement and other card functions
@@ -171,7 +197,7 @@ func uninspect() -> void:
 
 func release_card() -> void:
 	if is_instance_valid(new_slot) and new_slot.accepting and friendly:
-		Cards.place_slot_combat(self)
+		Cards.place_slot(self)
 		slot.fix_slot()
 	else:
 		reject()
@@ -185,40 +211,55 @@ func reject() -> void:
 		MoveLib.move(self, current_position)
 
 func highlight() -> void:
-	if friendly:
-		modulate = Color.PALE_GOLDENROD
-		if Vector2(1.2,1.2) > scale:
-			MoveLib.change_scale(self, Vector2(1.2,1.2))
-	else:
-		modulate = Color.LIGHT_CORAL
-		if Vector2(1.2,1.2) > scale:
-			MoveLib.change_scale(self, Vector2(1.2,1.2))
+	if not highlighted:
+		$Button.size = button_default_size * Vector2(1.175,1.175)
+		$Button.position = -$Button.size/Vector2(2.0,2.0)  
+		if friendly:
+			$CardImage.modulate = Color.PALE_GOLDENROD
+		else:
+			$CardImage.modulate = Color.LIGHT_CORAL
+		highlighted = true
 
+func card_highlight() -> void:
+	if friendly:
+		$CardImage.modulate = Color.PALE_GOLDENROD
+	else:
+		$CardImage.modulate = Color.LIGHT_CORAL
 func normalize() -> void:
-	modulate = default_color
+	$Button.size = button_default_size
+	$Button.position = -$Button.size/Vector2(2.0,2.0)  
+	$CardImage.modulate = default_color
 	MoveLib.change_scale(self, default_size)
+	highlighted = false
 
 func shadow() -> void:
-	get_child(0).show()
+	$Shadow.show()
 	var distance: Vector2 = global_position - get_viewport_rect().size/2
-	get_child(0).position = distance / 30
-	MoveLib.change_color(get_child(0), Color(Color.BLACK, .25-distance.length()/10000))
-	MoveLib.change_scale(get_child(0), shadow_scale+distance.abs()/50000)
+	$Shadow.position = distance / 30
+	MoveLib.change_color($Shadow, Color(Color.BLACK, .25-distance.length()/10000))
+	MoveLib.change_scale($Shadow, shadow_scale+distance.abs()/50000)
 
 func shadow_hide() -> void:
-	MoveLib.change_color(get_child(0), Color(Color.BLACK, 0))
-	get_child(0).hide()
-	
+	MoveLib.change_color($Shadow, Color(Color.BLACK, 0))
+	$Shadow.hide()
+
+func shadow_show() -> void:
+	MoveLib.change_color($Shadow, Color(Color.BLACK, 1))
+	$Shadow.show()
+
 func shader_process() -> void:
 	if material.get_shader_parameter("started") == false:
 			material.set_shader_parameter("started", true)
+			material.set_shader_parameter("modulate", $CardImage.modulate)
 			start_time = Time.get_unix_time_from_system()
-			shader_length = material.get_shader_parameter("length")
+			shader_length = material.get_shader_parameter("shader_length")
 			material.set_shader_parameter("cur_time", Time.get_unix_time_from_system() - start_time)
 	else:
+		#Sets the movement as the difference between the mouse and the card, assuming offset. When not moving mouse, offset = (0.0, 0.0)
 		var timer: float = Time.get_unix_time_from_system() - start_time
 		material.set_shader_parameter("cur_time", timer)
-		if timer >= shader_length:
+		material.set_shader_parameter("offset", get_global_mouse_position() - global_position)
+		if timer >= shader_length and not shader_length < 0.0:
 			material = default_material
 			start_time = 0.0
 #endregion
@@ -306,8 +347,8 @@ func get_ally() -> Card:
 #endregion
 
 #region Damage
-func damage_physical(damage: int) -> int:
-	var change = damage - phys_defense
+func damage_physical(damage: float) -> float:
+	var change: float = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -316,8 +357,8 @@ func damage_physical(damage: int) -> int:
 	check_death()
 	return change
 
-func direct_damage_physical(damage: int) -> int:
-	var change = damage - phys_defense
+func direct_damage_physical(damage: float) -> float:
+	var change: float = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -326,8 +367,8 @@ func direct_damage_physical(damage: int) -> int:
 	check_death()
 	return change
 
-func damage_magical(damage: int) -> int:
-	var change = damage - mag_defense
+func damage_magical(damage: float) -> float:
+	var change: float = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -336,8 +377,8 @@ func damage_magical(damage: int) -> int:
 	check_death()
 	return change
 
-func direct_damage_magical(damage: int) -> int:
-	var change = damage - mag_defense
+func direct_damage_magical(damage: float) -> float:
+	var change: float = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -364,7 +405,7 @@ func check_death() -> void:
 		for array in Combat.arrays:
 			while array.has(self):
 				array.erase(self)
-		for elem in Combat.slots:
+		for elem:Slot in Combat.slots:
 			if is_instance_valid(elem):
 				while elem.cards_list.has(self):
 					elem.cards_list.erase(self)
@@ -376,13 +417,13 @@ func check_death() -> void:
 		self.queue_free()
 
 func kill() -> void:
-	for status in statuses:
+	for status:StatusEffect in statuses:
 		status.queue_free()
 	statuses.clear()
-	for array in Combat.arrays:
+	for array: Array in Combat.arrays:
 		while array.has(self):
 			array.erase(self)
-	for elem in Combat.slots:
+	for elem: Slot in Combat.slots:
 		while elem.cards_list.has(self):
 			elem.cards_list.erase(self)
 	await get_tree().create_timer(.125).timeout
@@ -459,4 +500,26 @@ func shifted_center_action() -> void:
 func shifted_back_action() -> void:
 	shifted_default_action()
 #endregion
+#endregion
+
+#region Serialization
+func serialize() -> Dictionary:
+	var card_dat:Dictionary = {	
+		"script_link" : script_link
+	}
+	var reference: Card = CardReg.get_card(script_link)
+	var keys: Array = ["title", "flavor_text", "health", "phys_attack", "mag_attack", "phys_defense", "mag_defense", "speed", "tags", "shifted_health", "shifted_phys_attack", "shifted_mag_attack", "shifted_phys_defense", "shifted_mag_defense", "shifted_speed", "shifted_tags", "pos_health", "pos_phys_attack", "pos_mag_attack", "pos_phys_defense", "pos_speed", "pos_tags", "statuses", "perma_statuses", "pref_pos", "shifted", "friendly", "image_link"]
+	var keys_temp: Array = keys.duplicate(false)
+	for key: String in keys_temp:
+		if get(key) == reference.get(key):
+			keys.erase(key)
+		await get_tree().create_timer(1.0).timeout 
+	for key: String in keys:
+		card_dat[key] = get(key)
+		await get_tree().create_timer(1.0).timeout 
+	return card_dat
+
+func load_data(card_dat: Dictionary) -> void:
+	for key: String in card_dat.keys():
+		set(key, card_dat.get(key, key))
 #endregion

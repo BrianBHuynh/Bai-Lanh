@@ -1,7 +1,7 @@
 extends Node2D
 class_name Targeting
 
-static func simple_targeting(card: Card, type: String):
+static func simple_targeting(card: Card, type: String) -> Card:
 	if card.friendly:
 		if card.shifted:
 			if card.pos == "front":
@@ -41,7 +41,7 @@ static func simple_targeting(card: Card, type: String):
 			else:
 				return Callable(Targeting, type).call(card, "player")
 
-static func simple_ally(card: Card, type: String):
+static func simple_ally(card: Card, type: String) -> Card:
 	if card.friendly:
 		if card.shifted:
 			if card.pos == "front":
@@ -81,16 +81,15 @@ static func simple_ally(card: Card, type: String):
 			else:
 				return Callable(Targeting, type).call(card, "opposing")
 
-static func even(_card: Card, party: String):
+static func even(_card: Card, party: String) -> Card:
 	match party:
 		"player":
 			Combat.target_add(Combat.player_party)
-			return Combat.target_get()
 		"opposing":
 			Combat.target_add(Combat.opposing_party)
-			return Combat.target_get()
+	return Combat.target_get()
 
-static func front(_card: Card, party: String):
+static func front(_card: Card, party: String) -> Card:
 	match party:
 		"player":
 			if not Combat.player_front.is_empty():
@@ -101,7 +100,6 @@ static func front(_card: Card, party: String):
 				Combat.target_add(Combat.player_back)
 			else: 
 				Combat.target_add(Combat.player_party)
-			return Combat.target_get()
 		"opposing":
 			if not Combat.opposing_front.is_empty():
 				Combat.target_add(Combat.opposing_front)
@@ -111,9 +109,9 @@ static func front(_card: Card, party: String):
 				Combat.target_add(Combat.opposing_back)
 			else: 
 				Combat.target_add(Combat.opposing_party)
-			return Combat.target_get()
+	return Combat.target_get()
 
-static func same_pos(card: Card, party: String):
+static func same_pos(card: Card, party: String) -> Card:
 	match party:
 		"player":
 			if card.pos == "front" and not Combat.player_front.is_empty():
@@ -124,7 +122,6 @@ static func same_pos(card: Card, party: String):
 				Combat.target_add(Combat.player_back)
 			else:
 				Combat.target_add(Combat.player_party)
-			return Combat.target_get()
 		"opposing":
 			if card.pos == "front" and not Combat.opposing_front.is_empty():
 				Combat.target_add(Combat.opposing_front)
@@ -134,9 +131,9 @@ static func same_pos(card: Card, party: String):
 				Combat.target_add(Combat.opposing_back)
 			else:
 				Combat.target_add(Combat.opposing_party)
-			return Combat.target_get()
+	return Combat.target_get()
 
-static func specific_pos(party: String, pos: String):
+static func specific_pos(party: String, pos: String) -> Card:
 	match party:
 		"player":
 			if pos == "front" and not Combat.player_front.is_empty():
@@ -147,7 +144,6 @@ static func specific_pos(party: String, pos: String):
 				Combat.target_add(Combat.player_back)
 			else:
 				Combat.target_add(Combat.player_party)
-			return Combat.target_get()
 		"opposing":
 			if pos == "front" and not Combat.opposing_front.is_empty():
 				Combat.target_add(Combat.opposing_front)
@@ -157,4 +153,4 @@ static func specific_pos(party: String, pos: String):
 				Combat.target_add(Combat.opposing_back)
 			else:
 				Combat.target_add(Combat.opposing_party)
-			return Combat.target_get()
+	return Combat.target_get()

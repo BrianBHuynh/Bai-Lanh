@@ -1,41 +1,41 @@
 extends Card
 
 #region Card stats
-@export var card_title: String = "Archer"
-@export var card_flavor_text: String = "Shoots on the same row (most of the time)"
-@export var card_image_link: String = "res://current/cards/generic_mobs/common/archer/archer.tres"
+@export var card_title: String = "Lost Herbalist"
+@export var card_flavor_text: String = "Lost in the woods she looks for a way out"
+@export var card_image_link: String = "res://current/cards/named_chars/ultra_rare/lost_herbalist/lost_herbalist.tres"
 
-@export var card_health: float = 75.0 #Health amount of card
-@export var card_phys_attack: float = 12 #physical Attack value of the card
-@export var card_mag_attack: float = 8 #Magic attack value of the card
+@export var card_health: float = 65.0 #Health amount of card
+@export var card_phys_attack: float = 8 #physical Attack value of the card
+@export var card_mag_attack: float = 12 #Magic attack value of the card
 @export var card_phys_defense: float = 8 #Physical defense of the card
 @export var card_mag_defense: float = 8 #Magical defense of the card
-@export var card_speed: int = 9 #Speed of the card
-@export var card_tags: Array[String] = ["ranged", "generic"]
+@export var card_speed: int = 10 #Speed of the card
+@export var card_tags: Array[String] = ["Lost", "Sleepy", "Tired", "Sad"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
-@export var card_shifted_health: float = 0.0
-@export var card_shifted_phys_attack: float = -2
+@export var card_shifted_health: float = 10.0
+@export var card_shifted_phys_attack: float = 2
 @export var card_shifted_mag_attack: float = 2
 @export var card_shifted_phys_defense: float = 2
 @export var card_shifted_mag_defense: float = 2
-@export var card_shifted_speed: int = 1
-@export var card_shifted_tags: Array[String] = ["balanced"]
+@export var card_shifted_speed: int = -3
+@export var card_shifted_tags: Array[String] = ["Writing", "Recovering"]
 
 #Stats changed for being in the prefered positions
-@export var card_pos_health: float = -10.0
-@export var card_pos_phys_attack: float = 2
-@export var card_pos_mag_attack: float = 2
-@export var card_pos_phys_defense: float = 0
-@export var card_pos_mag_defense: float = 0
-@export var card_pos_speed: int = 2
-@export var card_pos_tags: Array[String] = ["rapid fire"]
+@export var card_pos_health: float = 10.0
+@export var card_pos_phys_attack: float = 0
+@export var card_pos_mag_attack: float = 0
+@export var card_pos_phys_defense: float = 1
+@export var card_pos_mag_defense: float = 1
+@export var card_pos_speed: int = 0
+@export var card_pos_tags: Array[String] = ["Recovering", "Safe"]
 
 #Position stats/effects should only be applied when the play button is pressed!
 @export var card_pref_pos: Array[String] = ["back"] #Prefered possitions of the card
 
 @export var card_default_color: Color = modulate #for default color
-@export var card_default_size: Vector2 = Vector2(1,1) #Default size for the card
+@export var card_default_size: Vector2 = Vector2(1,.95) #Default size for the card
 
 @export var card_shifted: bool = false
 @export var card_friendly: bool = true
@@ -73,21 +73,30 @@ func initialize() -> void:
 	if card_shifted:
 		shift()
 	friendly = card_friendly
-	script_link = "res://current/cards/generic_mobs/common/archer/archer.gd"
+	script_link = "res://current/cards/named_chars/ultra_rare/lost_herbalist/lost_herbalist.gd"
 	super()
 #endregion
 
 #region Actions
 func default_action() -> void:
 	var enemy: Card = get_target()
-	var _ally: Card = get_ally()
+	var ally: Card = get_ally()
 	var damage: int = (Combat.RNG.randi_range(1,10))
-	var ability: int = Combat.RNG.randi_range(1,2)
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
-			CombatLib.phys_attack(self, enemy, damage)
+			if friendly:
+				for card in Combat.player_back:
+					CombatLib.heal(self, card, mag_attack/4.0)
+			else:
+				for card in Combat.opposing_back:
+					CombatLib.heal(self, card, mag_attack/4.0)
 		2:
-			CombatLib.mag_attack(self, enemy, damage)
+			CombatLib.self_heal(self, mag_attack/2.0)
+		3,4:
+			CombatLib.baton_pass(self, ally)
+		5:
+			CombatLib.mag_attack(self, enemy, damage+mag_attack)
 
 #Should normally be called when standing in the front
 #func front_action() -> void:
@@ -120,9 +129,9 @@ func default_action() -> void:
 
 #region Targeting
 #region Simple
-func get_target() -> Card:
-	return Targeting.simple_targeting(self, "same_pos")
-
+#func get_target() -> Card:
+	#return Targeting.simple_targeting(self, "even")
+#
 #func get_ally() -> Card:
 	#return Targeting.simple_ally(self, "even")
 #endregion

@@ -1,19 +1,19 @@
 extends Slot
 
-@export var slot_pos = "Default"
+@export var slot_pos: String = "Default"
 @export var slot_health: float = 0.0
-@export var slot_phys_attack: int = 0
-@export var slot_mag_attack: int = 0
-@export var slot_phys_defense: int = 0
-@export var slot_mag_defense: int = 0
+@export var slot_phys_attack: float = 0
+@export var slot_mag_attack: float = 0
+@export var slot_phys_defense: float = 0
+@export var slot_mag_defense: float = 0
 @export var slot_speed: int = 0
 @export var slot_tags: Array = []
 @export var slot_shift:bool = false
 
-@export var slot_card_max = 1
+@export var slot_card_max: int = 1
 
-var max_cap = 10
-var drawn = 0
+var max_cap: int = 10
+var drawn: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,7 +32,7 @@ func _ready() -> void:
 
 func _on_button_pressed() -> void:
 	if drawn < max_cap:
-		var summon: Card = load(CardReg.ally_list.pick_random()).instantiate()
+		var summon: Card = CardReg.get_card(CardReg.ally_list.pick_random())
 		summon.position = position
 		get_parent().add_child(summon)
 		summon.new_slot = self
@@ -45,4 +45,7 @@ func _on_button_pressed() -> void:
 		#Cards.shift(cards_list.front())
 #
 #func place_action(_card):
+	#pass
+
+#func remove_action(_card: Card) -> void:
 	#pass

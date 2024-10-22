@@ -3,30 +3,31 @@ extends Card
 #region Card stats
 @export var card_title: String = "Evil Shadow Worm"
 @export var card_flavor_text: String = "Kinda squishy unless in defensive mode"
+@export var card_image_link: String = "res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.tres"
 
 @export var card_health: float = 5.0 #Health amount of card
-@export var card_phys_attack: int = 12 #physical Attack value of the card
-@export var card_mag_attack: int = 12 #Magic attack value of the card
-@export var card_phys_defense: int = 0 #Physical defense of the card
-@export var card_mag_defense: int = 0 #Magical defense of the card
+@export var card_phys_attack: float = 12 #physical Attack value of the card
+@export var card_mag_attack: float = 12 #Magic attack value of the card
+@export var card_phys_defense: float = 0 #Physical defense of the card
+@export var card_mag_defense: float = 0 #Magical defense of the card
 @export var card_speed: int = 5 #Speed of the card
 @export var card_tags: Array[String] = ["summon", "shadow", "evil"]
 
 #Modifiers for shifting, are added or subtracted from the normal stats when shifting
 @export var card_shifted_health: float = 25.0
-@export var card_shifted_phys_attack: int = -4
-@export var card_shifted_mag_attack: int = -4
-@export var card_shifted_phys_defense: int = 10
-@export var card_shifted_mag_defense: int = 10
+@export var card_shifted_phys_attack: float = -4
+@export var card_shifted_mag_attack: float = -4
+@export var card_shifted_phys_defense: float = 10
+@export var card_shifted_mag_defense: float = 10
 @export var card_shifted_speed: int = -2
 @export var card_shifted_tags: Array[String] = ["tanky"]
 
 #Stats changed for being in the prefered positions
 @export var card_pos_health: float = 0.0
-@export var card_pos_phys_attack: int = 2
-@export var card_pos_mag_attack: int = 2
-@export var card_pos_phys_defense: int = 0
-@export var card_pos_mag_defense: int = 0
+@export var card_pos_phys_attack: float = 2
+@export var card_pos_mag_attack: float = 2
+@export var card_pos_phys_defense: float = 0
+@export var card_pos_mag_defense: float = 0
 @export var card_pos_speed: int = 2
 @export var card_pos_tags: Array[String] = []
 
@@ -41,7 +42,7 @@ extends Card
 #endregion
 
 #region Card initialization
-func _ready() -> void:
+func initialize() -> void:
 	title = card_title
 	flavor_text = card_flavor_text
 	health = card_health
@@ -68,17 +69,20 @@ func _ready() -> void:
 	pref_pos = card_pref_pos
 	default_color = card_default_color
 	default_size = card_default_size
+	image_link = card_image_link
 	if card_shifted:
 		shift()
 	friendly = card_friendly
+	script_link = "res://current/cards/generic_mobs/rare/blind_assassin_worm/mysterious_shadow_worm/evil_shadow_worm.gd"
+	super()
 #endregion
 
 #region Actions
 func default_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var _damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,4)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,4)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Jump!\" \n"
@@ -98,10 +102,10 @@ func default_action() -> void:
 
 #Should normally be called when standing in the front
 func front_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var _damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Jump!\" \n"
@@ -133,10 +137,10 @@ func front_action() -> void:
 
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var _damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Jump!\" \n"
@@ -165,49 +169,49 @@ func shifted_front_action() -> void:
 #endregion
 
 #region Combat
-func damage_physical(damage: int) -> int:
-	var change = damage - phys_defense
+func damage_physical(damage: float) -> float:
+	var change: float = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
-		health = health - 1
-		change = 1
+		health = health - 1.0
+		change = 1.0
 	check_death()
 	if not slot.cards_list.is_empty():
 		slot.cards_list[0].direct_damage_true(1)
 	return change
 
-func direct_damage_physical(damage: int) -> int:
-	var change = damage - phys_defense
+func direct_damage_physical(damage: float) -> float:
+	var change: float = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
-		health = health - 1
-		change = 1
+		health = health - 1.0
+		change = 1.0
 	check_death()
 	if not slot.cards_list.is_empty():
 		slot.cards_list[0].direct_damage_true(1)
 	return change
 
-func damage_magical(damage: int) -> int:
-	var change = damage - mag_defense
+func damage_magical(damage: float) -> float:
+	var change: float = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
-		health = health - 1
-		change = 1
+		health = health - 1.0
+		change = 1.0
 	check_death()
 	if not slot.cards_list.is_empty():
 		slot.cards_list[0].direct_damage_true(1)
 	return change
 
-func direct_damage_magical(damage: int) -> int:
-	var change = damage - mag_defense
+func direct_damage_magical(damage: float) -> float:
+	var change: float = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
-		health = health - 1
-		change = 1
+		health = health - 1.0
+		change = 1.0
 	check_death()
 	if not slot.cards_list.is_empty():
 		slot.cards_list[0].direct_damage_true(1)
@@ -315,7 +319,7 @@ func check_death() -> void:
 		for array in Combat.arrays:
 			while array.has(self):
 				array.erase(self)
-		for elem in Combat.slots:
+		for elem: Slot in Combat.slots:
 			if is_instance_valid(elem):
 				while elem.cards_list.has(self):
 					elem.cards_list.erase(self)
