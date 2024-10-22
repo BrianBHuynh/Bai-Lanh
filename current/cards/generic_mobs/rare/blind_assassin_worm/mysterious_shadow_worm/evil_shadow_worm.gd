@@ -79,10 +79,10 @@ func initialize() -> void:
 
 #region Actions
 func default_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var _damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,4)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,4)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Jump!\" \n"
@@ -102,10 +102,10 @@ func default_action() -> void:
 
 #Should normally be called when standing in the front
 func front_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var _damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Jump!\" \n"
@@ -137,10 +137,10 @@ func front_action() -> void:
 
 #Should normally be called when standing in the front
 func shifted_front_action() -> void:
-	var enemy = get_target()
-	var _ally = get_ally()
-	var _damage = (Combat.RNG.randi_range(1,10))
-	var ability = Combat.RNG.randi_range(1,5)
+	var enemy: Card = get_target()
+	var _ally: Card = get_ally()
+	var _damage: int = (Combat.RNG.randi_range(1,10))
+	var ability: int = Combat.RNG.randi_range(1,5)
 	match ability:
 		1:
 			Combat.combat_board = Combat.combat_board + "\"Jump!\" \n"
@@ -170,7 +170,7 @@ func shifted_front_action() -> void:
 
 #region Combat
 func damage_physical(damage: float) -> float:
-	var change = damage - phys_defense
+	var change: float = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -182,7 +182,7 @@ func damage_physical(damage: float) -> float:
 	return change
 
 func direct_damage_physical(damage: float) -> float:
-	var change = damage - phys_defense
+	var change: float = damage - phys_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -194,7 +194,7 @@ func direct_damage_physical(damage: float) -> float:
 	return change
 
 func damage_magical(damage: float) -> float:
-	var change = damage - mag_defense
+	var change: float = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -206,7 +206,7 @@ func damage_magical(damage: float) -> float:
 	return change
 
 func direct_damage_magical(damage: float) -> float:
-	var change = damage - mag_defense
+	var change: float = damage - mag_defense
 	if change > 0:
 		health = health-change
 	else:
@@ -319,7 +319,7 @@ func check_death() -> void:
 		for array in Combat.arrays:
 			while array.has(self):
 				array.erase(self)
-		for elem in Combat.slots:
+		for elem: Slot in Combat.slots:
 			if is_instance_valid(elem):
 				while elem.cards_list.has(self):
 					elem.cards_list.erase(self)

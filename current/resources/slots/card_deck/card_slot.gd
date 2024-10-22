@@ -46,3 +46,6 @@ func _on_button_pressed() -> void:
 #
 #func place_action(_card):
 	#pass
+
+#func remove_action(_card: Card) -> void:
+	#pass

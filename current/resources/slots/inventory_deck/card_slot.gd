@@ -14,6 +14,7 @@ extends Slot
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	GlobalVars.inventory = self
 	pos = slot_pos
 	health = slot_health
 	phys_attack = slot_phys_attack
@@ -28,7 +29,7 @@ func _ready() -> void:
 	initialize()
 
 func _on_button_pressed() -> void:
-	var inventory_save: Variant = Saves.load_file("inventory_save")
+	var inventory_save: Variant = await Saves.load_file("inventory_save")
 	if typeof(inventory_save) == TYPE_ARRAY:
 		for card_dat: Dictionary in inventory_save:
 			var card: Card = CardReg.get_card(card_dat.get("script_link", "res://current/resources/templates/template_card/template.gd"))
@@ -44,9 +45,14 @@ func _on_button_pressed() -> void:
 		#Cards.shift(cards_list.front())
 
 func place_action(card: Card) -> void:
+	Combat.remove_combat(card)
+
+#func remove_action(card: Card) -> void:
+	#pass
+
+func save() -> void:
 	fix_slot()
 	var temp_cards_list: Array = []
 	for cards:Card in cards_list:
-		temp_cards_list.append(cards.serialize())
+		temp_cards_list.append(await cards.serialize())
 	Saves.save_file(temp_cards_list, "inventory_save")
-	Combat.remove_combat(card)

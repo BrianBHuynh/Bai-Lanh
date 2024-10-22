@@ -36,6 +36,9 @@ func action() -> void:
 func place_action(_card: Card) -> void:
 	pass
 
+func remove_action(_card: Card) -> void:
+	pass
+
 func normalize() -> void:
 	modulate = default_color
 	scale = default_size

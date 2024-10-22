@@ -33,3 +33,6 @@ func _ready() -> void:
 func place_action(card: Card) -> void:
 	Cards.place_slot_combat(card)
 	update_accepting()
+
+#func remove_action(_card: Card) -> void:
+	#pass

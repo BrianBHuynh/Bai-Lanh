@@ -154,16 +154,16 @@ func _on_mouse_exited() -> void:
 	if not inspected and not held:
 		normalize()
 
-func _screen_entered() -> void:
-	for i in get_children():
-		i.show()
-		i.set_process(true)
-
-func _screen_exited() -> void:
-	for i in get_children():
-		i.set_process(false)
-		if $OnScreenNotifier:
-			i.hide()
+#func _screen_entered() -> void:
+	#for i in get_children():
+		#i.show()
+		#i.set_process(true)
+#
+#func _screen_exited() -> void:
+	#for i in get_children():
+		#i.set_process(false)
+		#if $OnScreenNotifier:
+			#i.hide()
 #endregion
 
 #region Movement and other card functions
@@ -513,9 +513,10 @@ func serialize() -> Dictionary:
 	for key: String in keys_temp:
 		if get(key) == reference.get(key):
 			keys.erase(key)
+		await get_tree().create_timer(1.0).timeout 
 	for key: String in keys:
 		card_dat[key] = get(key)
-	print(card_dat)
+		await get_tree().create_timer(1.0).timeout 
 	return card_dat
 
 func load_data(card_dat: Dictionary) -> void:

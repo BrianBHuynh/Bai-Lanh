@@ -46,6 +46,9 @@ func _process(_delta: float) -> void:
 #func action():
 	#if shift:
 		#Cards.shift(cards_list.front())
-#
+
 #func place_action(_card):
+	#pass
+
+#func remove_action(_card: Card) -> void:
 	#pass

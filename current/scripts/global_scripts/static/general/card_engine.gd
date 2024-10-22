@@ -24,7 +24,7 @@ static func place_slot_combat(card: Card) -> void:
 
 #Moves card location to the slot's position, places card into the party, unfills the old slot if it exist, changes current slot to new slot and fills it
 static func place_slot(card: Card) -> void:
-	Cards.clear_slot(card)
+	clear_slot(card)
 	MoveLib.move(card, card.new_slot.position)
 	card.slot = card.new_slot
 	card.new_slot = null
@@ -69,6 +69,7 @@ static func pickup(card: Card) -> void:
 #removes the card from the slot and fixes it
 static func clear_slot(card: Card) -> void:
 	if is_instance_valid(card.slot):
+		card.slot.remove_action(card)
 		card.slot.cards_list.erase(card)
 		card.slot.update_accepting()
 		card.slot.fix_slot()
